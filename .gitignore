@@ -1,0 +1,8 @@
+build/
+
+.fuse_hidden*
+.directory
+.Trash-*
+
+git-add.sh
+
