@@ -11,6 +11,8 @@ Window::Window()
 
 uint Window::Initialize()
 {
+    int error = ERR_OK;
+    
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -32,8 +34,13 @@ uint Window::Initialize()
     Log(LOG_INFO) << "Initializing GLEW" << NEWLINE;
     
     glewExperimental = true;
-    if (glewInit() != GLEW_OK)
+    error = glewInit();
+    if (error != GLEW_OK)
     {
+#ifdef DEBUG
+        Log(LOG_DEBUG_ERROR) << glewGetErrorString(error) << NEWLINE;
+#endif
+        
         Log(LOG_ERROR) << GetErrorString(ERR_WINDOW_GLEW_INITIALIZE) << NEWLINE;
         return ERR_WINDOW_INITIALIZE;
     }

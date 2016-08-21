@@ -50,8 +50,9 @@ void Engine::Loop()
 
 void Engine::GLFW_Error(int code, const char* message)
 {
-    Log(LOG_DEBUG_ERROR) << "GLFW " << code << NEWLINE;
-    Log(LOG_ERROR) << message << NEWLINE;
+#ifdef DEBUG
+    Log(LOG_DEBUG_ERROR) << message << NEWLINE;
+#endif
 }
 
 Engine::~Engine()
