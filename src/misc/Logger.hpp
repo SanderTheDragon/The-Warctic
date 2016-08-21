@@ -6,7 +6,7 @@
 
 #include "Config.hpp"
 
-enum LogLevel { LOG_NONE, LOG_DEBUG, LOG_DEBUG_ERROR, LOG_INFO, LOG_WARNING, LOG_ERROR };
+enum LogLevel { LOG_NONE, LOG_DEBUG, LOG_DEBUG_ERROR, LOG_INFO, LOG_SYSTEM, LOG_WARNING, LOG_ERROR };
 
 class Log
 {
@@ -38,6 +38,10 @@ public:
         case LOG_INFO:
             levelColoredString = (char*)"\033[0m\033[1;34m[INFO]\033[0m\033[34m";
             levelString = (char*)"[INFO]";
+            break;
+        case LOG_SYSTEM:
+            levelColoredString = (char*)"\033[0m\033[1;36m[SYSTEM]\033[0m\033[36m";
+            levelString = (char*)"[SYSTEM]";
             break;
         case LOG_WARNING:
             levelColoredString = (char*)"\033[0m\033[1;33m[WARNING]\033[0m\033[33m";

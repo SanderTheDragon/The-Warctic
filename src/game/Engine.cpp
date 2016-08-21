@@ -36,6 +36,19 @@ uint Engine::Initialize()
     
     running = true;
     
+    Log(LOG_SYSTEM) << "OpenGL version: " << glGetString(GL_VERSION) << NEWLINE;
+    Log(LOG_SYSTEM) << "OpenGL vendor: " << glGetString(GL_VENDOR) << NEWLINE;
+    Log(LOG_SYSTEM) << "OpenGL renderer: " << glGetString(GL_RENDERER) << NEWLINE;
+    Log(LOG_SYSTEM) << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << NEWLINE;
+    Log(LOG_SYSTEM) << "GLFW version: " << glfwGetVersionString() << NEWLINE;
+    Log(LOG_SYSTEM) << "GLEW version: " << glewGetString(GLEW_VERSION) << NEWLINE;
+    
+    Log(LOG_INFO) << "Initializing events" << NEWLINE;
+    
+    glfwSetKeyCallback(graphics->GetWindow()->GetGLFWWindow(), Events::KeyHandle);
+    glfwSetMouseButtonCallback(graphics->GetWindow()->GetGLFWWindow(), Events::MouseButtonHandle);
+    glfwSetCursorPosCallback(graphics->GetWindow()->GetGLFWWindow(), Events::MouseMoveHandle);
+    
     return ERR_OK;
 }
 
