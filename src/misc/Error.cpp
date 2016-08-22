@@ -33,5 +33,12 @@ const char* GetErrorString(uint err)
     case ERR_WINDOW_GLEW_INITIALIZE:
         return "GLEW could not initialize";
         break;
+        
+    case ERR_FILE_UNKNOWN:
+        return "File error";
+        break;
+    case ERR_FILE_NOT_OPEN:
+        return "File could not open";
+        break;
     }
 } 

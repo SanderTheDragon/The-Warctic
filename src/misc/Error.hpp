@@ -17,6 +17,9 @@
 #define ERR_WINDOW_NULL             0x0302
 #define ERR_WINDOW_GLEW_INITIALIZE  0x0303
 
+#define ERR_FILE_UNKNOWN            0x0400
+#define ERR_FILE_NOT_OPEN           0x0401
+
 extern const char* GetErrorString(uint err);
 
 #endif
