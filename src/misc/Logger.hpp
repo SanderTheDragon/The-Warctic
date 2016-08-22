@@ -65,7 +65,8 @@ public:
             file.open("./out.log", std::ios::app);
             if (!file.is_open())
             {
-                std::cout << "\033[31m[ERROR]\033[0m\033[1;31m" << GetErrorString(ERR_FILE_NOT_OPEN) << NEWLINE;
+                error = ERR_FILE_NOT_OPEN;
+                std::cout << "\033[31m[ERROR]\033[0m\033[1;31m" << GetErrorString(error) << NEWLINE;
                 std::cout.flush();
             }
         }
