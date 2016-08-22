@@ -16,9 +16,10 @@ private:
     char* levelColoredString;
     char* levelString;
     int part;
+    bool writeToFile;
     
 public:
-    Log(LogLevel level)
+    Log(LogLevel level, bool writeFile = true)
     {
         part = 0;
         
@@ -53,6 +54,8 @@ public:
             levelString = (char*)"[ERROR]";
             break;
         }
+        
+        writeToFile = writeFile;
     }
     
     template<typename T>
@@ -76,7 +79,7 @@ public:
         std::cout << in;
         std::cout.flush();
         
-        if (error == ERR_OK)
+        if (error == ERR_OK && writeToFile)
         {
             if (part == 0)
                 file << levelString;
