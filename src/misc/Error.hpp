@@ -20,6 +20,11 @@
 #define ERR_FILE_UNKNOWN            0x0400
 #define ERR_FILE_NOT_OPEN           0x0401
 
+#define ERR_AUDIO_UNKNOWN           0x0500
+#define ERR_AUDIO_INITIALIZE        0x0501
+#define ERR_AUDIO_DEVICE_NULL       0x0502
+#define ERR_AUDIO_CONTEXT           0x0503
+
 extern const char* GetErrorString(uint err);
 
 #endif

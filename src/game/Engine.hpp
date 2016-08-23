@@ -6,6 +6,7 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
+#include "game/audio/Audio.hpp"
 #include "game/events/Events.hpp"
 #include "game/graphics/Graphics.hpp"
 
@@ -15,6 +16,7 @@ private:
     bool running;
     
     Graphics* graphics;
+    Audio* audio;
     
 public:
     Engine();

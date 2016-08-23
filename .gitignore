@@ -5,4 +5,5 @@ build/
 .Trash-*
 
 git-add.sh
+open-all.sh
 out.log

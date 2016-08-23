@@ -40,5 +40,18 @@ const char* GetErrorString(uint err)
     case ERR_FILE_NOT_OPEN:
         return "File could not open";
         break;
+        
+    case ERR_AUDIO_UNKNOWN:
+        return "Audio error";
+        break;
+    case ERR_AUDIO_INITIALIZE:
+        return "Audio could not initialize";
+        break;
+    case ERR_AUDIO_DEVICE_NULL:
+        return "Audio device is null";
+        break;
+    case ERR_AUDIO_CONTEXT:
+        return "Audio context error";
+        break;
     }
 } 
