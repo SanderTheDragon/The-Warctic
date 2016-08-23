@@ -59,7 +59,7 @@ uint Engine::Initialize()
     Log(LOG_SYSTEM) << "OpenAL-Soft ALC version: " << ALC_MAJOR_VERSION << "." << ALC_MINOR_VERSION << NEWLINE;
     Log(LOG_SYSTEM) << "OpenAL-Soft EFX version: " << ALC_EFX_MAJOR_VERSION << "." << ALC_EFX_MINOR_VERSION << NEWLINE;
     
-#ifdef DEBUG
+#if defined(DEBUG) && defined(TESTS)
     Log(LOG_DEBUG) << "Some test sine waves" << NEWLINE;
     audio->Sine(440.0f, 2, 41100);
     audio->Sine(330.0f, 4, 41100);
