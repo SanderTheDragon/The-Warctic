@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "Config.hpp"
-#include "misc/Error.hpp"
 
 enum LogLevel { LOG_NONE, LOG_DEBUG, LOG_DEBUG_ERROR, LOG_INFO, LOG_SYSTEM, LOG_WARNING, LOG_ERROR };
 
@@ -61,16 +60,15 @@ public:
     template<typename T>
     Log &operator<<(const T &in)
     {
-        int error = ERR_OK;
-            
         if (!file.is_open())
         {
             file.open("./out.log", std::ios::app);
             if (!file.is_open())
             {
-                error = ERR_FILE_NOT_OPEN;
-                std::cout << "\033[31m[ERROR]\033[0m\033[1;31m" << GetErrorString(error) << NEWLINE;
+                std::cout << "\033[31m[ERROR]\033[0m\033[1;31mCould not open log file" << NEWLINE;
                 std::cout.flush();
+                
+                writeToFile = false;
             }
         }
         
@@ -79,7 +77,7 @@ public:
         std::cout << in;
         std::cout.flush();
         
-        if (error == ERR_OK && writeToFile)
+        if (writeToFile)
         {
             if (part == 0)
                 file << levelString;

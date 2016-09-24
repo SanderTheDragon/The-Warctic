@@ -1,18 +1,8 @@
 #include "Config.hpp"
-#include "misc/Error.hpp"
 #include "misc/Logger.hpp"
-#include "game/Engine.hpp"
-#include "game/io/File.hpp"
 
 int main(int argc, char* argv[]) 
 {
-    int error = ERR_OK;
-    
-    if (File::FileExists("./out.log", true))
-        File::DeleteFile("./out.log", true);
-
-    File::CreateFile("./out.log", true);
-
     Log(LOG_NONE) << "--- Starting `The Warctic` ---" << NEWLINE;
     Log(LOG_NONE) << "\tVersion " << VER_MAJOR << "." << VER_MINOR << "." << VER_BUILD << NEWLINE;
     
@@ -28,27 +18,6 @@ int main(int argc, char* argv[])
     Log(LOG_ERROR, false) << "Error" << NEWLINE;
     Log(LOG_NONE, false) << "--------------------" << NEWLINE;
 #endif
-    
-    Log(LOG_INFO) << "Starting engine" << NEWLINE;
-    
-    Engine* engine = new Engine();
-    
-    error = engine->Initialize();
-    if (error != ERR_OK)
-        Log(LOG_ERROR) << GetErrorString(error) << NEWLINE;
-    else
-        Log(LOG_INFO) << "Engine is started" << NEWLINE;
-    
-    while (engine->IsRunning())
-    {
-        engine->Loop();
-    }
-    
-    Log(LOG_INFO) << "Stopping engine" << NEWLINE;
-    
-    engine->~Engine();
-    
-    Log(LOG_INFO) << "Engine is stopped" << NEWLINE;
     
     Log(LOG_NONE) << "---  End of `The Warctic`  ---" << NEWLINE;
 }
