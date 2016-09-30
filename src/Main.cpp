@@ -22,9 +22,26 @@
 #include "misc/Logger.hpp"
 
 bool debug = false;
+bool colors = true;
 
 int main(int argc, char* argv[]) 
 {
+    //Argument parsing
+    for (int i = 0; i < argc; i++)
+    {
+        std::string arg = std::string(argv[i]);
+        
+        if (arg == "--debug" || arg == "-d")
+        {
+            ::debug = true;
+        }
+        
+        if (arg == "--nocolor" || arg == "--no-color" || arg == "--nocolour" || arg == "--no-colour" || arg == "-n") // Don't nag about color/colour, you can use either
+        {
+            ::colors = false;
+        }
+    }
+    
     Log(LOG_NONE) << "--- Starting `The Warctic` ---" << NEWLINE;
     Log(LOG_NONE) << "\tVersion " << VER_MAJOR << "." << VER_MINOR << "." << VER_BUILD << NEWLINE;
     
@@ -33,17 +50,6 @@ int main(int argc, char* argv[])
     Log(LOG_WARNING) << "This is an unstable release!" << NEWLINE;
     Log(LOG_WARNING) << "Please report bugs to make it stable" << NEWLINE;
 #endif
-    
-    //Argument parsing
-    for (int i = 0; i < argc; i++)
-    {
-        if (std::string(argv[i]) == "--debug")
-        {
-            ::debug = true;
-            
-            Log(LOG_DEBUG) << "Activating debug mode" << NEWLINE;
-        }
-    }
     
     //Debug info
     Log(LOG_DEBUG) << "Debug mode active" << NEWLINE;

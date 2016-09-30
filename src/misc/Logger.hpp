@@ -90,13 +90,22 @@ public:
                 file.open("." DIR_SEP "out.log", std::ios::app);
                 if (!file.is_open())
                 {
-                    std::cout << LOG_COLOR_RESET << LOG_COLOR_BRED << "[ERROR]" << LOG_COLOR_RESET << LOG_COLOR_RED << "Could not open \'out.log\'" << NEWLINE;
+                    if (::colors)
+                        std::cout << LOG_COLOR_RESET << LOG_COLOR_BRED << "[ERROR]" << LOG_COLOR_RESET << LOG_COLOR_RED << "Could not open \'out.log\'" << NEWLINE;
+                    else
+                        std::cout << "[ERROR]Could not open \'out.log\'" << NEWLINE;
+                        
                     std::cout.flush();
                 }
             }
             
             if (part == 0)
-                std::cout << levelColoredString;
+            {
+                if (::colors)
+                    std::cout << levelColoredString;
+                else
+                    std::cout << levelString;
+            }
             std::cout << in;
             std::cout.flush();
             

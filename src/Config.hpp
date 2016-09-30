@@ -1,7 +1,8 @@
 #ifndef CONFIG_HPP_
 #define CONFIG_HPP_
 
-extern bool debug; //Global variable, one is enough
+extern bool debug;  //Global variable, one is enough
+extern bool colors; //It was not
 
 
 

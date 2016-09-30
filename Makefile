@@ -15,7 +15,7 @@ SOURCE_FILES=$(wildcard $(SOURCE_DIRECTORY)/*.cpp) $(wildcard $(SOURCE_DIRECTORY
 TARGET_FILES=$(subst $(SOURCE_DIRECTORY), $(OBJECT_DIRECTORY), $(SOURCE_FILES))
 OBJECT_FILES=$(TARGET_FILES:.cpp=.o)
 
-#This is all configured to my system, change to your own if you want to compile
+# This is all configured to my system, change to your own if you want to compile
 COMPILER=g++
 COMPILER_FLAGS=-c -g -std=c++11 -DLIN -DX64 -DUNSTABLE
 COMPILER_INCLUDE=-I$(SOURCE_DIRECTORY)
