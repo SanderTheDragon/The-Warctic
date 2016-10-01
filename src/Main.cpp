@@ -21,6 +21,8 @@
 #include "Config.hpp"
 #include "misc/Logger.hpp"
 
+#include "game/Engine.hpp"
+
 bool debug = false;
 bool colors = true;
 
@@ -36,7 +38,7 @@ int main(int argc, char* argv[])
             ::debug = true;
         }
         
-        if (arg == "--nocolor" || arg == "--no-color" || arg == "--nocolour" || arg == "--no-colour" || arg == "-n") // Don't nag about color/colour, you can use either
+        if (arg == "--nocolor" || arg == "--no-color" || arg == "--nocolour" || arg == "--no-colour" || arg == "-n") //Don't nag about color/colour, you can use either
         {
             ::colors = false;
         }
@@ -65,6 +67,15 @@ int main(int argc, char* argv[])
     //End debug info
     
     Log(LOG_SYSTEM) << "System: " << SYSTEM << NEWLINE; //System info
+    
+    Engine* engine = new Engine();
+    
+    while (engine->IsRunning())
+    {
+        engine->Loop();
+    }
+    
+    engine->~Engine();
     
     Log(LOG_NONE) << "---  End of `The Warctic`  ---" << NEWLINE;
 }

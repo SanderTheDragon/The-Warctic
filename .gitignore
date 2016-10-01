@@ -1,4 +1,5 @@
 build/
+resources/
 
 .fuse_hidden*
 .directory

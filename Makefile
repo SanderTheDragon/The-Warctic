@@ -7,6 +7,10 @@ TARGET_DIRECTORY=./build
 # Set object directory, all compiled files will go here
 OBJECT_DIRECTORY=$(TARGET_DIRECTORY)/obj
 
+# Set additional include and library directories
+INCLUDE_DIRECTORY=./include
+LIBRARY_DIRECTORY=./lib
+
 # Set executable name
 TARGET=warctic
 
@@ -18,11 +22,11 @@ OBJECT_FILES=$(TARGET_FILES:.cpp=.o)
 # This is all configured to my system, change to your own if you want to compile
 COMPILER=g++
 COMPILER_FLAGS=-c -g -std=c++11 -DLIN -DX64 -DUNSTABLE
-COMPILER_INCLUDE=-I$(SOURCE_DIRECTORY)
+COMPILER_INCLUDE=-I$(SOURCE_DIRECTORY) -I$(INCLUDE_DIRECTORY) -I/usr/include/OGRE/
 LINKER=g++
 LINKER_FLAGS=
-LINKER_LIBRARY_DIRECTORIES=-L/usr/lib/x86_64-linux-gnu/
-LINKER_LIBRARIES=-lstdc++
+LINKER_LIBRARY_DIRECTORIES=-L/usr/lib/x86_64-linux-gnu/ -L$(LIBRARY_DIRECTORY)
+LINKER_LIBRARIES=-lstdc++ -lOgreMain -lboost_system -lBtOgre -lsfml-window -lsfml-graphics -lsfml-system
 
 
 
@@ -30,8 +34,12 @@ LINKER_LIBRARIES=-lstdc++
 
 all: setup game
 
+# You could change this, but that will require changing generate-resources.py and src/Config.hpp
 setup:
 	mkdir -p $(TARGET_DIRECTORY)
+	mkdir -p $(TARGET_DIRECTORY)/resources
+	python ./generate-resources.py
+	mv ./resources/*.zip $(TARGET_DIRECTORY)/resources
 
 game: $(TARGET_DIRECTORY)/$(TARGET)
 
