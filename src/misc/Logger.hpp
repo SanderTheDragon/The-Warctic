@@ -6,7 +6,7 @@
 
 #include "Config.hpp"
 
-enum LogLevel { LOG_NONE, LOG_DEBUG, LOG_DEBUG_ERROR, LOG_INFO, LOG_SYSTEM, LOG_WARNING, LOG_ERROR }; //Log levels
+enum LogLevel { LOG_DEFAULT, LOG_NONE, LOG_DEBUG, LOG_DEBUG_ERROR, LOG_INFO, LOG_SYSTEM, LOG_WARNING, LOG_ERROR }; //Log levels
 
 //Ansi colors
 #define LOG_COLOR_BRED "\033[1;31m"
@@ -44,6 +44,10 @@ public:
         //Give all log levels a prefix and colored prefix
         switch (level)
         {
+        case LOG_DEFAULT:
+            levelColoredString = (char*)LOG_COLOR_RESET LOG_COLOR_WHITE "";
+            levelString = (char*)"";
+            break;
         case LOG_NONE:
             levelColoredString = (char*)LOG_COLOR_RESET LOG_COLOR_BWHITE "";
             levelString = (char*)"";

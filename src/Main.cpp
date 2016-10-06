@@ -20,7 +20,7 @@
 
 #include "Config.hpp"
 #include "misc/Logger.hpp"
-
+#include "misc/utils/Version.hpp"
 #include "game/Engine.hpp"
 
 bool debug = false;
@@ -38,32 +38,52 @@ int main(int argc, char* argv[])
             ::debug = true;
         }
         
-        if (arg == "--nocolor" || arg == "--no-color" || arg == "--nocolour" || arg == "--no-colour" || arg == "-n") //Don't nag about color/colour, you can use either
+        if (arg == "--nocolor" || arg == "--no-color" || arg == "--nocolour" || arg == "--no-colour" || arg == "-n" || arg == "--no(-)colo(u)r") //Don't nag about color/colour, you can use either,  the last one, well..., you probably get it why
         {
             ::colors = false;
+        }
+        
+        if (arg == "--help" || arg == "-h")
+        {
+            ::debug = true; //Fastest way to do this
+            
+            Log(LOG_DEFAULT, false) << NEWLINE;
+            
+            Log(LOG_DEFAULT, false) << "Help for `The Warctic` Version " << VERSION << NEWLINE;
+            
+#if defined(WIN) //Windows needs to be special again
+            Log(LOG_DEFAULT, false) << "Usage: warctic.exe [-d,-n,-h]" << NEWLINE << NEWLINE;
+#else
+            Log(LOG_DEFAULT, false) << "Usage: ./warctic [-d,-n,-h]" << NEWLINE << NEWLINE;
+#endif
+            
+            Log(LOG_DEFAULT, false) << "-d" << "\t--debug" << "\t\t\tStarts in debug mode" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-n" << "\t--no(-)colo(u)r" << "\t\tRemoves ansi colors from terminal" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-h" << "\t--help" << "\t\t\tShows this help message" << NEWLINE;
+            
+            Log(LOG_DEFAULT, false) << NEWLINE;
+            
+            return 0;
         }
     }
     
     Log(LOG_NONE) << "--- Starting `The Warctic` ---" << NEWLINE;
-    Log(LOG_NONE) << "\tVersion " << VER_MAJOR << "." << VER_MINOR << "." << VER_BUILD << NEWLINE;
-    
-//Unstable version warning
-#ifdef UNSTABLE
-    Log(LOG_WARNING) << "This is an unstable release!" << NEWLINE;
-    Log(LOG_WARNING) << "Please report bugs to make it stable" << NEWLINE;
-#endif
+    Utils::Version::PrintWarctic();
     
     //Debug info
     Log(LOG_DEBUG) << "Debug mode active" << NEWLINE;
     
-    Log(LOG_NONE, false) << "--- Color coding ---" << NEWLINE;
-    Log(LOG_DEBUG, false) << "Debug" << NEWLINE;
-    Log(LOG_DEBUG_ERROR, false) << "Debug Error" << NEWLINE;
-    Log(LOG_INFO, false) << "Info" << NEWLINE;
-    Log(LOG_SYSTEM, false) << "System" << NEWLINE;
-    Log(LOG_WARNING, false) << "Warning" << NEWLINE;
-    Log(LOG_ERROR, false) << "Error" << NEWLINE;
-    Log(LOG_NONE, false) << "--------------------" << NEWLINE;
+    if (::colors) //Color coding is useless without colors
+    {
+        Log(LOG_NONE, false) << "--- Color coding ---" << NEWLINE;
+        Log(LOG_DEBUG, false) << "Debug" << NEWLINE;
+        Log(LOG_DEBUG_ERROR, false) << "Debug Error" << NEWLINE;
+        Log(LOG_INFO, false) << "Info" << NEWLINE;
+        Log(LOG_SYSTEM, false) << "System" << NEWLINE;
+        Log(LOG_WARNING, false) << "Warning" << NEWLINE;
+        Log(LOG_ERROR, false) << "Error" << NEWLINE;
+        Log(LOG_NONE, false) << "--------------------" << NEWLINE;
+    }
     //End debug info
     
     Log(LOG_SYSTEM) << "System: " << SYSTEM << NEWLINE; //System info
@@ -78,4 +98,6 @@ int main(int argc, char* argv[])
     engine->~Engine();
     
     Log(LOG_NONE) << "---  End of `The Warctic`  ---" << NEWLINE;
+    
+    return 0;
 }

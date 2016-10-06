@@ -6,10 +6,19 @@ extern bool colors; //It was not
 
 
 
+//Macros
+#define STR_H(x) #x     //Required for some reason
+#define STR(x) STR_H(x)
+//End macros
+
+
+
 //Version info
 #define VER_MAJOR 0
 #define VER_MINOR 1
 #define VER_BUILD 1
+
+#define VERSION STR(VER_MAJOR) "." STR(VER_MINOR) "." STR(VER_BUILD)
 
 #if defined(LIN)
 #define PLAT "Linux"
