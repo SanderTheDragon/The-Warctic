@@ -91,7 +91,7 @@ public:
         {
             if (!file.is_open())
             {
-                file.open("." DIR_SEP "out.log", std::ios::app);
+                file.open(DIR_ROOT "out.log", std::ios::app);
                 if (!file.is_open())
                 {
                     if (::colors)

@@ -20,14 +20,19 @@
 
 #include "Config.hpp"
 #include "misc/Logger.hpp"
+#include "misc/Errors.hpp"
+
 #include "misc/utils/Version.hpp"
 #include "game/Engine.hpp"
 
 bool debug = false;
 bool colors = true;
+bool running = false;
 
 int main(int argc, char* argv[]) 
 {
+    int error;
+    
     //Argument parsing
     for (int i = 0; i < argc; i++)
     {
@@ -52,9 +57,9 @@ int main(int argc, char* argv[])
             Log(LOG_DEFAULT, false) << "Help for `The Warctic` Version " << VERSION << NEWLINE;
             
 #if defined(WIN) //Windows needs to be special again
-            Log(LOG_DEFAULT, false) << "Usage: warctic.exe [-d,-n,-h]" << NEWLINE << NEWLINE;
+            Log(LOG_DEFAULT, false) << "Usage: warctic.exe [-d] [-n] [-h]" << NEWLINE << NEWLINE;
 #else
-            Log(LOG_DEFAULT, false) << "Usage: ./warctic [-d,-n,-h]" << NEWLINE << NEWLINE;
+            Log(LOG_DEFAULT, false) << "Usage: ./warctic [-d] [-n] [-h]" << NEWLINE << NEWLINE;
 #endif
             
             Log(LOG_DEFAULT, false) << "-d" << "\t--debug" << "\t\t\tStarts in debug mode" << NEWLINE;
@@ -90,7 +95,14 @@ int main(int argc, char* argv[])
     
     Engine* engine = new Engine();
     
-    while (engine->IsRunning())
+    error = engine->Initialize();
+    
+    if (error != ERR_OK)
+    {
+        Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
+    }
+    
+    while (::running)
     {
         engine->Loop();
     }
@@ -99,5 +111,5 @@ int main(int argc, char* argv[])
     
     Log(LOG_NONE) << "---  End of `The Warctic`  ---" << NEWLINE;
     
-    return 0;
+    return error;
 }

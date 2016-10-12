@@ -1,8 +1,12 @@
 #ifndef CONFIG_HPP_
 #define CONFIG_HPP_
 
-extern bool debug;  //Global variable, one is enough
-extern bool colors; //It was not
+#include "OGRE/OgreRoot.h"
+
+extern bool debug;          //Global variable, one is enough
+extern bool colors;         //It was not
+extern bool running;        //I couldn't have been more wrong
+extern Ogre::Root* root;    //:'(
 
 
 
@@ -52,6 +56,20 @@ extern bool colors; //It was not
 #define DIR_SEP "/"
 #endif
 //End Windows being special
+
+
+
+//Directory definitions
+#define DIR_ROOT "." DIR_SEP
+//End directory definitions
+
+
+
+//File definitions
+#define FILE_CONFIG DIR_ROOT "ogre.cfg"
+#define FILE_PLUGINS DIR_ROOT "plugins.cfg"
+#define FILE_RESOURCES DIR_ROOT "resources.cfg"
+//End file definitions
 
 
 

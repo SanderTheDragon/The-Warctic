@@ -26,7 +26,7 @@ COMPILER_INCLUDE=-I$(SOURCE_DIRECTORY) -I$(INCLUDE_DIRECTORY) -I/usr/include/OGR
 LINKER=g++
 LINKER_FLAGS=
 LINKER_LIBRARY_DIRECTORIES=-L/usr/lib/x86_64-linux-gnu/ -L$(LIBRARY_DIRECTORY)
-LINKER_LIBRARIES=-lstdc++ -lOgreMain -lboost_system -lBtOgre -lSDL2 -lSDL2_mixer
+LINKER_LIBRARIES=-lstdc++ -lOgreMain -lboost_system -lBtOgre -lSDL2 -lSDL2_mixer -lGL
 
 
 
