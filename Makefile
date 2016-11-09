@@ -22,11 +22,11 @@ OBJECT_FILES=$(TARGET_FILES:.cpp=.o)
 # This is all configured to my system, change to your own if you want to compile
 COMPILER=g++
 COMPILER_FLAGS=-c -g -std=c++11 -DLIN -DX64 -DUNSTABLE
-COMPILER_INCLUDE=-I$(SOURCE_DIRECTORY) -I$(INCLUDE_DIRECTORY) -I/usr/include/OGRE/
+COMPILER_INCLUDE=-I$(SOURCE_DIRECTORY) -I$(INCLUDE_DIRECTORY)
 LINKER=g++
 LINKER_FLAGS=
 LINKER_LIBRARY_DIRECTORIES=-L/usr/lib/x86_64-linux-gnu/ -L$(LIBRARY_DIRECTORY)
-LINKER_LIBRARIES=-lstdc++ -lOgreMain -lboost_system -lBtOgre -lSDL2 -lSDL2_mixer -lGL
+LINKER_LIBRARIES=-lstdc++ -lSDL2 -lSDL2_mixer -lGL
 
 
 

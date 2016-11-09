@@ -5,15 +5,13 @@
 
 #include "misc/utils/String.hpp"
 
-const char* GetErrorMessage(uint error)
+//This returns the error message for a certain error code
+std::string GetErrorMessage(uint error)
 {
     switch (error)
     {
     case ERR_UNKNOWN:
         return "Unknown error";
-        break;
-    case ERR_OGRE_EXCEPTION:
-        return "Ogre has thrown an exception: ";
         break;
     
     case ERR_ENGINE_UNKNOWN:
@@ -57,12 +55,6 @@ const char* GetErrorMessage(uint error)
         break;
     case ERR_WINDOW_SDL_CREATE:
         return Utils::String::Combine(2, "Window failed to initialize, caused by SDL_CreateWindow(): ", SDL_GetError()).c_str();
-        break;
-    case ERR_WINDOW_OGRE_INIT:
-        return "Window failed to initialize, caused by root->initialise()";
-        break;
-    case ERR_WINDOW_OGL_CREATE:
-        return Utils::String::Combine(2, "Window failed to initialize, caused by SDL_GL_CreateContext(): ", SDL_GetError()).c_str();
         break;
         
     default:

@@ -1,6 +1,7 @@
 #include "misc/utils/String.hpp"
 
 #include <stdarg.h>
+#include <stdlib.h>
 
 std::string Utils::String::Combine(int count, ...)
 {
@@ -10,7 +11,7 @@ std::string Utils::String::Combine(int count, ...)
     va_start(args, count);
     
     for (int i = 0; i < count; i++)
-        ss << va_arg(args, const char*);
+        ss << va_arg(args, std::string);
     
     va_end(args);
     
@@ -26,6 +27,11 @@ std::string Utils::String::ToString(int number)
     return ss.str();
 }
 
+int Utils::String::ToInt(std::string string)
+{   
+    return std::stoi(string);
+}
+
 std::string Utils::String::ToHexString(int number)
 {
     std::stringstream ss;
@@ -33,4 +39,18 @@ std::string Utils::String::ToHexString(int number)
     ss << "0x" << std::setfill('0') << std::setw(6) << std::hex << number;
     
     return ss.str();
+}
+
+std::vector<std::string> Utils::String::Split(std::string string, char delim)
+{
+    std::vector<std::string> tokens;
+    std::string item;
+    std::stringstream ss(string);
+    
+    while (std::getline(ss, item, delim))
+    {
+        tokens.push_back(item);
+    }
+    
+    return tokens;
 }

@@ -13,8 +13,13 @@ public:
     
     int Initialize();
     
-    void Loop();
-    void HandleKeyup();
+    int Loop();
+    
+    int HandleKeyup();
+    int HandleKeydown();
+    int HandleMouseup();
+    int HandleMousedown();
+    int HandleWindow();
     
     ~Event();
 };

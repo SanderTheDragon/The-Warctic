@@ -19,7 +19,7 @@ public:
     
     int Initialize();
     
-    void Loop();
+    int Loop();
     
     virtual ~Graphics();
 };

@@ -1,7 +1,5 @@
 #include "game/graphics/Graphics.hpp"
 
-#include "GL/gl.h"
-
 #include "Config.hpp"
 #include "misc/Logger.hpp"
 #include "misc/Errors.hpp"
@@ -34,23 +32,18 @@ int Graphics::Initialize()
     if (renderer == NULL)
         return ERR_GRAPHICS_RENDERER_CREATE;
     
-    glClearColor(0, 0, 0, 1);
-    
     Log(LOG_INFO) << "Done (renderer)" << NEWLINE;
     
     return ERR_OK;
 }
 
-void Graphics::Loop()
+int Graphics::Loop()
 {
-    //SDL_RenderClear(renderer);
-    glClear(GL_COLOR_BUFFER_BIT);
+    SDL_RenderClear(renderer);
     
+    SDL_RenderPresent(renderer);
     
-    
-    ::root->renderOneFrame();
-    SDL_GL_SwapWindow(window->GetWindow());
-    //SDL_RenderPresent(renderer);
+    return ERR_OK;
 }
 
 Graphics::~Graphics()

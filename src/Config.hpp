@@ -1,12 +1,14 @@
 #ifndef CONFIG_HPP_
 #define CONFIG_HPP_
 
-#include "OGRE/OgreRoot.h"
+#include "game/io/ConfigFile.hpp"
 
-extern bool debug;          //Global variable, one is enough
-extern bool colors;         //It was not
-extern bool running;        //I couldn't have been more wrong
-extern Ogre::Root* root;    //:'(
+
+
+extern bool debug;              //Global variable, one is enough
+extern bool colors;             //It was not
+extern bool running;            //I couldn't have been more wrong
+extern ConfigFile* configFile;  //:'(
 
 
 
@@ -66,9 +68,7 @@ extern Ogre::Root* root;    //:'(
 
 
 //File definitions
-#define FILE_CONFIG DIR_ROOT "ogre.cfg"
-#define FILE_PLUGINS DIR_ROOT "plugins.cfg"
-#define FILE_RESOURCES DIR_ROOT "resources.cfg"
+#define FILE_CONFIG DIR_ROOT "warctic.cfg"
 //End file definitions
 
 

@@ -1,10 +1,9 @@
 #ifndef ENGINE_HPP_
 #define ENGINE_HPP_
 
-#include "OGRE/OgreRoot.h"
-
 #include "game/graphics/Graphics.hpp"
 #include "game/event/Event.hpp"
+#include "game/io/ConfigFile.hpp"
 
 class Engine
 {
@@ -17,7 +16,7 @@ public:
     
     int Initialize();
     
-    void Loop();
+    int Loop();
     
     virtual ~Engine();
 };

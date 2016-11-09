@@ -1,7 +1,5 @@
 #include "misc/utils/Version.hpp"
 
-#include "GL/gl.h"
-#include "OGRE/OgrePrerequisites.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_mixer.h"
 
@@ -46,17 +44,4 @@ void Utils::Version::PrintSDL()
     
     if (mLinked->major < mCompiled.major || mLinked->minor < mCompiled.minor || mLinked->patch < mCompiled.patch)
         Log(LOG_WARNING) << "SDL_mixer was compiled against a higher version, consider updating SDL_mixer" << NEWLINE;
-}
-
-void Utils::Version::PrintOgre()
-{
-    Log(LOG_SYSTEM) << "Ogre3D version: " << OGRE_VERSION_MAJOR << "." << OGRE_VERSION_MINOR << "." << OGRE_VERSION_PATCH  << " (" << OGRE_VERSION_NAME ")" << NEWLINE;
-}
-
-void Utils::Version::PrintOpenGL()
-{
-    Log(LOG_SYSTEM) << "OpenGL version: " << glGetString(GL_VERSION) << NEWLINE;
-    Log(LOG_SYSTEM) << "OpenGL vendor: " << glGetString(GL_VENDOR) << NEWLINE;
-    Log(LOG_SYSTEM) << "OpenGL renderer: " << glGetString(GL_RENDERER) << NEWLINE;
-    Log(LOG_SYSTEM) << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << NEWLINE;
 }
