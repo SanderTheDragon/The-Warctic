@@ -47,7 +47,8 @@ int Event::Loop()
 
 int Event::HandleKeyup()
 {
-    Log(LOG_DEBUG) << "Key \'" << SDL_GetKeyName(e.key.keysym.sym) << "\' was released" << NEWLINE;
+    if (!::suppressed)
+        Log(LOG_DEBUG) << "Key \'" << SDL_GetKeyName(e.key.keysym.sym) << "\' was released" << NEWLINE;
     
     switch (e.key.keysym.sym)
     {
@@ -62,7 +63,8 @@ int Event::HandleKeyup()
 
 int Event::HandleKeydown()
 {
-    Log(LOG_DEBUG) << "Key \'" << SDL_GetKeyName(e.key.keysym.sym) << "\' was pressed" << NEWLINE;
+    if (!::suppressed)
+        Log(LOG_DEBUG) << "Key \'" << SDL_GetKeyName(e.key.keysym.sym) << "\' was pressed" << NEWLINE;
     
     switch (e.key.keysym.sym)
     {
@@ -74,14 +76,16 @@ int Event::HandleKeydown()
 
 int Event::HandleMouseup()
 {
-    Log(LOG_DEBUG) << "\'" << e.button.button << "\' was released at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
+    if (!::suppressed)
+        Log(LOG_DEBUG) << "\'" << e.button.button << "\' was released at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
     
     return ERR_OK;
 }
 
 int Event::HandleMousedown()
 {
-    Log(LOG_DEBUG) << "\'" << e.button.button << "\' was pressed at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
+    if (!::suppressed)
+        Log(LOG_DEBUG) << "\'" << e.button.button << "\' was pressed at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
     
     return ERR_OK;
 }
@@ -91,20 +95,24 @@ int Event::HandleWindow()
     switch (e.window.event)
     {
     case SDL_WINDOWEVENT_HIDDEN:
-        Log(LOG_DEBUG) << "Window was hidden" << NEWLINE;
+        if (!::suppressed)
+            Log(LOG_DEBUG) << "Window was hidden" << NEWLINE;
         return ERR_OK;
         break;
     case SDL_WINDOWEVENT_FOCUS_LOST:
-        Log(LOG_DEBUG) << "Window lost focus" << NEWLINE;
+        if (!::suppressed)
+            Log(LOG_DEBUG) << "Window lost focus" << NEWLINE;
         return ERR_OK;
         break;
         
     case SDL_WINDOWEVENT_SHOWN:
-        Log(LOG_DEBUG) << "Window was shown" << NEWLINE;
+        if (!::suppressed)
+            Log(LOG_DEBUG) << "Window was shown" << NEWLINE;
         return ERR_OK;
         break;
     case SDL_WINDOWEVENT_FOCUS_GAINED:
-        Log(LOG_DEBUG) << "Window gained focus" << NEWLINE;
+        if (!::suppressed)
+            Log(LOG_DEBUG) << "Window gained focus" << NEWLINE;
         return ERR_OK;
         break;
     }

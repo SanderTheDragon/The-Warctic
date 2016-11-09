@@ -5,10 +5,12 @@
 
 
 
-extern bool debug;              //Global variable, one is enough
-extern bool colors;             //It was not
-extern bool running;            //I couldn't have been more wrong
-extern ConfigFile* configFile;  //:'(
+//I'll just live with them
+extern bool debug;              //Debug mode
+extern bool colors;             //Terminal colors
+extern bool running;            //Should stop running if false
+extern bool suppressed;         //Suppress event output
+extern ConfigFile* configFile;  //Configuration read/write
 
 
 

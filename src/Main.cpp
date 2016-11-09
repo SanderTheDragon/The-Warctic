@@ -28,6 +28,7 @@
 bool debug = false;
 bool colors = true;
 bool running = false;
+bool suppressed = false;
 
 int main(int argc, char* argv[]) 
 {
@@ -48,6 +49,11 @@ int main(int argc, char* argv[])
             ::colors = false;
         }
         
+        if (arg == "--suppress" || arg == "-s")
+        {
+            ::suppressed = true;
+        }
+        
         if (arg == "--help" || arg == "-h")
         {
             ::debug = true; //Fastest way to do this
@@ -64,6 +70,7 @@ int main(int argc, char* argv[])
             
             Log(LOG_DEFAULT, false) << "-d" << "\t--debug" << "\t\t\tStarts in debug mode" << NEWLINE;
             Log(LOG_DEFAULT, false) << "-n" << "\t--no(-)colo(u)r" << "\t\tRemoves ansi colors from terminal" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-s" << "\t--suppress" << "\t\tSuppresses printing event output, like \"Key \'A\' was pressed\" (not required if not in debug mode)" << NEWLINE;
             Log(LOG_DEFAULT, false) << "-h" << "\t--help" << "\t\t\tShows this help message" << NEWLINE;
             
             Log(LOG_DEFAULT, false) << NEWLINE;
