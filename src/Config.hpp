@@ -10,6 +10,7 @@ extern bool debug;              //Debug mode
 extern bool colors;             //Terminal colors
 extern bool running;            //Should stop running if false
 extern bool suppressed;         //Suppress event output
+extern bool mouseSuppressed;    //Only suppress mouse motion event output
 extern ConfigFile* configFile;  //Configuration read/write
 
 

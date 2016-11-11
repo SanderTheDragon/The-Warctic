@@ -30,7 +30,7 @@ def Generate(xDir, xExt):
 		shutil.copy2(file, target)
 		nFileList.append(target)
 	
-	print "Copied " + str(len(nFileList)) + "/" + str(len(fileList)) + " " + xExt + " file(s) from to ./resources/" + xDir
+	print "Copied " + str(len(nFileList)) + "/" + str(len(fileList)) + " " + xExt + " file(s) to ./resources/" + xDir
 	
 	zip = zipfile.ZipFile("./resources/" + xDir + ".zip", "w", zipfile.ZIP_DEFLATED)
 	for file in nFileList:

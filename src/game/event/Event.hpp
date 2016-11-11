@@ -19,6 +19,7 @@ public:
     int HandleKeydown();
     int HandleMouseup();
     int HandleMousedown();
+    int HandleMousemove();
     int HandleWindow();
     
     ~Event();

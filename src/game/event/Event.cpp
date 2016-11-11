@@ -36,6 +36,9 @@ int Event::Loop()
         case SDL_MOUSEBUTTONDOWN:
             return HandleMousedown();
             break;
+        case SDL_MOUSEMOTION:
+            return HandleMousemove();
+            break;
         case SDL_WINDOWEVENT:
             return HandleWindow();
             break;
@@ -86,6 +89,14 @@ int Event::HandleMousedown()
 {
     if (!::suppressed)
         Log(LOG_DEBUG) << "\'" << e.button.button << "\' was pressed at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
+    
+    return ERR_OK;
+}
+
+int Event::HandleMousemove()
+{
+    if (!::suppressed && !::mouseSuppressed)
+        Log(LOG_DEBUG) << "Mouse moved to (" << e.motion.x << "," << e.motion.y << ") = (" << e.motion.xrel << "," << e.motion.yrel << ")" << NEWLINE;
     
     return ERR_OK;
 }

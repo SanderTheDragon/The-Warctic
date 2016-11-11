@@ -28,7 +28,8 @@
 bool debug = false;
 bool colors = true;
 bool running = false;
-bool suppressed = false;
+bool suppressed = true;
+bool mouseSuppressed = true;
 
 int main(int argc, char* argv[]) 
 {
@@ -49,9 +50,14 @@ int main(int argc, char* argv[])
             ::colors = false;
         }
         
-        if (arg == "--suppress" || arg == "-s")
+        if (arg == "--nosuppress" || arg == "--no-suppress" || arg == "-s" || arg == "--no(-)suppress")
         {
-            ::suppressed = true;
+            ::suppressed = false;
+        }
+        
+        if (arg == "--nomousesuppress" || arg == "--no-mousesuppress" || arg == "--nomouse-suppress" || arg == "--no-mouse-suppress" || arg == "-m" || arg == "--no(-)mouse(-)suppress")
+        {
+            ::mouseSuppressed = false;
         }
         
         if (arg == "--help" || arg == "-h")
@@ -63,19 +69,20 @@ int main(int argc, char* argv[])
             Log(LOG_DEFAULT, false) << "Help for `The Warctic` Version " << VERSION << NEWLINE;
             
 #if defined(WIN) //Windows needs to be special again
-            Log(LOG_DEFAULT, false) << "Usage: warctic.exe [-d] [-n] [-h]" << NEWLINE << NEWLINE;
+            Log(LOG_DEFAULT, false) << "Usage: warctic.exe [-d] [-n] [-h] [-s] [-m]" << NEWLINE << NEWLINE;
 #else
-            Log(LOG_DEFAULT, false) << "Usage: ./warctic [-d] [-n] [-h]" << NEWLINE << NEWLINE;
+            Log(LOG_DEFAULT, false) << "Usage: ./warctic [-d] [-n] [-h] [-s] [-m]" << NEWLINE << NEWLINE;
 #endif
             
-            Log(LOG_DEFAULT, false) << "-d" << "\t--debug" << "\t\t\tStarts in debug mode" << NEWLINE;
-            Log(LOG_DEFAULT, false) << "-n" << "\t--no(-)colo(u)r" << "\t\tRemoves ansi colors from terminal" << NEWLINE;
-            Log(LOG_DEFAULT, false) << "-s" << "\t--suppress" << "\t\tSuppresses printing event output, like \"Key \'A\' was pressed\" (not required if not in debug mode)" << NEWLINE;
-            Log(LOG_DEFAULT, false) << "-h" << "\t--help" << "\t\t\tShows this help message" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-d" << "\t--debug" << "\t\t\t\tStarts in debug mode" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-n" << "\t--no(-)colo(u)r" << "\t\t\tRemoves ansi colors from terminal" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-s" << "\t--no(-)suppress" << "\t\t\tPrint event output, like \"Key \'A\' was pressed\" (requires debug mode {-d})" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-m" << "\t--no(-)mouse(-)suppress" << "\t\tPrint mouse motion events (requires debug mode {-d} and no suppress {-s})" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-h" << "\t--help" << "\t\t\t\tShows this help message" << NEWLINE;
             
             Log(LOG_DEFAULT, false) << NEWLINE;
             
-            return 0;
+            return ERR_OK;
         }
     }
     

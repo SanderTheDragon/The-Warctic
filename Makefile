@@ -21,7 +21,7 @@ OBJECT_FILES=$(TARGET_FILES:.cpp=.o)
 
 # This is all configured to my system, change to your own if you want to compile
 COMPILER=g++
-COMPILER_FLAGS=-c -g -std=c++11 -DLIN -DX64 -DUNSTABLE
+COMPILER_FLAGS=-c -g -Wall -std=c++11 -DLIN -DX64 -DUNSTABLE
 COMPILER_INCLUDE=-I$(SOURCE_DIRECTORY) -I$(INCLUDE_DIRECTORY)
 LINKER=g++
 LINKER_FLAGS=
@@ -51,7 +51,7 @@ $(OBJECT_DIRECTORY)%.o: $(SOURCE_DIRECTORY)%.cpp
 	$(COMPILER) $(COMPILER_FLAGS) $(COMPILER_INCLUDE) -o $@ $<
 
 run: all
-	cd $(TARGET_DIRECTORY) && pwd && ./$(TARGET) --debug
+	cd $(TARGET_DIRECTORY) && pwd && ./$(TARGET) -d -s
 
 run_ndbg: all
 	cd $(TARGET_DIRECTORY) && pwd && ./$(TARGET)
