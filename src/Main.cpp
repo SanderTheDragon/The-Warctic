@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
             Log(LOG_DEFAULT, false) << "-d" << "\t--debug" << "\t\t\t\tStarts in debug mode" << NEWLINE;
             Log(LOG_DEFAULT, false) << "-n" << "\t--no(-)colo(u)r" << "\t\t\tRemoves ansi colors from terminal" << NEWLINE;
             Log(LOG_DEFAULT, false) << "-s" << "\t--no(-)suppress" << "\t\t\tPrint event output, like \"Key \'A\' was pressed\" (requires debug mode {-d})" << NEWLINE;
-            Log(LOG_DEFAULT, false) << "-m" << "\t--no(-)mouse(-)suppress" << "\t\tPrint mouse motion events (requires debug mode {-d} and no suppress {-s})" << NEWLINE;
+            Log(LOG_DEFAULT, false) << "-m" << "\t--no(-)mouse(-)suppress" << "\t\tPrint mouse motion and wheel events (requires debug mode {-d} and no suppress {-s})" << NEWLINE;
             Log(LOG_DEFAULT, false) << "-h" << "\t--help" << "\t\t\t\tShows this help message" << NEWLINE;
             
             Log(LOG_DEFAULT, false) << NEWLINE;

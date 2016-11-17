@@ -4,9 +4,35 @@
 #include "misc/Logger.hpp"
 #include "misc/Errors.hpp"
 
+#include "misc/utils/String.hpp"
+
 Event::Event()
 {
     
+}
+
+std::string Event::ButtonName(uint button)
+{
+    switch (button)
+    {
+    case SDL_BUTTON_LEFT:
+        return "Left button";
+        break;
+    case SDL_BUTTON_MIDDLE:
+        return "Middle button";
+        break;
+    case SDL_BUTTON_RIGHT:
+        return "Right button";
+        break;
+    case SDL_BUTTON_X1:
+        return "Extra button 1";
+        break;
+    case SDL_BUTTON_X2:
+        return "Extra button 2";
+        break;
+    }
+    
+    return GetErrorMessage(ERR_UNKNOWN);
 }
 
 int Event::Initialize() //Not needed for anything, it just sits here, I don't know why
@@ -21,6 +47,7 @@ int Event::Loop()
         switch (e.type)
         {
         case SDL_QUIT:
+            Log(LOG_DEBUG) << "Window close button was clicked" << NEWLINE;
             ::running = false;
             return ERR_OK;
             break;
@@ -38,6 +65,9 @@ int Event::Loop()
             break;
         case SDL_MOUSEMOTION:
             return HandleMousemove();
+            break;
+        case SDL_MOUSEWHEEL:
+            return HandleMousewheel();
             break;
         case SDL_WINDOWEVENT:
             return HandleWindow();
@@ -80,7 +110,7 @@ int Event::HandleKeydown()
 int Event::HandleMouseup()
 {
     if (!::suppressed)
-        Log(LOG_DEBUG) << "\'" << e.button.button << "\' was released at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
+        Log(LOG_DEBUG) << "\'" << ButtonName(e.button.button) << "\' was released at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
     
     return ERR_OK;
 }
@@ -88,7 +118,7 @@ int Event::HandleMouseup()
 int Event::HandleMousedown()
 {
     if (!::suppressed)
-        Log(LOG_DEBUG) << "\'" << e.button.button << "\' was pressed at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
+        Log(LOG_DEBUG) << "\'" << ButtonName(e.button.button) << "\' was pressed " << Utils::String::ToString(e.button.clicks) << " times at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
     
     return ERR_OK;
 }
@@ -97,6 +127,23 @@ int Event::HandleMousemove()
 {
     if (!::suppressed && !::mouseSuppressed)
         Log(LOG_DEBUG) << "Mouse moved to (" << e.motion.x << "," << e.motion.y << ") = (" << e.motion.xrel << "," << e.motion.yrel << ")" << NEWLINE;
+    
+    return ERR_OK;
+}
+
+int Event::HandleMousewheel()
+{
+    int x = e.wheel.x;
+    int y = e.wheel.y;
+    
+    if (e.wheel.direction == SDL_MOUSEWHEEL_FLIPPED)
+    {
+        x *= -1;
+        y *= -1;
+    }
+    
+    if (!::suppressed && !::mouseSuppressed)
+        Log(LOG_DEBUG) << "Mouse wheel moved " << Utils::String::ToString(x) << " right and " << Utils::String::ToString(y) << " up" << NEWLINE;
     
     return ERR_OK;
 }
@@ -124,6 +171,12 @@ int Event::HandleWindow()
     case SDL_WINDOWEVENT_FOCUS_GAINED:
         if (!::suppressed)
             Log(LOG_DEBUG) << "Window gained focus" << NEWLINE;
+        return ERR_OK;
+        break;
+    
+    case SDL_WINDOWEVENT_CLOSE:
+        if (!::suppressed)
+            Log(LOG_DEBUG) << "Window was closed" << NEWLINE;
         return ERR_OK;
         break;
     }
