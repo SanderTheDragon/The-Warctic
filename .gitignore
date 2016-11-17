@@ -8,3 +8,8 @@ resources/
 open-all.sh
 out.log
 warctic.cfg
+
+CMakeFiles/
+Makefile
+cmake_install.cmake
+CMakeCache.txt

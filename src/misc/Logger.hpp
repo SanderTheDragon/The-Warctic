@@ -95,9 +95,9 @@ public:
                 if (!file.is_open())
                 {
                     if (::colors)
-                        std::cout << LOG_COLOR_RESET << LOG_COLOR_BRED << "[ERROR]" << LOG_COLOR_RESET << LOG_COLOR_RED << "Could not open \'out.log\'" << NEWLINE;
+                        std::cout << NEWLINE << LOG_COLOR_BRED << "[ERROR]" << LOG_COLOR_RESET << LOG_COLOR_RED << "Could not open \'out.log\'";
                     else
-                        std::cout << "[ERROR]Could not open \'out.log\'" << NEWLINE;
+                        std::cout << NEWLINE << "[ERROR]Could not open \'out.log\'";
                         
                     std::cout.flush();
                 }
