@@ -78,6 +78,8 @@ int Engine::Initialize()
 
 int Engine::Loop()
 {
+    screen->Update(event->GetMouseX(), event->GetMouseY());
+    
     graphics->Loop();
     
     event->Loop();

@@ -17,6 +17,7 @@ namespace Ui
         Screen();
         
         void Draw(SDL_Renderer** renderer);
+        void Update(int mouseX, int mouseY);
         
         void AddComponent(Ui::Component* component) { components.push_back(component); }
         

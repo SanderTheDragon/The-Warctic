@@ -10,7 +10,9 @@ namespace Ui
     public:
         DebugScreen();
         
-        static int ButtonResources();
+        static int ButtonResources(Ui::Button* button, int mouseButton, int type);
+        static int ButtonResourcesHovering(Ui::Button* button);
+        static int ButtonResourcesNotHovering(Ui::Button* button);
         
         virtual ~DebugScreen();
     };

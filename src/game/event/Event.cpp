@@ -112,6 +112,11 @@ int Event::HandleMouseup()
     if (!::suppressed)
         Log(LOG_DEBUG) << "\'" << ButtonName(e.button.button) << "\' was released at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
     
+    Ui::Button* button = screen->GetButtonAt(e.button.x, e.button.y);
+    
+    if (button)
+        button->GetCallback()(button, e.button.button, SDL_MOUSEBUTTONUP);
+    
     return ERR_OK;
 }
 
@@ -123,7 +128,7 @@ int Event::HandleMousedown()
     Ui::Button* button = screen->GetButtonAt(e.button.x, e.button.y);
     
     if (button)
-        button->GetCallback()();
+        button->GetCallback()(button, e.button.button, SDL_MOUSEBUTTONDOWN);
     
     return ERR_OK;
 }
@@ -132,6 +137,9 @@ int Event::HandleMousemove()
 {
     if (!::suppressed && !::mouseSuppressed)
         Log(LOG_DEBUG) << "Mouse moved to (" << e.motion.x << "," << e.motion.y << ") = (" << e.motion.xrel << "," << e.motion.yrel << ")" << NEWLINE;
+    
+    mouseX = e.motion.x;
+    mouseY = e.motion.y;
     
     return ERR_OK;
 }

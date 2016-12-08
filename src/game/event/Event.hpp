@@ -12,6 +12,9 @@ private:
     
     std::string ButtonName(uint button);
     
+    int mouseX;
+    int mouseY;
+    
 public:
     Event();
     
@@ -26,6 +29,9 @@ public:
     int HandleMousemove();
     int HandleMousewheel();
     int HandleWindow();
+    
+    int GetMouseX() { return mouseX; }
+    int GetMouseY() { return mouseY; }
     
     ~Event();
 };

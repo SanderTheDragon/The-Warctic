@@ -71,6 +71,7 @@ namespace Ui
         void SetForeground(Ui::Color color) { foreground = color; }
         void SetForeground(ushort r, ushort g, ushort b, ushort a) { foreground.SetColor(r, g, b, a); }
         Ui::Color GetForeground() { return foreground; }
+        Ui::Color* GetForegroundPointer() { return &foreground; }
         
         virtual ~Label() { }
     };

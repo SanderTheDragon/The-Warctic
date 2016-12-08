@@ -59,6 +59,7 @@ namespace Ui
         void SetBackground(Ui::Color color) { background = color; }
         void SetBackground(ushort r, ushort g, ushort b, ushort a) { background.SetColor(r, g, b, a); }
         Ui::Color GetBackground() { return background; }
+        Ui::Color* GetBackgroundPointer() { return &background; }
         
         virtual ~Box() { }
     };
