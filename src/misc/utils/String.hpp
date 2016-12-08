@@ -18,6 +18,8 @@ namespace Utils
         
         static std::string ToHexString(int number);                                 //Int to Hex String
         
+        static std::string PathToFile(std::string path);                            //Path to file, like fonts/freemono.ttf to fonts_freemono.ttf
+        
         static std::vector<std::string> Split(std::string string, char delim);      //Splits String
     };
 };

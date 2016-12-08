@@ -8,7 +8,7 @@ namespace Ui
     class Component
     {
     public:
-        virtual void Draw(SDL_Renderer** renderer) = 0;
+        virtual int Draw(SDL_Renderer** renderer) = 0;
     };
 };
 

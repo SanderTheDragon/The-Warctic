@@ -68,12 +68,15 @@ extern Ui::Screen* screen;      //Current shown screen
 
 //Directory definitions
 #define DIR_ROOT "." DIR_SEP
+#define DIR_RESOURCE DIR_ROOT "resources" DIR_SEP
 //End directory definitions
 
 
 
 //File definitions
 #define FILE_CONFIG DIR_ROOT "warctic.cfg"
+
+#define RESOURCE_OTHER DIR_RESOURCE "other.zip"
 //End file definitions
 
 

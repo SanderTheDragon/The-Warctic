@@ -2,6 +2,7 @@
 #define CONFIG_HPP_
 
 #include "game/io/ConfigFile.hpp"
+#include "game/ui/toolkit/Screen.hpp"
 
 
 
@@ -12,6 +13,7 @@ extern bool running;            //Should stop running if false
 extern bool suppressed;         //Suppress event output
 extern bool mouseSuppressed;    //Only suppress mouse motion event output
 extern ConfigFile* configFile;  //Configuration read/write
+extern Ui::Screen* screen;      //Current shown screen
 
 
 
@@ -66,12 +68,15 @@ extern ConfigFile* configFile;  //Configuration read/write
 
 //Directory definitions
 #define DIR_ROOT "." DIR_SEP
+#define DIR_RESOURCE DIR_ROOT "resources" DIR_SEP
 //End directory definitions
 
 
 
 //File definitions
 #define FILE_CONFIG DIR_ROOT "warctic.cfg"
+
+#define RESOURCE_OTHER DIR_RESOURCE "other.zip"
 //End file definitions
 
 

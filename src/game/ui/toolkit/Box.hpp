@@ -1,6 +1,8 @@
 #ifndef UI_BOX_HPP_
 #define UI_BOX_HPP_
 
+#include "misc/Errors.hpp"
+
 #include "game/ui/toolkit/Component.hpp"
 #include "game/ui/toolkit/Color.hpp"
 
@@ -19,7 +21,7 @@ namespace Ui
     public:
         Box(int x_, int y_, int w_, int h_, Ui::Color col) : x(x_), y(y_), w(w_), h(h_), background(col) { }
         
-        void Draw(SDL_Renderer** renderer)
+        int Draw(SDL_Renderer** renderer)
         {
             SDL_SetRenderDrawColor(*renderer, background.GetRed(), background.GetGreen(), background.GetBlue(), 255);
             
@@ -33,6 +35,8 @@ namespace Ui
             SDL_RenderFillRect(*renderer, &rect);
             
             SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 255);
+            
+            return ERR_OK;
         }
         
         //Shift position/size

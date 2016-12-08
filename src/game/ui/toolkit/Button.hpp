@@ -20,9 +20,9 @@ namespace Ui
         Button(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, int (* callbackFunction)(Ui::Button*, int, int)) : Label(x_, y_, w_, h_, bg, fg, msg, size), callback(callbackFunction) { }
         Button(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, int (* callbackFunction)(Ui::Button*, int, int), int (* hoveringFunction)(Ui::Button*), int (* notHoveringFunction)(Ui::Button*)) : Label(x_, y_, w_, h_, bg, fg, msg, size), callback(callbackFunction), hovering(hoveringFunction), notHovering(notHoveringFunction) { }
         
-        void Draw(SDL_Renderer** renderer)
+        int Draw(SDL_Renderer** renderer)
         {
-            Label::Draw(renderer);
+            return Label::Draw(renderer);
         }
         
         //Get/set callback

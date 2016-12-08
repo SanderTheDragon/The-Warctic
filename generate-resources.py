@@ -41,4 +41,4 @@ def Generate(xDir, xExt):
 	print "Old size " + size(tSize)
 	print "New size " + size(os.path.getsize("./resources/" + xDir + ".zip"))
 
-Generate("meshes", ".mesh")
+Generate("other", "")

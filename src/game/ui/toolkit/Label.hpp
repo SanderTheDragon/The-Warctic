@@ -5,6 +5,8 @@
 
 #include "game/ui/toolkit/Box.hpp"
 #include "game/ui/toolkit/Color.hpp"
+#include "misc/Resources.hpp"
+#include "misc/utils/String.hpp"
 
 namespace Ui
 {
@@ -19,9 +21,9 @@ namespace Ui
     public:
         Label(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size) : Box(x_, y_, w_, h_, bg), foreground(fg), text(msg), textSize(size) { }
         
-        void Draw(SDL_Renderer** renderer)
+        int Draw(SDL_Renderer** renderer)
         {
-            TTF_Font* font = TTF_OpenFont("./freemono.ttf", textSize); //TODO: get ttf from resource pack
+            TTF_Font* font = TTF_OpenFontRW(Resources::GetFile("./resources/other.zip", Utils::String::PathToFile("fonts/freemono.ttf")), 1, textSize);
             SDL_Color color = { (Uint8)foreground.GetRed(), (Uint8)foreground.GetGreen(), (Uint8)foreground.GetBlue(), (Uint8)foreground.GetAlpha() };
             SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
             SDL_Texture* texture = SDL_CreateTextureFromSurface(*renderer, surface);
@@ -61,6 +63,8 @@ namespace Ui
             TTF_CloseFont(font);
             SDL_FreeSurface(surface);
             SDL_DestroyTexture(texture);
+            
+            return ERR_OK;
         }
         
         //Get/set text

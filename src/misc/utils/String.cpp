@@ -3,6 +3,8 @@
 #include <cstdarg>
 #include <cstdlib>
 
+#include <algorithm>
+
 std::string Utils::String::Combine(int count, ...)
 {
     va_list args;
@@ -39,6 +41,13 @@ std::string Utils::String::ToHexString(int number)
     ss << "0x" << std::setfill('0') << std::setw(6) << std::hex << number;
     
     return ss.str();
+}
+
+std::string Utils::String::PathToFile(std::string path)
+{
+    std::replace(path.begin(), path.end(), '/', '_');
+    
+    return path;
 }
 
 std::vector<std::string> Utils::String::Split(std::string string, char delim)
