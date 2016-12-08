@@ -12,6 +12,7 @@
 #define ERR_ENGINE_SDL_MIXER_INIT       0x000104    //Engine failed to initialize: cause Mix_OpenAudio
 #define ERR_ENGINE_GRAPHICS_INIT        0x000108    //Engine failed to initialize: cause graphics->Initialize
 #define ERR_ENGINE_EVENT_INIT           0x000110    //Engine failed to initialize: cause event->Initialize
+#define ERR_ENGINE_SDL_TTF_INIT         0x000120    //Engine failed to initialize: cause Ttf_Init
 
 #define ERR_GRAPHICS_UNKNOWN            0x000200    //Should never be returned
 #define ERR_GRAPHICS_INIT               0x000201    //Graphics engine failed to initialize: cause undefined

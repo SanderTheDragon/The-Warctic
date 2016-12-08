@@ -33,7 +33,7 @@ bool mouseSuppressed = true;
 
 int main(int argc, char* argv[]) 
 {
-    int error;
+    uint error;
     
     //Argument parsing
     for (int i = 0; i < argc; i++)

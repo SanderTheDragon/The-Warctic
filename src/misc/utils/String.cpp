@@ -1,7 +1,7 @@
 #include "misc/utils/String.hpp"
 
-#include <stdarg.h>
-#include <stdlib.h>
+#include <cstdarg>
+#include <cstdlib>
 
 std::string Utils::String::Combine(int count, ...)
 {

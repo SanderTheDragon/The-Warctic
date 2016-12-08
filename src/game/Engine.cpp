@@ -2,6 +2,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_mixer.h"
+#include "SDL2/SDL_ttf.h"
 
 #include "Config.hpp"
 #include "misc/Logger.hpp"
@@ -19,7 +20,7 @@ Engine::Engine()
 
 int Engine::Initialize()
 {
-    int error;
+    uint error;
     
     Log(LOG_INFO) << "Reading \'" << FILE_CONFIG << "\'" << NEWLINE;
     
@@ -36,6 +37,9 @@ int Engine::Initialize()
     
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
         return ERR_ENGINE_SDL_MIXER_INIT;
+    
+    if (TTF_Init() < 0)
+        return ERR_ENGINE_SDL_TTF_INIT;
     
     Utils::Version::PrintSDL();
     
@@ -86,6 +90,7 @@ Engine::~Engine()
     event->~Event();
     graphics->~Graphics();
     
+    TTF_Quit();
     Mix_Quit();
     SDL_Quit();
 }

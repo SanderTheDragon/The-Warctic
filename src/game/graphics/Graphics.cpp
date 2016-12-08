@@ -4,6 +4,10 @@
 #include "misc/Logger.hpp"
 #include "misc/Errors.hpp"
 
+#include "game/ui/screens/DebugScreen.hpp"
+
+Ui::Screen* screen;
+
 Graphics::Graphics()
 {
     window = new Window();
@@ -11,7 +15,7 @@ Graphics::Graphics()
 
 int Graphics::Initialize()
 {
-    int error;
+    uint error;
     
     Log(LOG_INFO) << "Initializing window" << NEWLINE;
     
@@ -34,12 +38,27 @@ int Graphics::Initialize()
     
     Log(LOG_INFO) << "Done (renderer)" << NEWLINE;
     
+    if (::debug || true) //Always show debug screen for now
+    {
+        Log(LOG_INFO) << "Loading debug screen" << NEWLINE;
+        
+        screen = new Ui::DebugScreen();
+    }
+    else
+    {
+        Log(LOG_INFO) << "Loading main screen" << NEWLINE;
+    }
+    
+    Log(LOG_INFO) << "Done (screen)" << NEWLINE;
+    
     return ERR_OK;
 }
 
 int Graphics::Loop()
 {
     SDL_RenderClear(renderer);
+    
+    screen->Draw(&renderer);
     
     SDL_RenderPresent(renderer);
     

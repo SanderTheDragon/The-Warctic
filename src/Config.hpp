@@ -2,6 +2,7 @@
 #define CONFIG_HPP_
 
 #include "game/io/ConfigFile.hpp"
+#include "game/ui/toolkit/Screen.hpp"
 
 
 
@@ -12,6 +13,7 @@ extern bool running;            //Should stop running if false
 extern bool suppressed;         //Suppress event output
 extern bool mouseSuppressed;    //Only suppress mouse motion event output
 extern ConfigFile* configFile;  //Configuration read/write
+extern Ui::Screen* screen;      //Current shown screen
 
 
 

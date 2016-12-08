@@ -41,6 +41,6 @@ file (GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_executable (warctic ${SOURCES})
 
-target_link_libraries (warctic "-lstdc++ -lSDL2 -lSDL2_mixer -lGL")
+target_link_libraries (warctic "-lstdc++ -lSDL2 -lSDL2_mixer -lSDL2_ttf -lGL")
 
 add_dependencies (warctic resource)
