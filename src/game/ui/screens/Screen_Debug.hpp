@@ -1,15 +1,15 @@
-#ifndef UI_DEBUGSCREEN_HPP_
-#define UI_DEBUGSCREEN_HPP_
+#ifndef UI_SCREENDEBUG_HPP_
+#define UI_SCREENDEBUG_HPP_
 
 #include "game/ui/toolkit/Screen.hpp"
 #include "misc/Resources.hpp"
 
 namespace Ui
 {
-    class DebugScreen : public Ui::Screen
+    class Screen_Debug : public Ui::Screen
     {
     public:
-        DebugScreen();
+        Screen_Debug();
         
         void LoadResources();
         
@@ -17,7 +17,7 @@ namespace Ui
         static int ButtonResourcesHovering(Ui::Button* button);
         static int ButtonResourcesNotHovering(Ui::Button* button);
         
-        virtual ~DebugScreen();
+        virtual ~Screen_Debug();
     };
 };
 

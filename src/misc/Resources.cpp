@@ -22,3 +22,25 @@ SDL_RWops* Resources::GetFile(std::string archive, std::string file)
     
     return rw;
 }
+
+std::vector<std::string> Resources::ReadArchive(std::string archive)
+{
+    std::vector<std::string> files;
+    
+    unzFile data = unzOpen(archive.c_str());
+    unz_file_info info;
+    
+    unzGoToFirstFile(data);
+    
+    do
+    {
+        char buffer[256];
+        unzGetCurrentFileInfo(data, &info, buffer, sizeof(buffer), NULL, 0, NULL, 0);
+        
+        files.push_back(std::string(buffer));
+    } while (unzGoToNextFile(data) == UNZ_OK);
+
+    unzClose(data);
+    
+    return files;
+}

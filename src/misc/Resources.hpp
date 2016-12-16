@@ -2,6 +2,7 @@
 #define RESOURCES_HPP_
 
 #include <string>
+#include <vector>
 
 #include "SDL2/SDL.h"
 
@@ -9,6 +10,8 @@ class Resources
 {
 public:
     static SDL_RWops* GetFile(std::string archive, std::string file);
+    
+    static std::vector<std::string> ReadArchive(std::string archive);
 };
 
 #endif

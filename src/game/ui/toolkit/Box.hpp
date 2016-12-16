@@ -1,8 +1,6 @@
 #ifndef UI_BOX_HPP_
 #define UI_BOX_HPP_
 
-#include "misc/Errors.hpp"
-
 #include "game/ui/toolkit/Component.hpp"
 #include "game/ui/toolkit/Color.hpp"
 
@@ -23,7 +21,7 @@ namespace Ui
         
         int Draw(SDL_Renderer** renderer)
         {
-            SDL_SetRenderDrawColor(*renderer, background.GetRed(), background.GetGreen(), background.GetBlue(), 255);
+            SDL_SetRenderDrawColor(*renderer, background.GetRed(), background.GetGreen(), background.GetBlue(), background.GetAlpha());
             
             SDL_Rect rect;
             

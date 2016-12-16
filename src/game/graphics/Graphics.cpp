@@ -4,7 +4,7 @@
 #include "misc/Logger.hpp"
 #include "misc/Errors.hpp"
 
-#include "game/ui/screens/DebugScreen.hpp"
+#include "game/ui/screens/Screen_Debug.hpp"
 
 Ui::Screen* screen;
 
@@ -40,13 +40,13 @@ int Graphics::Initialize()
     
     if (::debug || true) //Always show debug screen for now
     {
-        Log(LOG_INFO) << "Loading debug screen" << NEWLINE;
+        Log(LOG_DEBUG) << "Loading debug screen" << NEWLINE;
         
-        screen = new Ui::DebugScreen();
+        screen = new Ui::Screen_Debug();
     }
     else
     {
-        Log(LOG_INFO) << "Loading main screen" << NEWLINE;
+        Log(LOG_DEBUG) << "Loading main screen" << NEWLINE;
     }
     
     Log(LOG_INFO) << "Done (screen)" << NEWLINE;

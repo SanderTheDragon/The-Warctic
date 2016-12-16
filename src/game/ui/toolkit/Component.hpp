@@ -3,6 +3,8 @@
 
 #include "SDL2/SDL.h"
 
+#include "misc/Errors.hpp"
+
 namespace Ui
 {
     class Component
