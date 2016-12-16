@@ -62,6 +62,7 @@ namespace Ui
         }
         
         void AddComponent(Ui::Box* component) { components.push_back(component); }
+        void ClearComponents() { components.clear(); }
         
         virtual ~List() { }
     };
