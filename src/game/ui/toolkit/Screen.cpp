@@ -1,5 +1,9 @@
 #include "game/ui/toolkit/Screen.hpp"
 
+#include "Config.hpp"
+#include "misc/Logger.hpp"
+#include "misc/Errors.hpp"
+
 #include <iostream>
 
 Ui::Screen::Screen()
@@ -39,6 +43,13 @@ Ui::Button* Ui::Screen::GetButtonAt(int x, int y)
     }
     
     return NULL;
+}
+
+std::pair<std::string, SDL_RWops*> Ui::Screen::LoadResource(std::string archive, std::string path)
+{
+    Log(LOG_DEBUG) << "Loading \'" << path << "\' from \'" << archive << "\'" << NEWLINE;
+    
+    return std::pair<std::string, SDL_RWops*>(path, Resources::GetFile(archive, Utils::String::PathToFile(path)));
 }
 
 Ui::Screen::~Screen()

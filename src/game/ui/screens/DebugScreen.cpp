@@ -9,11 +9,18 @@
 
 Ui::DebugScreen::DebugScreen()
 {
-    Ui::Label* topBox = new Ui::Label(0, 0, -1, -1, Ui::Color(0, 0, 0, 0), Ui::Color(255, 255, 255, 255), "Debug Mode", 24);
+    LoadResources();
+    
+    Ui::Label* topBox = new Ui::Label(0, 0, -1, -1, Ui::Color(0, 0, 0, 0), Ui::Color(255, 255, 255, 255), "Debug Mode", 24, GetResource("fonts/freemono.ttf"));
     AddComponent(topBox);
     
-    Ui::Button* resListButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "List resources", 24, &ButtonResources, &ButtonResourcesHovering, &ButtonResourcesNotHovering);
+    Ui::Button* resListButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "List resources", 24, GetResource("fonts/freemono.ttf"), &ButtonResources, &ButtonResourcesHovering, &ButtonResourcesNotHovering);
     AddComponent(resListButton);
+}
+
+void Ui::DebugScreen::LoadResources()
+{
+    AddResource(RESOURCE_OTHER, "fonts/freemono.ttf");
 }
 
 int Ui::DebugScreen::ButtonResources(Ui::Button* button, int mouseButton, int type)
