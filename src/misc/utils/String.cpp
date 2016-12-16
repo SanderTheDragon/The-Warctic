@@ -50,6 +50,13 @@ std::string Utils::String::PathToFile(std::string path)
     return path;
 }
 
+std::string Utils::String::FileToPath(std::string file)
+{
+    std::replace(file.begin(), file.end(), '_', '/');
+    
+    return file;
+}
+
 std::vector<std::string> Utils::String::Split(std::string string, char delim)
 {
     std::vector<std::string> tokens;

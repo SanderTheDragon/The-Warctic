@@ -18,8 +18,9 @@ namespace Ui
         void LoadResources();
         
         static int ButtonOther(Ui::Button* button, int mouseButton, int type);
-        static int ButtonOtherHovering(Ui::Button* button);
-        static int ButtonOtherNotHovering(Ui::Button* button);
+        static int ButtonBack(Ui::Button* button, int mouseButton, int type);
+        static int ButtonHovering(Ui::Button* button);
+        static int ButtonNotHovering(Ui::Button* button);
         
         virtual ~Screen_ResourceList();
     };

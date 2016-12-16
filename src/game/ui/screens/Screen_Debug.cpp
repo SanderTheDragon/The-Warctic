@@ -15,8 +15,11 @@ Ui::Screen_Debug::Screen_Debug()
     Ui::Label* topBox = new Ui::Label(0, 0, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "Debug Mode", 24, GetResource("fonts/freemono.ttf"));
     AddComponent(topBox);
     
-    Ui::Button* resListButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "List resources", 24, GetResource("fonts/freemono.ttf"), &ButtonResources, &ButtonResourcesHovering, &ButtonResourcesNotHovering);
+    Ui::Button* resListButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "List resources", 24, GetResource("fonts/freemono.ttf"), &ButtonResources, &ButtonHovering, &ButtonNotHovering);
     AddComponent(resListButton);
+    
+    Ui::Button* exitButton = new Ui::Button(0, 456, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Exit", 24, GetResource("fonts/freemono.ttf"), &ButtonExit, &ButtonHovering, &ButtonNotHovering);
+    AddComponent(exitButton);
 }
 
 void Ui::Screen_Debug::LoadResources()
@@ -30,14 +33,24 @@ int Ui::Screen_Debug::ButtonResources(Ui::Button* button, int mouseButton, int t
     {
         Log(LOG_DEBUG) << "Loading resource list screen" << NEWLINE;
         
-        free(screen);
+        delete screen;
         screen = new Ui::Screen_ResourceList();
     }
     
     return ERR_OK;
 }
 
-int Ui::Screen_Debug::ButtonResourcesHovering(Ui::Button* button)
+int Ui::Screen_Debug::ButtonExit(Ui::Button* button, int mouseButton, int type)
+{
+    if (mouseButton == SDL_BUTTON_LEFT && type == SDL_MOUSEBUTTONUP)
+    {
+        running = false;
+    }
+    
+    return ERR_OK;
+}
+
+int Ui::Screen_Debug::ButtonHovering(Ui::Button* button)
 {
     button->GetBackgroundPointer()->SetRed(255);
     button->GetBackgroundPointer()->SetBlue(255);
@@ -50,7 +63,7 @@ int Ui::Screen_Debug::ButtonResourcesHovering(Ui::Button* button)
     return ERR_OK;
 }
 
-int Ui::Screen_Debug::ButtonResourcesNotHovering(Ui::Button* button)
+int Ui::Screen_Debug::ButtonNotHovering(Ui::Button* button)
 {
     button->GetBackgroundPointer()->SetRed(0);
     button->GetBackgroundPointer()->SetBlue(0);
@@ -65,5 +78,5 @@ int Ui::Screen_Debug::ButtonResourcesNotHovering(Ui::Button* button)
 
 Ui::Screen_Debug::~Screen_Debug()
 {
-    
+    ClearComponents();
 }

@@ -24,7 +24,7 @@ namespace Ui
         void Update(int mouseX, int mouseY);
         
         void AddComponent(Ui::Component* component) { components.push_back(component); }
-        std::vector<Ui::Component*> GetComponents() { return components; }
+        void ClearComponents() { components.clear(); }
         
         Ui::Button* GetButtonAt(int x, int y);
         
