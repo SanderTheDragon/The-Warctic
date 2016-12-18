@@ -69,6 +69,9 @@ namespace Ui
             return ERR_OK;
         }
         
+        static uint Type() { return UI_LABEL; }
+        uint Type_() { Ui::Label::Type(); }
+        
         //Get/set text
         void SetText(std::string msg) { text = msg; }
         std::string GetText() { return text; }

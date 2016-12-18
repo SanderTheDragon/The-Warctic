@@ -25,6 +25,9 @@ namespace Ui
             return Label::Draw(renderer);
         }
         
+        static uint Type() { return UI_BUTTON; }
+        uint Type_() { Ui::Button::Type(); }
+        
         //Get/set callback
         void SetCallback(int (* callbackFunction)(Ui::Button*, int, int)) { callback = callbackFunction; }
         int (* GetCallback())(Ui::Button*, int, int) { return callback; }

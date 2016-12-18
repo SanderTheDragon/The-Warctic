@@ -37,23 +37,23 @@ namespace Ui
             
             for (uint i = 0; i < components.size(); i++)
             {
-                components[i]->SetX(GetX() + 2);
-                components[i]->SetY(lY + GetY() + 2);
+                components.at(i)->SetX(GetX() + 2);
+                components.at(i)->SetY(lY + GetY() + 2);
                 
-                components[i]->Draw(renderer);
+                components.at(i)->Draw(renderer);
                 
                 SDL_SetRenderDrawColor(*renderer, background.GetRed(), background.GetBlue(), background.GetGreen(), background.GetAlpha());
             
                 SDL_Rect rect;
                 
                 rect.x = GetX() + 1;
-                rect.y = components[i]->GetY() + components[i]->GetH() + 1;
+                rect.y = components.at(i)->GetY() + components.at(i)->GetH() + 1;
                 rect.w = GetW() - 2;
                 rect.h = 1;
                 
                 SDL_RenderFillRect(*renderer, &rect);
                 
-                lY += components[i]->GetH() + 2;
+                lY += components.at(i)->GetH() + 2;
                 
                 SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 255);
             }
@@ -61,8 +61,11 @@ namespace Ui
             return ERR_OK;
         }
         
+        static uint Type() { return UI_LIST; }
+        uint Type_() { Ui::List::Type(); }
+        
         void AddComponent(Ui::Box* component) { components.push_back(component); }
-        void ClearComponents() { components.clear(); }
+        void ClearComponents() { for(uint i = 0; i < components.size(); i++) { delete components.at(i); } components.clear(); components.shrink_to_fit(); }
         
         virtual ~List() { }
     };

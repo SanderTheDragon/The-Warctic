@@ -78,5 +78,5 @@ int Ui::Screen_Debug::ButtonNotHovering(Ui::Button* button)
 
 Ui::Screen_Debug::~Screen_Debug()
 {
-    ClearComponents();
+    
 }

@@ -2,16 +2,12 @@
 #define UI_SCREENRESOURCELIST_HPP_
 
 #include "game/ui/toolkit/Screen.hpp"
-#include "game/ui/toolkit/List.hpp"
 #include "misc/Resources.hpp"
 
 namespace Ui
 {
     class Screen_ResourceList : public Ui::Screen
     {
-    private:
-        Ui::List* files;
-        
     public:
         Screen_ResourceList();
         

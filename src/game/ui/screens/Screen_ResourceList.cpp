@@ -20,7 +20,7 @@ Ui::Screen_ResourceList::Screen_ResourceList()
     Ui::Button* otherButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "other.zip", 24, GetResource("fonts/freemono.ttf"), &ButtonOther, &ButtonHovering, &ButtonNotHovering);
     AddComponent(otherButton);
     
-    files = new Ui::List(168, 40, 536, 424, Ui::Color(255, 255, 255, 255), Ui::Color(0, 0, 0, 255));
+    Ui::List* files = new Ui::List(168, 40, 536, 424, Ui::Color(255, 255, 255, 255), Ui::Color(0, 0, 0, 255));
     AddComponent(files);
     
     Ui::Button* backButton = new Ui::Button(0, 456, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "< Back", 24, GetResource("fonts/freemono.ttf"), &ButtonBack, &ButtonHovering, &ButtonNotHovering);
@@ -38,14 +38,16 @@ int Ui::Screen_ResourceList::ButtonOther(Ui::Button* button, int mouseButton, in
     {
         Ui::Screen_ResourceList* scr = dynamic_cast<Ui::Screen_ResourceList*>(screen);
         
-        scr->files->ClearComponents();
+        Ui::List* files = scr->FindComponent<Ui::List>();
+        
+        files->ClearComponents();
         
         std::vector<std::string> items = Resources::ReadArchive(Utils::String::Combine(2, std::string(DIR_RESOURCE), button->GetText()));
         
         for (uint i = 0; i < items.size(); i++)
         {
-            Ui::Label* file = new Ui::Label(-1, -1, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), Utils::String::FileToPath(items[i]), 14, scr->GetResource("fonts/freemono.ttf"));
-            scr->files->AddComponent(file);
+            Ui::Label* file = new Ui::Label(-1, -1, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), Utils::String::FileToPath(items.at(i)), 14, scr->GetResource("fonts/freemono.ttf"));
+            files->AddComponent(file);
         }
     }
     
@@ -93,5 +95,5 @@ int Ui::Screen_ResourceList::ButtonNotHovering(Ui::Button* button)
 
 Ui::Screen_ResourceList::~Screen_ResourceList()
 {
-    ClearComponents();
+    
 }

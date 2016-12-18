@@ -37,6 +37,9 @@ namespace Ui
             return ERR_OK;
         }
         
+        static uint Type() { return UI_BOX; }
+        uint Type_() { Ui::Box::Type(); }
+        
         //Shift position/size
         void ShiftX(int i) { x += i; }
         void ShiftY(int i) { y += i; }
