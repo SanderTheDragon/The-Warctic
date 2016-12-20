@@ -8,11 +8,30 @@
 
 #include "misc/utils/String.hpp"
 
-//TODO: More error handling
-
 ConfigFile::ConfigFile()
 {
     
+}
+
+std::map<std::string, std::string> ConfigFile::GetConfig()
+{
+    return config;
+}
+
+std::string ConfigFile::GetValue(std::string key)
+{
+    if (config.find(key) == config.end())
+    {
+        Log(LOG_DEBUG_ERROR) << GetErrorMessage(ERR_IO_CONFIG_KEYNOTFOUND) << key << NEWLINE;
+        return "";
+    }
+    
+    return config.at(key);
+}
+
+void ConfigFile::SetValue(std::string key, std::string val)
+{
+    config.insert(std::pair<std::string, std::string>(key, val));
 }
 
 int ConfigFile::Read()
@@ -23,6 +42,9 @@ int ConfigFile::Read()
     
     if (!in.is_open())
         in.open(FILE_CONFIG, std::ios::in);
+    
+    if (!in.is_open()) //If still not open
+        return ERR_IO_CONFIG_OPEN;
     
     while (std::getline(in, line))
     {
@@ -46,10 +68,12 @@ int ConfigFile::Read()
     {
         Log(LOG_DEBUG_ERROR) << "Config size is zero, creating default" << NEWLINE;
         
-        SetValue("Graphics_Window_Size_W", "720");
-        SetValue("Graphics_Window_Size_H", "480");
+        SetValue("GraphicsWindowSizeW", "720");
+        SetValue("GraphicsWindowSizeH", "480");
         
-        Write();
+        uint error = Write();
+        if (error != ERR_OK)
+            Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
     }
     
     if (in.is_open())
@@ -62,6 +86,9 @@ int ConfigFile::Write()
 {
     if (!out.is_open())
         out.open(FILE_CONFIG, std::ios::out);
+    
+    if (!out.is_open()) //If still not open
+        return ERR_IO_CONFIG_OPEN;
     
     out << "#You can edit this, it works like KEY=VAL, keys probably explain what they do themself" << NEWLINE;
     

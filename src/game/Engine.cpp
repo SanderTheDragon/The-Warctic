@@ -25,7 +25,13 @@ int Engine::Initialize()
     Log(LOG_INFO) << "Reading \'" << FILE_CONFIG << "\'" << NEWLINE;
     
     configFile = new ConfigFile();
-    configFile->Read();
+    error = configFile->Read();
+    
+    if (error != ERR_OK)
+    {
+        Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
+        return ERR_ENGINE_IO_CONFIG_READ;
+    }
     
     Log(LOG_INFO) << "Done (config)" << NEWLINE;
     

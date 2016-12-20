@@ -13,7 +13,9 @@ std::string Utils::String::Combine(int count, ...)
     va_start(args, count);
     
     for (int i = 0; i < count; i++)
-        ss << va_arg(args, std::string);
+    {
+        ss << va_arg(args, const char*);
+    }
     
     va_end(args);
     
@@ -31,6 +33,9 @@ std::string Utils::String::ToString(int number)
 
 int Utils::String::ToInt(std::string string)
 {   
+    if (string.empty())
+        return 0;
+    
     return std::stoi(string);
 }
 

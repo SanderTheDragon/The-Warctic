@@ -35,6 +35,9 @@ std::string GetErrorMessage(uint error)
         break;
     case ERR_ENGINE_SDL_TTF_INIT:
         return Utils::String::Combine(2, "Engine failed to initialize, caused by Ttf_Init(): ", TTF_GetError());
+    case ERR_ENGINE_IO_CONFIG_READ:
+        return "Engine failed to initialize, caused by configFile->Read()";
+        break;
         
     case ERR_GRAPHICS_UNKNOWN:
         return "Unknown graphics engine error";
@@ -59,10 +62,19 @@ std::string GetErrorMessage(uint error)
     case ERR_WINDOW_SDL_CREATE:
         return Utils::String::Combine(2, "Window failed to initialize, caused by SDL_CreateWindow(): ", SDL_GetError());
         break;
+    
+    case ERR_IO_UNKNOWN:
+        return "Unknown IO error";
+        break;
+    case ERR_IO_CONFIG_KEYNOTFOUND:
+        return "Could not find key: ";
+        break;
+    case ERR_IO_CONFIG_OPEN:
+        return "Failed to open configuration file";
+        break;
         
     default:
-        std::string tmp = Utils::String::Combine(5, "Could not find message for error ", Utils::String::ToString(error), " (", Utils::String::ToHexString(error), ")");
-        return tmp.c_str();
+        return Utils::String::Combine(5, "Could not find message for error ", Utils::String::ToString(error).c_str(), " (", Utils::String::ToHexString(error).c_str(), ")");
         break;
     }
 } 

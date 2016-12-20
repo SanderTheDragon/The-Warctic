@@ -15,9 +15,9 @@ private:
 public:
     ConfigFile();
     
-    std::map<std::string, std::string> GetConfig() { return config; }
-    std::string GetValue(std::string key) { return config[key]; }
-    void SetValue(std::string key, std::string val) { config.insert(std::pair<std::string, std::string>(key, val)); }
+    std::map<std::string, std::string> GetConfig();
+    std::string GetValue(std::string key);
+    void SetValue(std::string key, std::string val);
     
     int Read();
     int Write();
