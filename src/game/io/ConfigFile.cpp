@@ -36,6 +36,9 @@ void ConfigFile::SetValue(std::string key, std::string val)
 
 int ConfigFile::Read()
 {
+    //Fastest way to do this
+    Write();
+    
     std::string line;
     
     config.clear();
