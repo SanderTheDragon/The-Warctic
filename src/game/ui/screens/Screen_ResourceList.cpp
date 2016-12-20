@@ -42,7 +42,7 @@ int Ui::Screen_ResourceList::ButtonOther(Ui::Button* button, int mouseButton, in
         
         files->ClearComponents();
         
-        std::vector<std::string> items = Resources::ReadArchive(Utils::String::Combine(2, std::string(DIR_RESOURCE), button->GetText()));
+        std::vector<std::string> items = Resources::ReadArchive(Utils::String::Combine(2, DIR_RESOURCE, button->GetText().c_str()));
         
         for (uint i = 0; i < items.size(); i++)
         {

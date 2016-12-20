@@ -43,7 +43,7 @@ namespace Ui
                 components.at(i)->Draw(renderer);
                 
                 SDL_SetRenderDrawColor(*renderer, background.GetRed(), background.GetBlue(), background.GetGreen(), background.GetAlpha());
-            
+                
                 SDL_Rect rect;
                 
                 rect.x = GetX() + 1;
