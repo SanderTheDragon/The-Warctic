@@ -21,7 +21,7 @@ Ui::Screen_ResourceList::Screen_ResourceList()
     Ui::Button* otherButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "other.zip", 24, GetResource("fonts/freemono.ttf"), &ButtonOther, &ButtonHovering, &ButtonNotHovering);
     AddComponent(otherButton);
     
-    Ui::List* files = new Ui::List(168, 40, WINDOW_W() - 8, WINDOW_H() - 8, Ui::Color(255, 255, 255, 255), Ui::Color(0, 0, 0, 255));
+    Ui::List* files = new Ui::List(168, 40, WINDOW_W() - 8, WINDOW_H() - 8, Ui::Color(0, 0, 0, 255), 1, Ui::Color(255, 255, 255, 255));
     files->XYToWH(); //Call if w and h were x2 and y2
     AddComponent(files);
     
@@ -48,7 +48,8 @@ int Ui::Screen_ResourceList::ButtonOther(Ui::Button* button, int mouseButton, in
         
         for (uint i = 0; i < items.size(); i++)
         {
-            Ui::Label* file = new Ui::Label(-1, -1, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), Utils::String::FileToPath(items.at(i)), 14, scr->GetResource("fonts/freemono.ttf"));
+            Ui::Label* file = new Ui::Label(files->GetX(), files->GetY(), files->GetW() - 2, -1, Ui::Color(0, 0, 0, 255), 1, Ui::Color(255, 255, 255, 255), Ui::Color(255, 255, 255, 255), Utils::String::FileToPath(items.at(i)), 14, scr->GetResource("fonts/freemono.ttf"));
+            file->SetFontFix(true);
             files->AddComponent(file);
         }
     }

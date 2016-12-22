@@ -19,6 +19,8 @@ namespace Ui
     public:
         Button(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int)) : Label(x_, y_, w_, h_, bg, fg, msg, size, font_), callback(callbackFunction) { }
         Button(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int), int (* hoveringFunction)(Ui::Button*), int (* notHoveringFunction)(Ui::Button*)) : Label(x_, y_, w_, h_, bg, fg, msg, size, font_), callback(callbackFunction), hovering(hoveringFunction), notHovering(notHoveringFunction) { }
+        Button(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int)) : Label(x_, y_, w_, h_, bg, bSize, bColor, fg, msg, size, font_), callback(callbackFunction) { }
+        Button(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int), int (* hoveringFunction)(Ui::Button*), int (* notHoveringFunction)(Ui::Button*)) : Label(x_, y_, w_, h_, bg, bSize, bColor, fg, msg, size, font_), callback(callbackFunction), hovering(hoveringFunction), notHovering(notHoveringFunction) { }
         
         int Draw(SDL_Renderer** renderer)
         {
