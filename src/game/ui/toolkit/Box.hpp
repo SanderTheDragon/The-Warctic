@@ -53,6 +53,9 @@ namespace Ui
         void SetSize(int w_, int h_) { w = w_; h = h_; } 
         void SetW(int w_) { w = w_; } 
         void SetH(int h_) { h = h_; }
+
+        //Call this if your arguments were x1, y1, x2, y2 instead of x, y, w, h
+        void XYToWH() { w = w - x; h = h - y; }
         
         //Get position/size
         int GetX() { return x; }

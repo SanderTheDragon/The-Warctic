@@ -21,7 +21,8 @@ Ui::Screen_ResourceList::Screen_ResourceList()
     Ui::Button* otherButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "other.zip", 24, GetResource("fonts/freemono.ttf"), &ButtonOther, &ButtonHovering, &ButtonNotHovering);
     AddComponent(otherButton);
     
-    Ui::List* files = new Ui::List(168, 40, 536, 424, Ui::Color(255, 255, 255, 255), Ui::Color(0, 0, 0, 255));
+    Ui::List* files = new Ui::List(168, 40, WINDOW_W() - 8, WINDOW_H() - 8, Ui::Color(255, 255, 255, 255), Ui::Color(0, 0, 0, 255));
+    files->XYToWH(); //Call if w and h were x2 and y2
     AddComponent(files);
     
     Ui::Button* backButton = new Ui::Button(0, 456, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "< Back", 24, GetResource("fonts/freemono.ttf"), &ButtonBack, &ButtonHovering, &ButtonNotHovering);

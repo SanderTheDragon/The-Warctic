@@ -6,7 +6,6 @@
 #include "misc/Logger.hpp"
 #include "misc/Errors.hpp"
 
-#include "misc/utils/String.hpp"
 #include "misc/utils/File.hpp"
 
 ConfigFile::ConfigFile()
@@ -32,6 +31,9 @@ std::string ConfigFile::GetValue(std::string key)
 
 void ConfigFile::SetValue(std::string key, std::string val)
 {
+    if (config.find(key) != config.end())
+        config.erase(key);
+    
     config.insert(std::pair<std::string, std::string>(key, val));
 }
 

@@ -4,8 +4,6 @@
 #include "misc/Logger.hpp"
 #include "misc/Errors.hpp"
 
-#include "misc/utils/String.hpp"
-
 Window::Window()
 {
     
@@ -15,10 +13,10 @@ int Window::Initialize()
 {
     Log(LOG_INFO) << "Creating window" << NEWLINE;
     
-    int w = Utils::String::ToInt(configFile->GetValue("GraphicsWindowSizeW"));
-    int h = Utils::String::ToInt(configFile->GetValue("GraphicsWindowSizeH"));
+    int w = configFile->GetIntValue("GraphicsWindowSizeW");
+    int h = configFile->GetIntValue("GraphicsWindowSizeH");
     
-    if (w == 0)
+    if (w < 640)
     {
         Log(LOG_WARNING) << "Window width is too small, setting it to default" << NEWLINE;
         configFile->SetValue("GraphicsWindowSizeW", "720");
@@ -26,9 +24,11 @@ int Window::Initialize()
         uint error = configFile->Write();
         if (error != ERR_OK)
             Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
+        
+        w = configFile->GetIntValue("GraphicsWindowSizeW");
     }
     
-    if (h == 0)
+    if (h < 480)
     {
         Log(LOG_WARNING) << "Window heigth is too small, setting it to default" << NEWLINE;
         configFile->SetValue("GraphicsWindowSizeH", "480");
@@ -36,6 +36,8 @@ int Window::Initialize()
         uint error = configFile->Write();
         if (error != ERR_OK)
             Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
+        
+        h = configFile->GetIntValue("GraphicsWindowSizeH");
     }
     
     Log(LOG_DEBUG) << "Window size: " << w << "x" << h << NEWLINE;
