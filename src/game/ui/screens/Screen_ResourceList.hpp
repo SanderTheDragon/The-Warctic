@@ -2,7 +2,7 @@
 #define UI_SCREENRESOURCELIST_HPP_
 
 #include "game/ui/toolkit/Screen.hpp"
-#include "misc/Resources.hpp"
+#include "misc/Resource.hpp"
 
 namespace Ui
 {

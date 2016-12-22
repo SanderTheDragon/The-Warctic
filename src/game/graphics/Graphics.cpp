@@ -69,5 +69,6 @@ Graphics::~Graphics()
 {
     SDL_DestroyRenderer(renderer);
     
-    window->~Window();
+    delete screen;
+    delete window;
 }

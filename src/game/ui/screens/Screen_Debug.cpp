@@ -12,7 +12,7 @@ Ui::Screen_Debug::Screen_Debug()
 {
     LoadResources();
     
-    Ui::Label* topBox = new Ui::Label(0, 0, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "Debug Mode", 24, GetResource("fonts/freemono.ttf"));
+    Ui::Label* topBox = new Ui::Label(0, 0, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The Warctic - Debug Mode", 24, GetResource("fonts/freemono.ttf"));
     AddComponent(topBox);
     
     Ui::Button* resListButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "List resources", 24, GetResource("fonts/freemono.ttf"), &ButtonResources, &ButtonHovering, &ButtonNotHovering);

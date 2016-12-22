@@ -40,6 +40,7 @@ public:
     Log(LogLevel level, bool writeFile = true)
     {
         part = 0;
+        reqDebug = false;
         
         //Give all log levels a prefix and colored prefix
         switch (level)

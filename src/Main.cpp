@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
         engine->Loop();
     }
     
-    engine->~Engine();
+    delete engine;
     
     Log(LOG_NONE) << "---  End of `The Warctic`  ---" << NEWLINE;
     

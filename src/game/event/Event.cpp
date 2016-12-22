@@ -8,7 +8,8 @@
 
 Event::Event()
 {
-    
+    mouseX = 0;
+    mouseY = 0;
 }
 
 std::string Event::ButtonName(uint button)

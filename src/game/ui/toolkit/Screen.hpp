@@ -7,6 +7,7 @@
 
 #include "game/ui/toolkit/Component.hpp"
 #include "game/ui/toolkit/Button.hpp"
+#include "misc/Resource.hpp"
 
 namespace Ui
 {
@@ -15,7 +16,7 @@ namespace Ui
     private:
         std::vector<Ui::Component*> components;
         
-        std::map<std::string, SDL_RWops*> resources;
+        std::map<std::string, Resource*> resources;
         
     public:
         Screen();
@@ -44,11 +45,11 @@ namespace Ui
         
         virtual void LoadResources() = 0;
         
-        std::pair<std::string, SDL_RWops*> LoadResource(std::string archive, std::string path);
+        std::pair<std::string, Resource*> LoadResource(std::string archive, std::string path);
         
         void AddResource(std::string archive, std::string path) { resources.insert(LoadResource(archive, path)); }
-        void AddResource(std::pair<std::string, SDL_RWops*> resource) { resources.insert(resource); }
-        SDL_RWops* GetResource(std::string path) { return resources[path]; }
+        void AddResource(std::pair<std::string, Resource*> resource) { resources.insert(resource); }
+        Resource* GetResource(std::string path) { return resources[path]; }
         void ClearResources();
         
         virtual ~Screen();

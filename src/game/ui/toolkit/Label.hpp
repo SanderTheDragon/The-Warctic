@@ -5,7 +5,7 @@
 
 #include "game/ui/toolkit/Box.hpp"
 #include "game/ui/toolkit/Color.hpp"
-#include "misc/Resources.hpp"
+#include "misc/Resource.hpp"
 #include "misc/utils/String.hpp"
 
 namespace Ui
@@ -16,16 +16,16 @@ namespace Ui
         std::string text;
         uint textSize;
         
-        SDL_RWops* fontBuffer;
+        Resource* res;
         
         Ui::Color foreground;
         
     public:
-        Label(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, SDL_RWops* font_) : Box(x_, y_, w_, h_, bg), foreground(fg), text(msg), textSize(size), fontBuffer(font_) { }
+        Label(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_) : Box(x_, y_, w_, h_, bg), foreground(fg), text(msg), textSize(size), res(font_) { }
         
         int Draw(SDL_Renderer** renderer)
         {
-            TTF_Font* font = TTF_OpenFontRW(fontBuffer, 0, textSize);
+            TTF_Font* font = TTF_OpenFontRW(*res->Get(), 0, textSize);
             SDL_Color color = { (Uint8)foreground.GetRed(), (Uint8)foreground.GetGreen(), (Uint8)foreground.GetBlue(), (Uint8)foreground.GetAlpha() };
             SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
             SDL_Texture* texture = SDL_CreateTextureFromSurface(*renderer, surface);

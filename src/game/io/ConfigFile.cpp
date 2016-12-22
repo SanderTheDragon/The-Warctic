@@ -7,6 +7,7 @@
 #include "misc/Errors.hpp"
 
 #include "misc/utils/String.hpp"
+#include "misc/utils/File.hpp"
 
 ConfigFile::ConfigFile()
 {
@@ -34,10 +35,26 @@ void ConfigFile::SetValue(std::string key, std::string val)
     config.insert(std::pair<std::string, std::string>(key, val));
 }
 
+int ConfigFile::Check()
+{
+    if (!Utils::File::Exists(FILE_CONFIG))
+    {
+        Log(LOG_DEBUG_ERROR) << "Creating default configuration file" << NEWLINE;
+        
+        SetValue("GraphicsWindowSizeW", "720");
+        SetValue("GraphicsWindowSizeH", "480");
+        
+        uint error = Write();
+        if (error != ERR_OK)
+            Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
+    }
+    
+    return ERR_OK;
+}
+
 int ConfigFile::Read()
 {
-    //Fastest way to do this
-    Write();
+    Check();
     
     std::string line;
     
@@ -66,18 +83,6 @@ int ConfigFile::Read()
     }
     
     Log(LOG_INFO) << "Read " << config.size() << " lines from \'" << FILE_CONFIG << "\'" << NEWLINE;
-
-    if (config.size() == 0)
-    {
-        Log(LOG_DEBUG_ERROR) << "Config size is zero, creating default" << NEWLINE;
-        
-        SetValue("GraphicsWindowSizeW", "720");
-        SetValue("GraphicsWindowSizeH", "480");
-        
-        uint error = Write();
-        if (error != ERR_OK)
-            Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
-    }
     
     if (in.is_open())
         in.close();

@@ -9,12 +9,13 @@
 #include "game/ui/toolkit/List.hpp"
 #include "game/ui/screens/Screen_Debug.hpp"
 #include "misc/utils/String.hpp"
+#include "misc/utils/File.hpp"
 
 Ui::Screen_ResourceList::Screen_ResourceList()
 {
     LoadResources();
     
-    Ui::Label* topBox = new Ui::Label(0, 0, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "Debug Mode - Resource list", 24, GetResource("fonts/freemono.ttf"));
+    Ui::Label* topBox = new Ui::Label(0, 0, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The Warctic - Debug Mode - Resource list", 24, GetResource("fonts/freemono.ttf"));
     AddComponent(topBox);
     
     Ui::Button* otherButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "other.zip", 24, GetResource("fonts/freemono.ttf"), &ButtonOther, &ButtonHovering, &ButtonNotHovering);
@@ -42,7 +43,7 @@ int Ui::Screen_ResourceList::ButtonOther(Ui::Button* button, int mouseButton, in
         
         files->ClearComponents();
         
-        std::vector<std::string> items = Resources::ReadArchive(Utils::String::Combine(2, DIR_RESOURCE, button->GetText().c_str()));
+        std::vector<std::string> items = Utils::File::ReadArchive(Utils::String::Combine(2, DIR_RESOURCE, button->GetText().c_str()));
         
         for (uint i = 0; i < items.size(); i++)
         {

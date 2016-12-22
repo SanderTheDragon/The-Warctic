@@ -45,24 +45,26 @@ Ui::Button* Ui::Screen::GetButtonAt(int x, int y)
     return NULL;
 }
 
-std::pair<std::string, SDL_RWops*> Ui::Screen::LoadResource(std::string archive, std::string path)
+std::pair<std::string, Resource*> Ui::Screen::LoadResource(std::string archive, std::string path)
 {
     Log(LOG_DEBUG) << "Loading \'" << path << "\' from \'" << archive << "\'" << NEWLINE;
     
-    return std::pair<std::string, SDL_RWops*>(path, Resources::GetFile(archive, Utils::String::PathToFile(path)));
+    Resource* resource = new Resource();
+    resource->Load(archive, Utils::String::PathToFile(path));
+    
+    return std::pair<std::string, Resource*>(path, resource);
 }
 
 void Ui::Screen::ClearResources()
 {
-    for (std::map<std::string, SDL_RWops*>::iterator it = resources.begin(); it != resources.end(); it++)
-    {
-        SDL_FreeRW(it->second);
-        resources.erase(it);
-    }
+    for (std::map<std::string, Resource*>::iterator it = resources.begin(); it != resources.end(); it++)
+        delete it->second;
+    
+    resources.clear();
 }
 
 Ui::Screen::~Screen()
 {
-    ClearComponents();
     ClearResources();
+    ClearComponents();
 }

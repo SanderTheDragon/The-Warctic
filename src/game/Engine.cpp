@@ -95,8 +95,8 @@ int Engine::Loop()
 
 Engine::~Engine()
 {
-    event->~Event();
-    graphics->~Graphics();
+    delete event;
+    delete graphics;
     
     TTF_Quit();
     Mix_Quit();
