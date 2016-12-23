@@ -25,6 +25,7 @@ namespace Ui
         void Update(int mouseX, int mouseY);
         
         void AddComponent(Ui::Component* component) { components.push_back(component); }
+        void RemoveLastComponent() { components.pop_back(); components.pop_back(); } //TODO: Not this
         std::vector<Ui::Component*> GetComponents() { return components; }
         void ClearComponents() { for(uint i = 0; i < components.size(); i++) { delete components.at(i); } components.clear(); components.shrink_to_fit(); }
         

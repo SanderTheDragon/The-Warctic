@@ -15,6 +15,7 @@ namespace Ui
         int (* callback)(Ui::Button*, int, int);
         int (* hovering)(Ui::Button*);
         int (* notHovering)(Ui::Button*);
+        bool enabled;
         
     public:
         Button(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int)) : Label(x_, y_, w_, h_, bg, fg, msg, size, font_), callback(callbackFunction) { }
@@ -41,6 +42,12 @@ namespace Ui
         //Get/set not hovering
         void SetNotHovering(int (* notHoveringFunction)(Ui::Button*)) { notHovering = notHoveringFunction; }
         int (* GetNotHovering())(Ui::Button*) { return notHovering; }
+        
+        //Get/set enabled
+        void SetEnabled(bool enable) { enabled = enable; }
+        bool GetEnabled() { return enabled; }
+        void Enable() { enabled = true; }
+        void Disable() { enabled = false; }
         
         virtual ~Button() { }
     };

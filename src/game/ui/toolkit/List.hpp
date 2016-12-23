@@ -36,9 +36,10 @@ namespace Ui
         uint Type_() { Ui::List::Type(); }
         
         void AddComponent(Ui::Box* component) { components.push_back(component); }
+        std::vector<Ui::Box*> GetComponents() { return components; }
         void ClearComponents() { for(uint i = 0; i < components.size(); i++) { delete components.at(i); } components.clear(); components.shrink_to_fit(); }
         
-        virtual ~List() { }
+        virtual ~List() { ClearComponents(); }
     };
 };
 

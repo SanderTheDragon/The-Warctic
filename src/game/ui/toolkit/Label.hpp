@@ -62,6 +62,13 @@ namespace Ui
                 SDL_SetRenderDrawColor(*renderer, (Uint8)background.GetRed(), (Uint8)background.GetGreen(), (Uint8)background.GetBlue(), (Uint8)background.GetAlpha());
                 
                 SDL_RenderFillRect(*renderer, &rect);
+                
+                if (fontFix)
+                {
+                    rect.w = tW;
+                    rect.h = tH;
+                }
+                
                 SDL_RenderCopy(*renderer, texture, NULL, &rect);
             }
             else

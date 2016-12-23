@@ -11,6 +11,7 @@
 #define UI_LABEL        0x010002
 #define UI_BUTTON       0x010004
 #define UI_LIST         0x010008
+#define UI_OVERLAY      0x01000F
 //End define numbers for components
 
 namespace Ui

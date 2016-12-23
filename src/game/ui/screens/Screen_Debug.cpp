@@ -16,9 +16,11 @@ Ui::Screen_Debug::Screen_Debug()
     AddComponent(topBox);
     
     Ui::Button* resListButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "List resources", 24, GetResource("fonts/freemono.ttf"), &ButtonResources, &ButtonHovering, &ButtonNotHovering);
+    resListButton->Enable();
     AddComponent(resListButton);
     
     Ui::Button* exitButton = new Ui::Button(0, 456, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Exit", 24, GetResource("fonts/freemono.ttf"), &ButtonExit, &ButtonHovering, &ButtonNotHovering);
+    exitButton->Enable();
     AddComponent(exitButton);
 }
 

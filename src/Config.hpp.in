@@ -20,6 +20,9 @@ extern Ui::Screen* screen;      //Current shown screen
 //Macros
 #define STR_H(x) #x     //Required for some reason
 #define STR(x) STR_H(x)
+
+#define WINDOW_W() configFile->GetIntValue("GraphicsWindowSizeW")
+#define WINDOW_H() configFile->GetIntValue("GraphicsWindowSizeH")
 //End macros
 
 

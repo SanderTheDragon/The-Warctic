@@ -18,6 +18,9 @@ namespace Ui
         static int ButtonHovering(Ui::Button* button);
         static int ButtonNotHovering(Ui::Button* button);
         
+        static int PreviewResource(Ui::Button* button, int mouseButton, int type);
+        static int ClosePreview(Ui::Button* button, int mouseButton, int type);
+        
         virtual ~Screen_ResourceList();
     };
 };
