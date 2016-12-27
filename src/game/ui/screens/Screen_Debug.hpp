@@ -15,8 +15,6 @@ namespace Ui
         
         static int ButtonResources(Ui::Button* button, int mouseButton, int type);
         static int ButtonExit(Ui::Button* button, int mouseButton, int type);
-        static int ButtonHovering(Ui::Button* button);
-        static int ButtonNotHovering(Ui::Button* button);
         
         virtual ~Screen_Debug();
     };

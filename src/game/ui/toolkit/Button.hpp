@@ -7,8 +7,6 @@
 
 namespace Ui
 {
-    class Screen;
-    
     class Button : public Ui::Label
     {
     protected:
@@ -18,9 +16,9 @@ namespace Ui
         bool enabled;
         
     public:
-        Button(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int)) : Label(x_, y_, w_, h_, bg, fg, msg, size, font_), callback(callbackFunction) { }
+        Button(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int)) : Label(x_, y_, w_, h_, bg, fg, msg, size, font_), callback(callbackFunction), hovering(DefaultHovering), notHovering(DefaultNotHovering) { }
         Button(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int), int (* hoveringFunction)(Ui::Button*), int (* notHoveringFunction)(Ui::Button*)) : Label(x_, y_, w_, h_, bg, fg, msg, size, font_), callback(callbackFunction), hovering(hoveringFunction), notHovering(notHoveringFunction) { }
-        Button(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int)) : Label(x_, y_, w_, h_, bg, bSize, bColor, fg, msg, size, font_), callback(callbackFunction) { }
+        Button(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int)) : Label(x_, y_, w_, h_, bg, bSize, bColor, fg, msg, size, font_), callback(callbackFunction), hovering(DefaultHovering), notHovering(DefaultNotHovering) { }
         Button(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, Ui::Color fg, std::string msg, uint size, Resource* font_, int (* callbackFunction)(Ui::Button*, int, int), int (* hoveringFunction)(Ui::Button*), int (* notHoveringFunction)(Ui::Button*)) : Label(x_, y_, w_, h_, bg, bSize, bColor, fg, msg, size, font_), callback(callbackFunction), hovering(hoveringFunction), notHovering(notHoveringFunction) { }
         
         int Draw(SDL_Renderer** renderer)
@@ -50,6 +48,34 @@ namespace Ui
         void Disable() { enabled = false; }
         
         virtual ~Button() { }
+ 
+ 
+ 
+        static int DefaultHovering(Ui::Button* button)
+        {
+            button->GetBackgroundPointer()->SetRed(255);
+            button->GetBackgroundPointer()->SetBlue(255);
+            button->GetBackgroundPointer()->SetGreen(255);
+            
+            button->GetForegroundPointer()->SetRed(0);
+            button->GetForegroundPointer()->SetBlue(0);
+            button->GetForegroundPointer()->SetGreen(0);
+            
+            return ERR_OK;
+        }
+        
+        static int DefaultNotHovering(Ui::Button* button)
+        {
+            button->GetBackgroundPointer()->SetRed(0);
+            button->GetBackgroundPointer()->SetBlue(0);
+            button->GetBackgroundPointer()->SetGreen(0);
+            
+            button->GetForegroundPointer()->SetRed(255);
+            button->GetForegroundPointer()->SetBlue(255);
+            button->GetForegroundPointer()->SetGreen(255);
+            
+            return ERR_OK;
+        }
     };
 };
 

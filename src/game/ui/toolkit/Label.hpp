@@ -22,8 +22,8 @@ namespace Ui
         Ui::Color foreground;
         
     public:
-        Label(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_) : Box(x_, y_, w_, h_, bg), foreground(fg), text(msg), textSize(size), res(font_) { }
-        Label(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, Ui::Color fg, std::string msg, uint size, Resource* font_) : Box(x_, y_, w_, h_, bg, bSize, bColor), foreground(fg), text(msg), textSize(size), res(font_) { }
+        Label(int x_, int y_, int w_, int h_, Ui::Color bg, Ui::Color fg, std::string msg, uint size, Resource* font_) : Box(x_, y_, w_, h_, bg), foreground(fg), text(msg), textSize(size), res(font_), fontFix(false) { }
+        Label(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, Ui::Color fg, std::string msg, uint size, Resource* font_) : Box(x_, y_, w_, h_, bg, bSize, bColor), foreground(fg), text(msg), textSize(size), res(font_), fontFix(false) { }
         
         int Draw(SDL_Renderer** renderer)
         {

@@ -24,36 +24,65 @@ namespace Ui
         void Draw(SDL_Renderer** renderer);
         void Update(int mouseX, int mouseY);
         
+        virtual ~Screen();
+        
+        
+        
+        //Component related stuff
         void AddComponent(Ui::Component* component) { components.push_back(component); }
-        void RemoveLastComponent() { components.pop_back(); components.pop_back(); } //TODO: Not this
+        
         std::vector<Ui::Component*> GetComponents() { return components; }
+        std::vector<Ui::Component*>* GetComponentsPointer() { return &components; }
+        
         void ClearComponents() { for(uint i = 0; i < components.size(); i++) { delete components.at(i); } components.clear(); components.shrink_to_fit(); }
         
         //I don't know how safe this is
         template<class T>
-        T* FindComponent()
+        T* FindComponent(uint target = 0)
         {
+            uint index = 0;
+            
             for (uint i = 0; i < components.size(); i++)
             {
                 if (components.at(i)->Type_() == T::Type())
-                    return dynamic_cast<T*>(components.at(i));
+                {
+                    if (index < target)
+                        index++;
+                    else
+                        return dynamic_cast<T*>(components.at(i));
+                }
             }
             
             return NULL;
         }
         
-        Ui::Button* GetButtonAt(int x, int y);
+        template<class T>
+        T* GetComponentAt(int x, int y, bool backwards = false)
+        {
+            if (T* c = dynamic_cast<T*>(GetAnyComponentAt(x, y, backwards, T::Type())))
+                return c;
+            
+            return NULL;
+        }
         
+        Ui::Component* GetAnyComponentAt(int x, int y, bool backwards = false, uint type = UI_UNDEFINED);
+        
+        
+        
+        //Resource related stuff
         virtual void LoadResources() = 0;
         
         std::pair<std::string, Resource*> LoadResource(std::string archive, std::string path);
         
         void AddResource(std::string archive, std::string path) { resources.insert(LoadResource(archive, path)); }
         void AddResource(std::pair<std::string, Resource*> resource) { resources.insert(resource); }
-        Resource* GetResource(std::string path) { return resources[path]; }
-        void ClearResources();
         
-        virtual ~Screen();
+        std::map<std::string, Resource*> GetResources() { return resources; }
+        std::map<std::string, Resource*>* GetResourcesPointer() { return &resources; }
+        
+        Resource* GetResource(std::string path) { return resources[path]; }
+        
+        void ClearResources();
     };
 };
 

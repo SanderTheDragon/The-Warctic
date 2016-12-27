@@ -15,8 +15,6 @@ namespace Ui
         
         static int ButtonOther(Ui::Button* button, int mouseButton, int type);
         static int ButtonBack(Ui::Button* button, int mouseButton, int type);
-        static int ButtonHovering(Ui::Button* button);
-        static int ButtonNotHovering(Ui::Button* button);
         
         static int PreviewResource(Ui::Button* button, int mouseButton, int type);
         static int ClosePreview(Ui::Button* button, int mouseButton, int type);

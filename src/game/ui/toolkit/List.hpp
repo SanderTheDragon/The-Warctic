@@ -1,18 +1,19 @@
 #ifndef UI_LIST_HPP_
 #define UI_LIST_HPP_
 
-#include "game/ui/toolkit/Box.hpp"
+#include "game/ui/toolkit/Component.hpp"
 #include "game/ui/toolkit/Color.hpp"
+#include "game/ui/toolkit/Box.hpp"
 
 namespace Ui
 {
     class List : public Ui::Box
     {
     protected:
-        std::vector<Ui::Box*> components;
+        std::vector<Ui::Component*>* components;
         
     public:
-        List(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor) : Box(x_, y_, w_, h_, bg, bSize, bColor) { }
+        List(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, std::vector<Ui::Component*>* components_) : Box(x_, y_, w_, h_, bg, bSize, bColor), components(components_) { }
         
         int Draw(SDL_Renderer** renderer)
         {
@@ -20,13 +21,18 @@ namespace Ui
             
             int lY = 0;
             
-            for (uint i = 0; i < components.size(); i++)
+            for (uint i = 0; i < (*components).size(); i++)
             {
-                components.at(i)->SetY(lY + GetY());
-                
-                components.at(i)->Draw(renderer);
-                
-                lY += components.at(i)->GetH() + 2 * components.at(i)->GetBorderSize();
+                if ((*components).at(i)->GetParent() == this)
+                {
+                    Ui::Box* box = dynamic_cast<Ui::Box*>((*components).at(i));
+                    
+                    box->SetY(lY + GetY());
+                    
+                    box->Draw(renderer);
+                    
+                    lY += box->GetH() + box->GetBorderSize();
+                }
             }
             
             return ERR_OK;
@@ -35,11 +41,7 @@ namespace Ui
         static uint Type() { return UI_LIST; }
         uint Type_() { Ui::List::Type(); }
         
-        void AddComponent(Ui::Box* component) { components.push_back(component); }
-        std::vector<Ui::Box*> GetComponents() { return components; }
-        void ClearComponents() { for(uint i = 0; i < components.size(); i++) { delete components.at(i); } components.clear(); components.shrink_to_fit(); }
-        
-        virtual ~List() { ClearComponents(); }
+        virtual ~List() { }
     };
 };
 

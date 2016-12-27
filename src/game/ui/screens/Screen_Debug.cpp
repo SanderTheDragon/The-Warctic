@@ -15,11 +15,11 @@ Ui::Screen_Debug::Screen_Debug()
     Ui::Label* topBox = new Ui::Label(0, 0, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The Warctic - Debug Mode", 24, GetResource("fonts/freemono.ttf"));
     AddComponent(topBox);
     
-    Ui::Button* resListButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "List resources", 24, GetResource("fonts/freemono.ttf"), &ButtonResources, &ButtonHovering, &ButtonNotHovering);
+    Ui::Button* resListButton = new Ui::Button(0, 32, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "List resources", 24, GetResource("fonts/freemono.ttf"), &ButtonResources);
     resListButton->Enable();
     AddComponent(resListButton);
     
-    Ui::Button* exitButton = new Ui::Button(0, 456, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Exit", 24, GetResource("fonts/freemono.ttf"), &ButtonExit, &ButtonHovering, &ButtonNotHovering);
+    Ui::Button* exitButton = new Ui::Button(0, 456, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Exit", 24, GetResource("fonts/freemono.ttf"), &ButtonExit);
     exitButton->Enable();
     AddComponent(exitButton);
 }
@@ -48,32 +48,6 @@ int Ui::Screen_Debug::ButtonExit(Ui::Button* button, int mouseButton, int type)
     {
         running = false;
     }
-    
-    return ERR_OK;
-}
-
-int Ui::Screen_Debug::ButtonHovering(Ui::Button* button)
-{
-    button->GetBackgroundPointer()->SetRed(255);
-    button->GetBackgroundPointer()->SetBlue(255);
-    button->GetBackgroundPointer()->SetGreen(255);
-    
-    button->GetForegroundPointer()->SetRed(0);
-    button->GetForegroundPointer()->SetBlue(0);
-    button->GetForegroundPointer()->SetGreen(0);
-    
-    return ERR_OK;
-}
-
-int Ui::Screen_Debug::ButtonNotHovering(Ui::Button* button)
-{
-    button->GetBackgroundPointer()->SetRed(0);
-    button->GetBackgroundPointer()->SetBlue(0);
-    button->GetBackgroundPointer()->SetGreen(0);
-    
-    button->GetForegroundPointer()->SetRed(255);
-    button->GetForegroundPointer()->SetBlue(255);
-    button->GetForegroundPointer()->SetGreen(255);
     
     return ERR_OK;
 }
