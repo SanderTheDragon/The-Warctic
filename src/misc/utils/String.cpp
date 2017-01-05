@@ -65,6 +65,13 @@ std::string Utils::String::FileToPath(std::string file)
 std::vector<std::string> Utils::String::Split(std::string string, char delim)
 {
     std::vector<std::string> tokens;
+    
+    if (string.find(delim) == std::string::npos)
+    {
+        tokens.push_back(string);
+        return tokens;
+    }
+    
     std::string item;
     std::stringstream ss(string);
     

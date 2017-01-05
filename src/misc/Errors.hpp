@@ -11,7 +11,7 @@
 #define ERR_ENGINE_SDL_INIT             0x000102    //Engine failed to initialize: cause SDL_Init
 #define ERR_ENGINE_SDL_MIXER_INIT       0x000104    //Engine failed to initialize: cause Mix_OpenAudio
 #define ERR_ENGINE_GRAPHICS_INIT        0x000108    //Engine failed to initialize: cause graphics->Initialize
-#define ERR_ENGINE_EVENT_INIT           0x00010F    //Engine failed to initialize: cause event->Initialize
+#define ERR_ENGINE_EVENT_INIT           0x000110    //Engine failed to initialize: cause event->Initialize
 #define ERR_ENGINE_SDL_TTF_INIT         0x000120    //Engine failed to initialize: cause Ttf_Init
 #define ERR_ENGINE_IO_CONFIG_READ       0x000140    //Engine failed to initialize: cause configFile->Read
 
@@ -27,6 +27,11 @@
 #define ERR_IO_UNKNOWN                  0x000800    //Should never be returned
 #define ERR_IO_CONFIG_KEYNOTFOUND       0x000801    //Config could not find key: cause GetConfig
 #define ERR_IO_CONFIG_OPEN              0x000802    //Config file failed to open
+#define ERR_IO_RESOURCE_ARCHIVEOPEN     0x000804    //Failed to open resource archive
+#define ERR_IO_RESOURCE_FILENOTFOUND    0x000808    //Could not find file in resource (808 = 2* 404)
+#define ERR_IO_RESOURCE_FILEINFO        0x000810    //Failed to get resource file info
+#define ERR_IO_RESOURCE_FILEOPEN        0x000820    //Failed to open resource file
+#define ERR_IO_RESOURCE_FILEREAD        0x000840    //Failed to read resource file
 
 extern std::string GetErrorMessage(uint err);
 

@@ -22,12 +22,17 @@ void Ui::Screen::Update(int mouseX, int mouseY)
 {
     for (uint i = 0; i < components.size(); i++)
     {
-        if (Ui::Button* b = dynamic_cast<Ui::Button*>(components.at(i)))
+        switch (components.at(i)->Type_())
         {
-            if (mouseX >= b->GetX() && mouseX <= b->GetX() + b->GetW() && mouseY >= b->GetY() && mouseY <= b->GetY() + b->GetH() && b->GetEnabled())
-                b->GetHovering()(b);
-            else
-                b->GetNotHovering()(b);
+        case UI_BUTTON:
+            if (Ui::Button* b = dynamic_cast<Ui::Button*>(components.at(i)))
+            {
+                if (mouseX >= b->GetX() && mouseX <= b->GetX() + b->GetW() && mouseY >= b->GetY() && mouseY <= b->GetY() + b->GetH() && b->GetEnabled())
+                    b->GetHovering()(b);
+                else
+                    b->GetNotHovering()(b);
+            }
+            break;
         }
     }
 }
@@ -64,14 +69,32 @@ Ui::Component* Ui::Screen::GetAnyComponentAt(int x, int y, bool backwards, uint 
     return NULL;
 }
 
-std::pair<std::string, Resource*> Ui::Screen::LoadResource(std::string archive, std::string path)
+int Ui::Screen::LoadResource(std::string archive, std::string path, std::pair<std::string, Resource*>* resourcePair)
 {
     Log(LOG_DEBUG) << "Loading \'" << path << "\' from \'" << archive << "\'" << NEWLINE;
     
     Resource* resource = new Resource();
-    resource->Load(archive, Utils::String::PathToFile(path));
     
-    return std::pair<std::string, Resource*>(path, resource);
+    int error = resource->Load(archive, Utils::String::PathToFile(path));
+    
+    if (error != ERR_OK)
+        return error;
+    
+    *resourcePair = std::pair<std::string, Resource*>(path, resource);
+    
+    return ERR_OK;
+}
+
+void Ui::Screen::PrintResources()
+{
+    int i = 0;
+    
+    for (std::map<std::string, Resource*>::iterator it = resources.begin(); it != resources.end(); it++)
+    {
+        Log(LOG_DEBUG) << i << ": " << it->first << " = " << it->second << NEWLINE;
+        
+        i++;
+    }
 }
 
 void Ui::Screen::ClearResources()

@@ -12,8 +12,7 @@ namespace Ui
         std::vector<Ui::Component*>* components;
         
     public:
-        Overlay(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, 
-        std::vector<Ui::Component*>* components_) : Box(x_, y_, w_, h_, bg, bSize, bColor), components(components_) { }
+        Overlay(int x_, int y_, int w_, int h_, Ui::Color bg, int bSize, Ui::Color bColor, std::vector<Ui::Component*>* components_) : Box(x_, y_, w_, h_, bg, bSize, bColor), components(components_) { }
         
         int Draw(SDL_Renderer** renderer)
         {

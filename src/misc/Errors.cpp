@@ -11,6 +11,7 @@ std::string GetErrorMessage(uint error)
 {
     switch (error)
     {
+    case ERR_OK: //If there is no error, something still failed
     case ERR_UNKNOWN:
         return "Unknown error";
         break;
@@ -35,6 +36,7 @@ std::string GetErrorMessage(uint error)
         break;
     case ERR_ENGINE_SDL_TTF_INIT:
         return Utils::String::Combine(2, "Engine failed to initialize, caused by Ttf_Init(): ", TTF_GetError());
+        break;
     case ERR_ENGINE_IO_CONFIG_READ:
         return "Engine failed to initialize, caused by configFile->Read()";
         break;
@@ -71,6 +73,21 @@ std::string GetErrorMessage(uint error)
         break;
     case ERR_IO_CONFIG_OPEN:
         return "Failed to open configuration file";
+        break;
+    case ERR_IO_RESOURCE_ARCHIVEOPEN:
+        return "Failed to open resource archive";
+        break;
+    case ERR_IO_RESOURCE_FILENOTFOUND:
+        return "File was not found in resource archive";
+        break;
+    case ERR_IO_RESOURCE_FILEINFO:
+        return "Failed to get file info from resource archive";
+        break;
+    case ERR_IO_RESOURCE_FILEOPEN:
+        return "Failed to open file in resource archive";
+        break;
+    case ERR_IO_RESOURCE_FILEREAD:
+        return "Failed to read file from resource archive";
         break;
         
     default:

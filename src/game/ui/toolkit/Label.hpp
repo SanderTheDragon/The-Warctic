@@ -27,35 +27,21 @@ namespace Ui
         
         int Draw(SDL_Renderer** renderer)
         {
-            TTF_Font* font = TTF_OpenFontRW(*res->Get(), 0, textSize);
+            int tW, tH;
+            
+            Resolve(&tW, &tH);
+            
+            TTF_Font* font = TTF_OpenFontRW(*(res->Get()), 0, textSize);
             SDL_Color color = { (Uint8)foreground.GetRed(), (Uint8)foreground.GetGreen(), (Uint8)foreground.GetBlue(), (Uint8)foreground.GetAlpha() };
-            SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
+            SDL_Surface* surface = TTF_RenderText_Blended(font, text.c_str(), color);
             SDL_Texture* texture = SDL_CreateTextureFromSurface(*renderer, surface);
             
             SDL_Rect rect;
             
             rect.x = x;
             rect.y = y;
-            
-            int tW, tH;
-            
-            TTF_SizeText(font, text.c_str(), &tW, &tH);
-            
-            if (w < 0)
-            {
-                rect.w = tW;
-                SetW(tW);
-            }
-            else
-                rect.w = w;
-            
-            if (h < 0)
-            {
-                rect.h = tH;
-                SetH(tH);
-            }
-            else
-                rect.h = h;
+            rect.w = w;
+            rect.h = h;
             
             if (borderSize <= 0)
             {
@@ -103,6 +89,29 @@ namespace Ui
             TTF_CloseFont(font);
             SDL_FreeSurface(surface);
             SDL_DestroyTexture(texture);
+            
+            return ERR_OK;
+        }
+        
+        int Resolve() { int i; return Resolve(&i, &i); }
+        int Resolve(int* tW, int* tH)
+        {
+            TTF_Font* font = TTF_OpenFontRW(*(res->Get()), 0, textSize);
+            
+            int itW, itH;
+            
+            TTF_SizeText(font, text.c_str(), &itW, &itH);
+            
+            if (w < 0)
+                SetW(itW);
+
+            if (h < 0)
+                SetH(itH);
+            
+            *tW = itW;
+            *tH = itH;
+            
+            TTF_CloseFont(font);
             
             return ERR_OK;
         }

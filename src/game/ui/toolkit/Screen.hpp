@@ -72,16 +72,26 @@ namespace Ui
         //Resource related stuff
         virtual void LoadResources() = 0;
         
-        std::pair<std::string, Resource*> LoadResource(std::string archive, std::string path);
+        int LoadResource(std::string archive, std::string path, std::pair<std::string, Resource*>* resourcePair);
         
-        void AddResource(std::string archive, std::string path) { resources.insert(LoadResource(archive, path)); }
-        void AddResource(std::pair<std::string, Resource*> resource) { resources.insert(resource); }
+        int AddResource(std::string archive, std::string path)
+        {
+            std::pair<std::string, Resource*> resource;
+            int error = LoadResource(archive, path, &resource);
+            
+            if (error != ERR_OK)
+                return error;
+            
+            return AddResource(resource);
+        }
+        int AddResource(std::pair<std::string, Resource*> resource) { resources.insert(resource); return ERR_OK; }
         
         std::map<std::string, Resource*> GetResources() { return resources; }
         std::map<std::string, Resource*>* GetResourcesPointer() { return &resources; }
         
         Resource* GetResource(std::string path) { return resources[path]; }
         
+        void PrintResources();
         void ClearResources();
     };
 };

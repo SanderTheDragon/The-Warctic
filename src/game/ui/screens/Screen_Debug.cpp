@@ -26,7 +26,17 @@ Ui::Screen_Debug::Screen_Debug()
 
 void Ui::Screen_Debug::LoadResources()
 {
-    AddResource(RESOURCE_OTHER, "fonts/freemono.ttf");
+    int error = ERR_OK;
+    
+    error |= AddResource(RESOURCE_OTHER, "fonts/freemono.ttf");
+    
+    if (error != ERR_OK)
+    {
+        if (error &= ERR_IO_RESOURCE_FILENOTFOUND)
+            Log(LOG_ERROR) << GetErrorMessage(ERR_IO_RESOURCE_FILENOTFOUND) << NEWLINE;
+        
+        ::running = false;
+    }
 }
 
 int Ui::Screen_Debug::ButtonResources(Ui::Button* button, int mouseButton, int type)

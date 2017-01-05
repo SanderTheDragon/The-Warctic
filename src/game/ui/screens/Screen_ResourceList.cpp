@@ -8,6 +8,7 @@
 #include "game/ui/toolkit/Button.hpp"
 #include "game/ui/toolkit/List.hpp"
 #include "game/ui/toolkit/Overlay.hpp"
+#include "game/ui/toolkit/ErrorBox.hpp"
 #include "game/ui/screens/Screen_Debug.hpp"
 #include "misc/utils/String.hpp"
 #include "misc/utils/File.hpp"
@@ -34,7 +35,16 @@ Ui::Screen_ResourceList::Screen_ResourceList()
 
 void Ui::Screen_ResourceList::LoadResources()
 {
-    AddResource(RESOURCE_OTHER, "fonts/freemono.ttf");
+    int error = ERR_OK;
+    
+    error |= AddResource(RESOURCE_OTHER, "fonts/freemono.ttf");
+    error |= AddResource(RESOURCE_OTHER, "fonts/freemono-bold.ttf");
+    
+    if (error != ERR_OK)
+    {
+        if (error &= ERR_IO_RESOURCE_FILENOTFOUND)
+            Log(LOG_ERROR) << GetErrorMessage(ERR_IO_RESOURCE_FILENOTFOUND) << NEWLINE;
+    }
 }
 
 int Ui::Screen_ResourceList::ButtonOther(Ui::Button* button, int mouseButton, int type)
@@ -98,6 +108,24 @@ int Ui::Screen_ResourceList::PreviewResource(Ui::Button* button, int mouseButton
         std::string path = file.substr(archive.length() + 1, file.length());
         std::string ext = path.substr(path.find(".") + 1, file.length());
         
+        int error = ERR_OK;
+        
+        if (!scr->GetResource(path))
+            error = scr->AddResource(Utils::String::Combine(2, DIR_RESOURCE, archive.c_str()), path);
+        
+        Resource* res = scr->GetResource(path);
+        
+        if (error != ERR_OK || !res)
+        {
+            Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
+            
+            Ui::ErrorBox* errorBox = new Ui::ErrorBox(Utils::String::Combine(4, "Could not load file: \n", path.c_str(), "\n\n", GetErrorMessage(error).c_str()), scr->GetComponentsPointer());
+            
+            scr->AddComponent(errorBox);
+            
+            return ERR_IO_UNKNOWN;
+        }
+        
         Log(LOG_DEBUG) << "Preview for \'" << path << "\' in \'" << archive << "\'" << NEWLINE;
         
         Ui::Overlay* overlay = new Overlay(8, 8, WINDOW_W() - 8, WINDOW_H() - 8, Ui::Color(0, 0, 0, 255), 2, Ui::Color(255, 255, 255, 255), scr->GetComponentsPointer());
@@ -105,35 +133,35 @@ int Ui::Screen_ResourceList::PreviewResource(Ui::Button* button, int mouseButton
         
         if (ext == "ttf")
         {
-            Ui::Label* str1 = new Ui::Label(10, 10, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 24, scr->GetResource(path));
+            Ui::Label* str1 = new Ui::Label(10, 10, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 24, res);
             str1->SetParent(overlay);
             scr->AddComponent(str1);
-            Ui::Label* str2 = new Ui::Label(10, 36, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 22, scr->GetResource(path));
+            Ui::Label* str2 = new Ui::Label(10, 36, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 22, res);
             str2->SetParent(overlay);
             scr->AddComponent(str2);
-            Ui::Label* str3 = new Ui::Label(10, 60, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 20, scr->GetResource(path));
+            Ui::Label* str3 = new Ui::Label(10, 60, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 20, res);
             str3->SetParent(overlay);
             scr->AddComponent(str3);
-            Ui::Label* str4 = new Ui::Label(10, 82, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 18, scr->GetResource(path));
+            Ui::Label* str4 = new Ui::Label(10, 82, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 18, res);
             str4->SetParent(overlay);
             scr->AddComponent(str4);
-            Ui::Label* str5 = new Ui::Label(10, 102, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 16, scr->GetResource(path));
+            Ui::Label* str5 = new Ui::Label(10, 102, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 16, res);
             str5->SetParent(overlay);
             scr->AddComponent(str5);
-            Ui::Label* str6 = new Ui::Label(10, 120, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 14, scr->GetResource(path));
+            Ui::Label* str6 = new Ui::Label(10, 120, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "The quick brown fox jumps over the lazy dog", 14, res);
             str6->SetParent(overlay);
             scr->AddComponent(str6);
             
-            Ui::Label* prev1 = new Ui::Label(10, 166, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "ABCDEFGHIJKLMNOPQRTSUVWXYZ", 24, scr->GetResource(path));
+            Ui::Label* prev1 = new Ui::Label(10, 166, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "ABCDEFGHIJKLMNOPQRTSUVWXYZ", 24, res);
             prev1->SetParent(overlay);
             scr->AddComponent(prev1);
-            Ui::Label* prev2 = new Ui::Label(10, 192, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "abcdefghijklmnopqrstuvwxyz", 24, scr->GetResource(path));
+            Ui::Label* prev2 = new Ui::Label(10, 192, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "abcdefghijklmnopqrstuvwxyz", 24, res);
             prev2->SetParent(overlay);
             scr->AddComponent(prev2);
-            Ui::Label* prev3 = new Ui::Label(10, 218, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "1234567890", 24, scr->GetResource(path));
+            Ui::Label* prev3 = new Ui::Label(10, 218, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "1234567890", 24, res);
             prev3->SetParent(overlay);
             scr->AddComponent(prev3);
-            Ui::Label* prev4 = new Ui::Label(10, 244, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "!@#$%^&*()-_=+[]{}\\:;\"\',.<>?/~`", 24, scr->GetResource(path));
+            Ui::Label* prev4 = new Ui::Label(10, 244, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "!@#$%^&*()-_=+[]{}\\:;\"\',.<>?/~`", 24, res);
             prev4->SetParent(overlay);
             scr->AddComponent(prev4);
         }
@@ -144,7 +172,11 @@ int Ui::Screen_ResourceList::PreviewResource(Ui::Button* button, int mouseButton
         scr->AddComponent(close);
         
         scr->AddComponent(overlay);
+        
+        if (!scr->GetResource(path))
+            delete res;
     }
+    
     
     return ERR_OK;
 }
