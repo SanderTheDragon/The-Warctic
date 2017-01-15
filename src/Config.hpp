@@ -1,8 +1,8 @@
 #ifndef CONFIG_HPP_
 #define CONFIG_HPP_
 
-#include "game/io/ConfigFile.hpp"
-#include "game/ui/toolkit/Screen.hpp"
+#include "io/ConfigFile.hpp"
+#include "ui/toolkit/Screen.hpp"
 
 
 
@@ -12,6 +12,7 @@ extern bool colors;             //Terminal colors
 extern bool running;            //Should stop running if false
 extern bool suppressed;         //Suppress event output
 extern bool mouseSuppressed;    //Only suppress mouse motion event output
+extern bool logAll;             //Print everything to file
 extern ConfigFile* configFile;  //Configuration read/write
 extern Ui::Screen* screen;      //Current shown screen
 
@@ -21,8 +22,8 @@ extern Ui::Screen* screen;      //Current shown screen
 #define STR_H(x) #x     //Required for some reason
 #define STR(x) STR_H(x)
 
-#define WINDOW_W() configFile->GetIntValue("GraphicsWindowSizeW")
-#define WINDOW_H() configFile->GetIntValue("GraphicsWindowSizeH")
+#define WINDOW_W() configFile->GetIntValue("iGraphicsWindowSizeW")
+#define WINDOW_H() configFile->GetIntValue("iGraphicsWindowSizeH")
 //End macros
 
 
@@ -65,7 +66,7 @@ extern Ui::Screen* screen;      //Current shown screen
 #define NEWLINE "\n"
 #define DIR_SEP "/"
 #endif
-//End Windows being special
+//End Windows being special, also end of platform specific stuff
 
 
 

@@ -19,19 +19,23 @@
 #define ERR_GRAPHICS_INIT               0x000201    //Graphics engine failed to initialize: cause undefined
 #define ERR_GRAPHICS_WINDOW_INIT        0x000202    //Graphics engine failed to initialize: cause window->Initialize
 #define ERR_GRAPHICS_RENDERER_CREATE    0x000204    //Graphics engine failed to initialize: cause SDL_CreateRenderer
+#define ERR_GRAPHICS_SCREEN_INIT        0x000208    //Graphics engine failed to initialize: cause screen->initialize
 
-#define ERR_WINDOW_UNKNOWN              0x000400    //Should never be returned
-#define ERR_WINDOW_INIT                 0x000401    //Window failed to initialize: cause undefined
-#define ERR_WINDOW_SDL_CREATE           0x000402    //Window failed to initialize: cause SDL_CreateWindow
+#define ERR_RESOURCE_UNKNOWN            0x000400    //Should never be returned
+#define ERR_RESOURCE_ARCHIVEOPEN        0x000401    //Failed to open resource archive
+#define ERR_RESOURCE_FILEINFO           0x000402    //Failed to get resource file info
+#define ERR_RESOURCE_FILENOTFOUND       0x000404    //Failed to find file in resource
+#define ERR_RESOURCE_FILEOPEN           0x000408    //Failed to open resource file
+#define ERR_RESOURCE_FILEREAD           0x000410    //Failed to read resource file
+#define ERR_RESOURCE_LOAD               0x000420    //Failed to load resources
 
-#define ERR_IO_UNKNOWN                  0x000800    //Should never be returned
-#define ERR_IO_CONFIG_KEYNOTFOUND       0x000801    //Config could not find key: cause GetConfig
-#define ERR_IO_CONFIG_OPEN              0x000802    //Config file failed to open
-#define ERR_IO_RESOURCE_ARCHIVEOPEN     0x000804    //Failed to open resource archive
-#define ERR_IO_RESOURCE_FILENOTFOUND    0x000808    //Could not find file in resource (808 = 2* 404)
-#define ERR_IO_RESOURCE_FILEINFO        0x000810    //Failed to get resource file info
-#define ERR_IO_RESOURCE_FILEOPEN        0x000820    //Failed to open resource file
-#define ERR_IO_RESOURCE_FILEREAD        0x000840    //Failed to read resource file
+#define ERR_WINDOW_UNKNOWN              0x000800    //Should never be returned
+#define ERR_WINDOW_INIT                 0x000801    //Window failed to initialize: cause undefined
+#define ERR_WINDOW_SDL_CREATE           0x000802    //Window failed to initialize: cause SDL_CreateWindow
+
+#define ERR_FILE_UNKNOWN                0x001000    //Should never be returned
+#define ERR_FILE_CONFIG_KEYNOTFOUND     0x001001    //Config failed to find key
+#define ERR_FILE_CONFIG_OPEN            0x001002    //Config failed to open file
 
 extern std::string GetErrorMessage(uint err);
 

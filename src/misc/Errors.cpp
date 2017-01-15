@@ -53,6 +53,9 @@ std::string GetErrorMessage(uint error)
     case ERR_GRAPHICS_RENDERER_CREATE:
         return Utils::String::Combine(2, "Graphics engine failed to initialize: caused by SDL_CreateRenderer(): ", SDL_GetError());
         break;
+    case ERR_GRAPHICS_SCREEN_INIT:
+        return "Graphics engine failed to initialize screen: caused by screen->Initialize()";
+        break;
         
         
     case ERR_WINDOW_UNKNOWN:
@@ -65,29 +68,36 @@ std::string GetErrorMessage(uint error)
         return Utils::String::Combine(2, "Window failed to initialize, caused by SDL_CreateWindow(): ", SDL_GetError());
         break;
     
-    case ERR_IO_UNKNOWN:
-        return "Unknown IO error";
+    case ERR_FILE_UNKNOWN:
+        return "Unknown file error";
         break;
-    case ERR_IO_CONFIG_KEYNOTFOUND:
-        return "Could not find key: ";
+    case ERR_FILE_CONFIG_KEYNOTFOUND:
+        return "Failed to find key: ";
         break;
-    case ERR_IO_CONFIG_OPEN:
+    case ERR_FILE_CONFIG_OPEN:
         return "Failed to open configuration file";
         break;
-    case ERR_IO_RESOURCE_ARCHIVEOPEN:
+        
+    case ERR_RESOURCE_UNKNOWN:
+        return "Unknown resource error";
+        break;
+    case ERR_RESOURCE_ARCHIVEOPEN:
         return "Failed to open resource archive";
         break;
-    case ERR_IO_RESOURCE_FILENOTFOUND:
-        return "File was not found in resource archive";
+    case ERR_RESOURCE_FILENOTFOUND:
+        return "Failed to find file in resource archive";
         break;
-    case ERR_IO_RESOURCE_FILEINFO:
+    case ERR_RESOURCE_FILEINFO:
         return "Failed to get file info from resource archive";
         break;
-    case ERR_IO_RESOURCE_FILEOPEN:
+    case ERR_RESOURCE_FILEOPEN:
         return "Failed to open file in resource archive";
         break;
-    case ERR_IO_RESOURCE_FILEREAD:
+    case ERR_RESOURCE_FILEREAD:
         return "Failed to read file from resource archive";
+        break;
+    case ERR_RESOURCE_LOAD:
+        return "Failed to load important resources";
         break;
         
     default:

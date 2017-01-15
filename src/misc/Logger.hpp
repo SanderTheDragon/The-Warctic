@@ -114,7 +114,7 @@ public:
             std::cout << in;
             std::cout.flush();
             
-            if (writeToFile && file.is_open()) //Also write to file if file is opened
+            if ((writeToFile || ::logAll) && file.is_open()) //Also write to file if file is opened
             {
                 if (part == 0)
                     file << levelString;
