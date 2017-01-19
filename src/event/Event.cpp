@@ -113,7 +113,7 @@ int Event::HandleMouseup()
     if (!::suppressed)
         Log(LOG_DEBUG) << "\'" << ButtonName(e.button.button) << "\' was released at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
     
-    Ui::Button* button = screen->GetButtonAt(e.button.x, e.button.y, true);
+    Ui::Button* button = ::screen->GetButtonAt(e.button.x, e.button.y, true);
     
     if (button && button->GetEnabled())
         button->GetCallback()(button, e.button.button, SDL_MOUSEBUTTONUP);
@@ -126,7 +126,7 @@ int Event::HandleMousedown()
     if (!::suppressed)
         Log(LOG_DEBUG) << "\'" << ButtonName(e.button.button) << "\' was pressed " << Utils::String::ToString(e.button.clicks) << " times at (" << e.button.x << "," << e.button.y << ")" << NEWLINE;
     
-    Ui::Button* button = screen->GetButtonAt(e.button.x, e.button.y, true);
+    Ui::Button* button = ::screen->GetButtonAt(e.button.x, e.button.y, true);
     
     if (button && button->GetEnabled())
         button->GetCallback()(button, e.button.button, SDL_MOUSEBUTTONDOWN);

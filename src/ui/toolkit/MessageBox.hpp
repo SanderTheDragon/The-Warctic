@@ -28,7 +28,7 @@ namespace Ui
         
         int Component()
         {
-            (*screen->GetUiHandlerPointer())->DisableButtons();
+            (*::screen->GetUiHandlerPointer())->DisableButtons();
             
             XYToWH();
             
@@ -38,7 +38,7 @@ namespace Ui
             
             for (uint i = 0; i < lines.size(); i++)
             {
-                Ui::Label* label = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), lines.at(i), 14, screen->GetResource("fonts/freemono.ttf"));
+                Ui::Label* label = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), lines.at(i), 14, ::screen->GetResource("fonts/freemono.ttf"));
                 label->SetParent(this);
                 label->Resolve();
                 
@@ -63,14 +63,14 @@ namespace Ui
                         else
                             msg = lines.at(i).substr(last, tar);
                         
-                        Ui::Label* nLabel = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), msg, 14, screen->GetResource("fonts/freemono.ttf"));
+                        Ui::Label* nLabel = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), msg, 14, ::screen->GetResource("fonts/freemono.ttf"));
                         nLabel->SetParent(this);
                         nLabel->Resolve();
                         
                         if (center)
                             nLabel->SetX((w - nLabel->GetW()) / 2);
                         
-                        screen->AddComponent(nLabel);
+                        ::screen->AddComponent(nLabel);
                         
                         lY += 14 + 2;
                         last = tar;
@@ -81,13 +81,13 @@ namespace Ui
                     if (center)
                         label->SetX((w - label->GetW()) / 2);
                     
-                    screen->AddComponent(label);
+                    ::screen->AddComponent(label);
                     
                     lY += 14 + 2;
                 }
             }
             
-            Ui::Button* close = new Ui::Button(x + borderSize, y + h - borderSize - 25, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Close", 24, screen->GetResource("fonts/freemono.ttf"), &MsgClose);
+            Ui::Button* close = new Ui::Button(x + borderSize, y + h - borderSize - 25, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Close", 24, ::screen->GetResource("fonts/freemono.ttf"), &MsgClose);
             close->SetParent(this);
             close->Enable();
             screen->AddComponent(close);
@@ -106,28 +106,28 @@ namespace Ui
         {
             if (mouseButton == SDL_BUTTON_LEFT && type == SDL_MOUSEBUTTONUP)
             {
-                Ui::MessageBox* msg = screen->FindComponent<Ui::MessageBox>();
+                Ui::MessageBox* msg = ::screen->FindComponent<Ui::MessageBox>();
                 
-                for (uint i = (*screen->GetComponentsPointer()).size() - 1; i > 0; i--) //Needs to be done backwards
+                for (uint i = (*::screen->GetComponentsPointer()).size() - 1; i > 0; i--) //Needs to be done backwards
                 {
-                    if ((*screen->GetComponentsPointer()).at(i)->GetParent() == msg)
+                    if ((*::screen->GetComponentsPointer()).at(i)->GetParent() == msg)
                     {
-                        (*screen->GetComponentsPointer()).erase((*screen->GetComponentsPointer()).begin() + i);
+                        (*::screen->GetComponentsPointer()).erase((*::screen->GetComponentsPointer()).begin() + i);
                     }
                 }
                 
-                for (uint i = (*screen->GetButtonsPointer()).size() - 1; i > 0; i--) //Also needs to be done backwards
+                for (uint i = (*::screen->GetButtonsPointer()).size() - 1; i > 0; i--) //Also needs to be done backwards
                 {
-                    if ((*screen->GetButtonsPointer()).at(i)->GetParent() == msg)
+                    if ((*::screen->GetButtonsPointer()).at(i)->GetParent() == msg)
                     {
-                        delete (*screen->GetButtonsPointer()).at(i);
-                        (*screen->GetButtonsPointer()).erase((*screen->GetButtonsPointer()).begin() + i);
+                        delete (*::screen->GetButtonsPointer()).at(i);
+                        (*::screen->GetButtonsPointer()).erase((*::screen->GetButtonsPointer()).begin() + i);
                     }
                 }
                 
-                (*screen->GetComponentsPointer()).erase((*screen->GetComponentsPointer()).end() - 1);
+                (*::screen->GetComponentsPointer()).erase((*::screen->GetComponentsPointer()).end() - 1);
                 
-                (*screen->GetUiHandlerPointer())->EnableButtons();
+                (*::screen->GetUiHandlerPointer())->EnableButtons();
                 
                 delete msg;
             }

@@ -15,33 +15,33 @@ int Window::Initialize()
     
     Log(LOG_INFO) << "Creating window" << NEWLINE;
     
-    int w = configFile->GetIntValue("iGraphicsWindowSizeW");
-    int h = configFile->GetIntValue("iGraphicsWindowSizeH");
+    int w = ::configFile->GetIntValue("iGraphicsWindowSizeW");
+    int h = ::configFile->GetIntValue("iGraphicsWindowSizeH");
     
     if (w < 640)
     {
         Log(LOG_WARNING) << "Window width is too small, setting it to default" << NEWLINE;
-        configFile->SetValue("iGraphicsWindowSizeW", "720");
+        ::configFile->SetValue("iGraphicsWindowSizeW", "720");
         
-        error = configFile->Write();
+        error = ::configFile->Write();
         
         if (error != ERR_OK)
             Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
         
-        w = configFile->GetIntValue("iGraphicsWindowSizeW");
+        w = ::configFile->GetIntValue("iGraphicsWindowSizeW");
     }
     
     if (h < 480)
     {
         Log(LOG_WARNING) << "Window heigth is too small, setting it to default" << NEWLINE;
-        configFile->SetValue("iGraphicsWindowSizeH", "480");
+        ::configFile->SetValue("iGraphicsWindowSizeH", "480");
         
-        error = configFile->Write();
+        error = ::configFile->Write();
         
         if (error != ERR_OK)
             Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
         
-        h = configFile->GetIntValue("iGraphicsWindowSizeH");
+        h = ::configFile->GetIntValue("iGraphicsWindowSizeH");
     }
     
     Log(LOG_DEBUG) << "Window size: " << w << "x" << h << NEWLINE;

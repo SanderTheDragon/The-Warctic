@@ -71,7 +71,7 @@ int Ui::Screen_Debug::ButtonResources(Ui::Button* button, int mouseButton, int t
             
             Ui::ErrorBox* errorBox = new Ui::ErrorBox(Utils::String::Combine(2, "Could not load screen ResourceList\n\n", GetErrorMessage(error).c_str()));
             
-            screen->AddComponent(errorBox);
+            ::screen->AddComponent(errorBox);
             
             errorBox->Component();
             
@@ -79,8 +79,8 @@ int Ui::Screen_Debug::ButtonResources(Ui::Button* button, int mouseButton, int t
         }
         else
         {
-            delete screen;
-            screen = tScreen;
+            delete ::screen;
+            ::screen = tScreen;
         }
     }
     
@@ -103,7 +103,7 @@ int Ui::Screen_Debug::ButtonInfo(Ui::Button* button, int mouseButton, int type)
             
             Ui::ErrorBox* errorBox = new Ui::ErrorBox(Utils::String::Combine(2, "Could not load screen Info\n\n", GetErrorMessage(error).c_str()));
             
-            screen->AddComponent(errorBox);
+            ::screen->AddComponent(errorBox);
             
             errorBox->Component();
             
@@ -111,8 +111,8 @@ int Ui::Screen_Debug::ButtonInfo(Ui::Button* button, int mouseButton, int type)
         }
         else
         {
-            delete screen;
-            screen = tScreen;
+            delete ::screen;
+            ::screen = tScreen;
         }
     }
     

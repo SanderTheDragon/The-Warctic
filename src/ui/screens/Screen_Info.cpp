@@ -63,7 +63,7 @@ int Ui::Screen_Info::ShowCredits(Ui::Button* button, int mouseButton, int type)
     {
         Ui::MessageBox* messageBox = new Ui::MessageBox(credits, true);
         
-        screen->AddComponent(messageBox);
+        ::screen->AddComponent(messageBox);
         
         messageBox->Component();
     }
@@ -77,7 +77,7 @@ int Ui::Screen_Info::ShowLicense(Ui::Button* button, int mouseButton, int type)
     {
         Ui::MessageBox* messageBox = new Ui::MessageBox(license, true);
         
-        screen->AddComponent(messageBox);
+        ::screen->AddComponent(messageBox);
         
         messageBox->Component();
     }
@@ -101,7 +101,7 @@ int Ui::Screen_Info::ButtonBack(Ui::Button* button, int mouseButton, int type)
             
             Ui::ErrorBox* errorBox = new Ui::ErrorBox(Utils::String::Combine(2, "Could not load screen Debug\n\n", GetErrorMessage(error).c_str()));
             
-            screen->AddComponent(errorBox);
+            ::screen->AddComponent(errorBox);
             
             errorBox->Component();
             
@@ -109,8 +109,8 @@ int Ui::Screen_Info::ButtonBack(Ui::Button* button, int mouseButton, int type)
         }
         else
         {
-            delete screen;
-            screen = tScreen;
+            delete ::screen;
+            ::screen = tScreen;
         }
     }
     

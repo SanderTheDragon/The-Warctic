@@ -103,10 +103,10 @@ namespace Ui
             TTF_SizeText(font, text.c_str(), &itW, &itH);
             
             if (w < 0)
-                SetW(itW);
+                w = itW;
 
             if (h < 0)
-                SetH(itH);
+                h = itH;
             
             *tW = itW;
             *tH = itH;

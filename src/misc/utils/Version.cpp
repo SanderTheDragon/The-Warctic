@@ -15,7 +15,7 @@ void Utils::Version::PrintWarctic(bool tabbed)
         Log(LOG_NONE) << "Version " << VERSION << NEWLINE;
     
 //Unstable version warning
-#ifdef UNSTABLE
+#if defined(UNSTABLE)
     Log(LOG_WARNING) << "This is an unstable release!" << NEWLINE;
     Log(LOG_WARNING) << "Please report bugs to make it stable" << NEWLINE;
 #endif

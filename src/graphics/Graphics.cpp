@@ -42,9 +42,9 @@ int Graphics::Initialize()
     {
         Log(LOG_DEBUG) << "Loading debug screen" << NEWLINE;
         
-        screen = new Ui::Screen_Debug();
+        ::screen = new Ui::Screen_Debug();
         
-        error = screen->Initialize();
+        error = ::screen->Initialize();
         
         if (error != ERR_OK)
             return ERR_GRAPHICS_SCREEN_INIT;
@@ -63,7 +63,7 @@ int Graphics::Loop()
 {
     SDL_RenderClear(renderer);
     
-    screen->Draw(&renderer);
+    ::screen->Draw(&renderer);
     
     SDL_RenderPresent(renderer);
     

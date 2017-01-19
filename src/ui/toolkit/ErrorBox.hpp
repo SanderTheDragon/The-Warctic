@@ -36,7 +36,7 @@ namespace Ui
             
             for (uint i = 0; i < lines.size(); i++)
             {
-                Ui::Label* label = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(126, 0, 0, 255), Ui::Color(255, 255, 255, 255), lines.at(i), 24, screen->GetResource("fonts/freemono.ttf"));
+                Ui::Label* label = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(126, 0, 0, 255), Ui::Color(255, 255, 255, 255), lines.at(i), 24, ::screen->GetResource("fonts/freemono.ttf"));
                 label->SetParent(this);
                 label->Resolve();
                 
@@ -61,9 +61,9 @@ namespace Ui
                         else
                             msg = lines.at(i).substr(last, tar);
                         
-                        Ui::Label* nLabel = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(126, 0, 0, 255), Ui::Color(255, 255, 255, 255), msg, 24, screen->GetResource("fonts/freemono.ttf"));
+                        Ui::Label* nLabel = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(126, 0, 0, 255), Ui::Color(255, 255, 255, 255), msg, 24, ::screen->GetResource("fonts/freemono.ttf"));
                         nLabel->SetParent(this);
-                        screen->AddComponent(nLabel);
+                        ::screen->AddComponent(nLabel);
                         
                         lY += 24 + 2;
                         last = tar;
@@ -77,10 +77,10 @@ namespace Ui
                 }
             }
             
-            Ui::Button* close = new Ui::Button(x + borderSize, y + h - borderSize - 25, -1, -1, Ui::Color(126, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Close", 24, screen->GetResource("fonts/freemono.ttf"), &ErrClose, &ErrHovering, &ErrNotHovering);
+            Ui::Button* close = new Ui::Button(x + borderSize, y + h - borderSize - 25, -1, -1, Ui::Color(126, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Close", 24, ::screen->GetResource("fonts/freemono.ttf"), &ErrClose, &ErrHovering, &ErrNotHovering);
             close->SetParent(this);
             close->Enable();
-            screen->AddComponent(close);
+            ::screen->AddComponent(close);
         }
         
         static uint Type() { return UI_OVERLAY; }
@@ -94,31 +94,28 @@ namespace Ui
         {
             if (mouseButton == SDL_BUTTON_LEFT && type == SDL_MOUSEBUTTONUP)
             {
-                Ui::ErrorBox* err = screen->FindComponent<Ui::ErrorBox>();
+                Ui::ErrorBox* err = ::screen->FindComponent<Ui::ErrorBox>();
                 
-                for (uint i = (*screen->GetComponentsPointer()).size() - 1; i > 0; i--) //Needs to be done backwards
+                for (uint i = (*::screen->GetComponentsPointer()).size() - 1; i > 0; i--) //Needs to be done backwards
                 {
-                    if (Ui::Button* button = dynamic_cast<Ui::Button*>((*screen->GetComponentsPointer()).at(i)))
-                        button->Enable();
-                    
-                    if ((*screen->GetComponentsPointer()).at(i)->GetParent() == err)
+                    if ((*::screen->GetComponentsPointer()).at(i)->GetParent() == err)
                     {
-                        (*screen->GetComponentsPointer()).erase((*screen->GetComponentsPointer()).begin() + i);
+                        (*::screen->GetComponentsPointer()).erase((*::screen->GetComponentsPointer()).begin() + i);
                     }
                 }
                 
-                for (uint i = (*screen->GetButtonsPointer()).size() - 1; i > 0; i--) //Also needs to be done backwards
+                for (uint i = (*::screen->GetButtonsPointer()).size() - 1; i > 0; i--) //Also needs to be done backwards
                 {
-                    if ((*screen->GetButtonsPointer()).at(i)->GetParent() == err)
+                    if ((*::screen->GetButtonsPointer()).at(i)->GetParent() == err)
                     {
-                        delete (*screen->GetButtonsPointer()).at(i);
-                        (*screen->GetButtonsPointer()).erase((*screen->GetButtonsPointer()).begin() + i);
+                        delete (*::screen->GetButtonsPointer()).at(i);
+                        (*::screen->GetButtonsPointer()).erase((*::screen->GetButtonsPointer()).begin() + i);
                     }
                 }
                 
-                (*screen->GetComponentsPointer()).erase((*screen->GetComponentsPointer()).end() - 1);
+                (*::screen->GetComponentsPointer()).erase((*::screen->GetComponentsPointer()).end() - 1);
                 
-                (*screen->GetUiHandlerPointer())->EnableButtons();
+                (*::screen->GetUiHandlerPointer())->EnableButtons();
                 
                 delete err;
             }
