@@ -17,7 +17,7 @@ namespace Ui
         bool center;
         
     public:
-        MessageBox(std::string msg, bool alignCenter = false) : Overlay(8, 8, WINDOW_W() - 8, WINDOW_H() - 8, Ui::Color(0, 0, 0, 100), 2, Ui::Color(255, 255, 255, 255)), message(msg), center(alignCenter) { }
+        MessageBox(std::string msg, bool alignCenter = false) : Overlay(8, 8, WINDOW_W() - 8, WINDOW_H() - 8, Ui::Color(0, 0, 0, 100), 2, Ui::Color(255, 255, 255, 255)), message(msg), center(alignCenter) { XYToWH(); }
         
         int Draw(SDL_Renderer** renderer)
         {
@@ -30,13 +30,11 @@ namespace Ui
         {
             (*::screen->GetUiHandlerPointer())->DisableButtons();
             
-            XYToWH();
-            
             std::vector<std::string> lines = Utils::String::Split(message, '\n');
             
             int lY = 0;
             
-            for (uint i = 0; i < lines.size(); i++)
+            for (uint i = scrollLevel; i < lines.size(); i++)
             {
                 Ui::Label* label = new Ui::Label(x + borderSize, y + borderSize + lY, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), lines.at(i), 14, ::screen->GetResource("fonts/freemono.ttf"));
                 label->SetParent(this);
@@ -85,6 +83,9 @@ namespace Ui
                     
                     lY += 14 + 2;
                 }
+                
+                if (y + lY + 2 * borderSize + 16 > h) //If it's too high, do not continue
+                    break;
             }
             
             Ui::Button* close = new Ui::Button(x + borderSize, y + h - borderSize - 25, -1, -1, Ui::Color(0, 0, 0, 255), Ui::Color(255, 255, 255, 255), "X Close", 24, ::screen->GetResource("fonts/freemono.ttf"), &MsgClose);

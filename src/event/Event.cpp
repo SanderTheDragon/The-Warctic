@@ -5,6 +5,7 @@
 #include "misc/Errors.hpp"
 
 #include "misc/utils/String.hpp"
+#include "ui/toolkit/MessageBox.hpp"
 
 Event::Event()
 {
@@ -48,7 +49,9 @@ int Event::Loop()
         switch (e.type)
         {
         case SDL_QUIT:
-            Log(LOG_DEBUG) << "Window close button was clicked" << NEWLINE;
+            if (!::suppressed)
+                Log(LOG_DEBUG) << "Window close button was clicked" << NEWLINE;
+            
             ::running = false;
             return ERR_OK;
             break;
@@ -158,6 +161,14 @@ int Event::HandleMousewheel()
     
     if (!::suppressed && !::mouseSuppressed)
         Log(LOG_DEBUG) << "Mouse wheel moved " << Utils::String::ToString(x) << " right and " << Utils::String::ToString(y) << " up" << NEWLINE;
+    
+    if (Ui::MessageBox* msg = ::screen->FindComponent<Ui::MessageBox>())
+    {
+        msg->SetScrollLevel(msg->GetScrollLevel() - y);
+        
+        msg->ClearComponent(msg);
+        msg->Component();
+    }
     
     return ERR_OK;
 }
