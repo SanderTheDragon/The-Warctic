@@ -23,11 +23,11 @@ namespace Ui
         
         int Component() { }
         
-        int ClearComponent(Ui::Overlay* parent)
+        int ClearComponent()
         {
             for (uint i = 0; i < ::screen->ComponentSize(); i++)
             {
-                if ((*::screen->GetComponentsPointer()).at(i)->GetParent() == parent)
+                if ((*::screen->GetComponentsPointer()).at(i)->GetParent() == this)
                     (*::screen->GetComponentsPointer()).erase((*::screen->GetComponentsPointer()).begin() + i);
             }
             

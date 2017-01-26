@@ -15,10 +15,12 @@ namespace Ui
         std::string message;
         
     public:
-        ErrorBox(std::string msg) : Overlay(64, 96, WINDOW_W() - 64, WINDOW_H() - 96, Ui::Color(126, 0, 0, 100), 2, Ui::Color(255, 0, 0, 255)), message(msg) { }
+        ErrorBox(std::string msg) : Overlay(64, 96, WINDOW_W() - 64, WINDOW_H() - 96, Ui::Color(126, 0, 0, 255), 2, Ui::Color(255, 0, 0, 255)), message(msg) { }
         
         int Draw(SDL_Renderer** renderer)
         {
+            scrollLevel = 0;
+            
             Box::Draw(renderer);
             
             return ERR_OK;
@@ -100,6 +102,7 @@ namespace Ui
                 {
                     if ((*::screen->GetComponentsPointer()).at(i)->GetParent() == err)
                     {
+                        delete (*::screen->GetComponentsPointer()).at(i);
                         (*::screen->GetComponentsPointer()).erase((*::screen->GetComponentsPointer()).begin() + i);
                     }
                 }
@@ -108,7 +111,6 @@ namespace Ui
                 {
                     if ((*::screen->GetButtonsPointer()).at(i)->GetParent() == err)
                     {
-                        delete (*::screen->GetButtonsPointer()).at(i);
                         (*::screen->GetButtonsPointer()).erase((*::screen->GetButtonsPointer()).begin() + i);
                     }
                 }

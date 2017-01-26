@@ -164,10 +164,14 @@ int Event::HandleMousewheel()
     
     if (Ui::MessageBox* msg = ::screen->FindComponent<Ui::MessageBox>())
     {
-        msg->SetScrollLevel(msg->GetScrollLevel() - y);
-        
-        msg->ClearComponent(msg);
-        msg->Component();
+        if (msg->GetScrollLevel() - y >= 0)
+        {
+            msg->ClearComponent();
+            
+            msg->SetScrollLevel(msg->GetScrollLevel() - y);
+            
+            msg->Component();
+        }
     }
     
     return ERR_OK;

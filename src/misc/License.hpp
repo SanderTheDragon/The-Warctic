@@ -682,4 +682,3 @@ std::string license
 );
 
 #endif
- 

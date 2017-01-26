@@ -17,7 +17,7 @@ namespace Ui
         bool center;
         
     public:
-        MessageBox(std::string msg, bool alignCenter = false) : Overlay(8, 8, WINDOW_W() - 8, WINDOW_H() - 8, Ui::Color(0, 0, 0, 100), 2, Ui::Color(255, 255, 255, 255)), message(msg), center(alignCenter) { XYToWH(); }
+        MessageBox(std::string msg, bool alignCenter = false) : Overlay(8, 8, WINDOW_W() - 8, WINDOW_H() - 8, Ui::Color(0, 0, 0, 255), 2, Ui::Color(255, 255, 255, 255)), message(msg), center(alignCenter) { XYToWH(); }
         
         int Draw(SDL_Renderer** renderer)
         {
@@ -66,7 +66,7 @@ namespace Ui
                         nLabel->Resolve();
                         
                         if (center)
-                            nLabel->SetX((w - nLabel->GetW()) / 2);
+                            label->SetX((w - label->GetW()) / 2);
                         
                         ::screen->AddComponent(nLabel);
                         
@@ -113,6 +113,7 @@ namespace Ui
                 {
                     if ((*::screen->GetComponentsPointer()).at(i)->GetParent() == msg)
                     {
+                        delete (*::screen->GetComponentsPointer()).at(i);
                         (*::screen->GetComponentsPointer()).erase((*::screen->GetComponentsPointer()).begin() + i);
                     }
                 }
@@ -121,7 +122,6 @@ namespace Ui
                 {
                     if ((*::screen->GetButtonsPointer()).at(i)->GetParent() == msg)
                     {
-                        delete (*::screen->GetButtonsPointer()).at(i);
                         (*::screen->GetButtonsPointer()).erase((*::screen->GetButtonsPointer()).begin() + i);
                     }
                 }
