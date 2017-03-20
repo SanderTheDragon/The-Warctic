@@ -1,15 +1,5 @@
-build/
-resources/
-
 .fuse_hidden*
 .directory
 .Trash-*
 
-open-all.sh
-out.log
-warctic.cfg
-
-CMakeFiles/
-Makefile
-cmake_install.cmake
-CMakeCache.txt
+build/
