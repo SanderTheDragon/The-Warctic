@@ -3,3 +3,4 @@
 .Trash-*
 
 build/
+src/Config.hpp
