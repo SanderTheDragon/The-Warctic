@@ -48,4 +48,35 @@
 #endif
 //End Windows being special, also end of platform specific stuff
 
+
+
+//Directory and file definitions
+#define DIR_ROOT "." DIR_SEP
+
+#define FILE_LOG DIR_ROOT "warctic.log"
+//End directory and file definitions
+
+
+
+#include "utils/Singleton.hpp"
+
+class Config : public Singleton<Config>
+{
+private:
+	uint logLevelTerm = 0x0F10; //Minimal log level to print in the terminal, default LOG_INFO
+	uint logLevelFile = 0x0F20; //Minimal log level to print to the log file, default LOG_DEBUG
+	
+	bool logTermColor = true;
+	
+public:
+	uint GetLogLevelTerm() { return logLevelTerm; }
+	void SetLogLevelTerm(uint level) { logLevelTerm = level; }
+	
+	uint GetLogLevelFile() { return logLevelFile; }
+	void SetLogLevelFile(uint level) { logLevelFile = level; }
+	
+	bool GetLogTermColor() { return logTermColor; }
+	void SetLogTermColor(bool color) { logTermColor = color; }
+};
+
 #endif
