@@ -2,14 +2,14 @@
 #define LOGGER_HPP_
 
 //Log levels
-#define LOG_OFF       0x0F00
-#define LOG_NONE      0x0F01
-#define LOG_FATAL     0x0F02
-#define LOG_ERROR     0x0F04
-#define LOG_WARNING   0x0F08
-#define LOG_INFO      0x0F10
-#define LOG_DEBUG     0x0F20
-#define LOG_TRACE     0x0F40
+#define LOG_OFF       0x0C00
+#define LOG_NONE      0x0C01
+#define LOG_FATAL     0x0C02
+#define LOG_ERROR     0x0C03
+#define LOG_WARNING   0x0C04
+#define LOG_INFO      0x0C05
+#define LOG_DEBUG     0x0C06
+#define LOG_TRACE     0x0C07
 //End log levels
 
 //Ansi colors
@@ -47,7 +47,7 @@ public:
 	Logger(ushort level, bool noFileOut = false)
 	{
 		canWriteTerm = (level <= Config::Ref().GetLogLevelTerm());
-		canWriteFile = (noFileOut) ? noFileOut : (level <= Config::Ref().GetLogLevelFile());
+		canWriteFile = (noFileOut) ? !noFileOut : (level <= Config::Ref().GetLogLevelFile());
 		
 		if (!canWriteTerm && !canWriteFile)
 			return;
