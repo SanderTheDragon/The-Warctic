@@ -45,15 +45,16 @@ uint ParseArguments(int argc, char* argv[])
 			Log(LOG_NONE, true) << "Help for \'The Warctic\' Version " << VERSION << NEWLINE;
 			Log(LOG_NONE, true) << NEWLINE;
 #if defined(WIN) //Windows needs to be special again
-			Log(LOG_NONE, true) << "Usage: warctic.exe [-h] [-lnc] [-llt LEVEL] [-llf LEVEL]" << NEWLINE;
+			Log(LOG_NONE, true) << "Usage: warctic.exe [-h] [-lnc] [-llt LEVEL] [-llf LEVEL] [-dar ASPECT]" << NEWLINE;
 #else
-			Log(LOG_NONE, true) << "Usage: ./warctic [-h] [-lnc] [-llt LEVEL] [-llf LEVEL]" << NEWLINE;
+			Log(LOG_NONE, true) << "Usage: ./warctic [-h] [-lnc] [-llt LEVEL] [-llf LEVEL] [-dar ASPECT]" << NEWLINE;
 #endif
 			Log(LOG_NONE, true) << NEWLINE;
 			Log(LOG_NONE, true) << "-h      Show this help" << NEWLINE;
 			Log(LOG_NONE, true) << "-llt    Set minimal log level required to print to terminal, values: off/0, fatal/1, error/2, warning/3, info/4, debug/5, trace/6" << NEWLINE;
 			Log(LOG_NONE, true) << "-llf    Set minimal log level required to print to log file, values: off/0, fatal/1, error/2, warning/3, info/4, debug/5, trace/6" << NEWLINE;
 			Log(LOG_NONE, true) << "-lnc    Disable colors in the terminal" << NEWLINE;
+			Log(LOG_NONE, true) << "-dar    Set display aspect ratio, values: 16:9, 16:10, 4:3" << NEWLINE;
 			
 			return ERR_EXIT; //Just to exit
 		}
@@ -61,29 +62,65 @@ uint ParseArguments(int argc, char* argv[])
 		if (arg == "-llt" || arg == "-llf") //Set minimal log level required to print to terminal/file
 		{
 			if (i + 1 >= argc)
+			{
+				Log(LOG_ERROR) << "No value provided for " << ((arg == "-llt") ? "terminal" : "file") << NEWLINE;
 				continue;
+			}
 			
 			std::string value = argv[i + 1];
 			uint level = LOG_NONE;
 			
 			if (value == "off" || value == "0" || value == "off/0")
 				level = LOG_OFF;
-			if (value == "fatal" || value == "1" || value == "fatal/1")
+			else if (value == "fatal" || value == "1" || value == "fatal/1")
 				level = LOG_FATAL;
-			if (value == "error" || value == "2" || value == "error/2")
+			else if (value == "error" || value == "2" || value == "error/2")
 				level = LOG_ERROR;
-			if (value == "warning" || value == "3" || value == "warning/3")
+			else if (value == "warning" || value == "3" || value == "warning/3")
 				level = LOG_WARNING;
-			if (value == "info" || value == "4" || value == "info/4")
+			else if (value == "info" || value == "4" || value == "info/4")
 				level = LOG_INFO;
-			if (value == "debug" || value == "5" || value == "debug/5")
+			else if (value == "debug" || value == "5" || value == "debug/5")
 				level = LOG_DEBUG;
-			if (value == "trace" || value == "6" || value == "trace/6")
+			else if (value == "trace" || value == "6" || value == "trace/6")
 				level = LOG_TRACE;
+			else
+			{
+				Log(LOG_ERROR) << "Invalid value \'" << value << "\' for " << ((arg == "-llt") ? "terminal" : "file") << NEWLINE;
+				continue;
+			}
 			
 			(arg == "-llt") ? Config::Ref().SetLogLevelTerm(level) : Config::Ref().SetLogLevelFile(level);
 			
 			Log(LOG_NONE) << "Changing log level to \'" << value << "\' for " << ((arg == "-llt") ? "terminal" : "file") << NEWLINE;
+		}
+		
+		if (arg == "-dar") //Set aspect ratio
+		{
+			if (i + 1 >= argc)
+			{
+				Log(LOG_ERROR) << "No value provided for " << arg << NEWLINE;
+				continue;
+			}
+			
+			std::string value = argv[i + 1];
+			uint ar = ASPECT_16_9;
+			
+			if (value == "16:9")
+				ar = ASPECT_16_9;
+			else if (value == "16:10")
+				ar = ASPECT_16_10;
+			else if (value == "4:3")
+				ar = ASPECT_4_3;
+			else
+			{
+				Log(LOG_ERROR) << "Invalid value \'" << value << "\' for " << arg << NEWLINE;
+				continue;
+			}
+			
+			Config::Ref().SetAspectRatio(ar);
+			
+			Log(LOG_NONE) << "Changing aspect ratio to \'" << value << "\'" << NEWLINE;
 		}
 		
 		if (arg == "-lnc") //Disable colors in terminal
@@ -112,7 +149,14 @@ uint Initialize(Window** window)
 	
 	*window = new Window();
 	
-	if ((*window)->Initialize(720, 480) != ERR_OK)
+	uint winW = 852;
+	
+	if (Config::Ref().GetAspectRatio() == ASPECT_16_10)
+		winW = 768;
+	if (Config::Ref().GetAspectRatio() == ASPECT_4_3)
+		winW = 640;
+	
+	if ((*window)->Initialize(winW, 480) != ERR_OK)
 		return ERR_INIT_WINDOW;
 	
 	Log(LOG_DEBUG) << "Initializing GLEW" << NEWLINE;

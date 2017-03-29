@@ -21,7 +21,6 @@ uint Window::Initialize(ushort width, ushort height)
 #endif
 	
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 	
 	Log(LOG_DEBUG) << "Creating window" << NEWLINE;
 	
@@ -31,6 +30,22 @@ uint Window::Initialize(ushort width, ushort height)
 		return ERR_INIT_WINDOW;
 	
 	Log(LOG_TRACE) << "Configuring GLFW/GL" << NEWLINE;
+	
+	if (Config::Ref().GetAspectRatio() == ASPECT_16_9)
+	{
+		glfwSetWindowSizeLimits(window, 852, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
+		glfwSetWindowAspectRatio(window, 16, 9);
+	}
+	else if (Config::Ref().GetAspectRatio() == ASPECT_16_10)
+	{
+		glfwSetWindowSizeLimits(window, 768, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
+		glfwSetWindowAspectRatio(window, 16, 10);
+	}
+	else if (Config::Ref().GetAspectRatio() == ASPECT_4_3) //Almost everyone uses 16:9 or 16:10 but 4:3 users probably exists
+	{
+		glfwSetWindowSizeLimits(window, 640, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
+		glfwSetWindowAspectRatio(window, 4, 3);
+	}
 	
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);

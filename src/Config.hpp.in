@@ -65,8 +65,9 @@ class Config : public Singleton<Config>
 private:
 	uint logLevelTerm = 0x0C05; //Minimal log level to print in the terminal, default LOG_INFO
 	uint logLevelFile = 0x0C06; //Minimal log level to print to the log file, default LOG_DEBUG
-	
 	bool logTermColor = true;
+	
+	uint aspectRatio = 0x0A1609; //Default aspect ratio is 16:9
 	
 public:
 	uint GetLogLevelTerm() { return logLevelTerm; }
@@ -77,6 +78,9 @@ public:
 	
 	bool GetLogTermColor() { return logTermColor; }
 	void SetLogTermColor(bool color) { logTermColor = color; }
+	
+	uint GetAspectRatio() { return aspectRatio; }
+	void SetAspectRatio(uint ratio) { aspectRatio = ratio; }
 };
 
 #endif
