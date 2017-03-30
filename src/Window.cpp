@@ -41,7 +41,7 @@ uint Window::Initialize(ushort width, ushort height)
 		glfwSetWindowSizeLimits(window, 768, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
 		glfwSetWindowAspectRatio(window, 16, 10);
 	}
-	else if (Config::Ref().GetAspectRatio() == ASPECT_4_3) //Almost everyone uses 16:9 or 16:10 but 4:3 users probably exists
+	else if (Config::Ref().GetAspectRatio() == ASPECT_4_3) //Almost everyone uses 16:9 or 16:10 but 4:3 users probably exist
 	{
 		glfwSetWindowSizeLimits(window, 640, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
 		glfwSetWindowAspectRatio(window, 4, 3);

@@ -22,7 +22,7 @@
 #include "Errors.hpp"
 #include "utils/Logger.hpp"
 
-#include "Window.hpp"
+#include "Engine.hpp"
 
 void GLFWError(int c, const char* msg)
 {
@@ -134,43 +134,6 @@ uint ParseArguments(int argc, char* argv[])
 	return ERR_OK;
 }
 
-uint Initialize(Window** window)
-{
-	Log(LOG_INFO) << "Initializing" << NEWLINE;
-	
-	Log(LOG_DEBUG) << "Initializing GLFW" << NEWLINE;
-	
-	glfwSetErrorCallback(GLFWError);
-	
-	if (!glfwInit())
-		return ERR_INIT_GLFW;
-	
-	Log(LOG_DEBUG) << "Initializing window" << NEWLINE;
-	
-	*window = new Window();
-	
-	uint winW = 852;
-	
-	if (Config::Ref().GetAspectRatio() == ASPECT_16_10)
-		winW = 768;
-	if (Config::Ref().GetAspectRatio() == ASPECT_4_3)
-		winW = 640;
-	
-	if ((*window)->Initialize(winW, 480) != ERR_OK)
-		return ERR_INIT_WINDOW;
-	
-	Log(LOG_DEBUG) << "Initializing GLEW" << NEWLINE;
-	
-	glewExperimental = GL_TRUE;
-	
-	if (glewInit() != GLEW_OK)
-		return ERR_INIT_GLEW;
-	
-	Log(LOG_INFO) << "Initializing done" << NEWLINE;
-	
-	return ERR_OK;
-}
-
 int main(int argc, char* argv[])
 {
 	uint error = ERR_OK;
@@ -194,30 +157,21 @@ int main(int argc, char* argv[])
 		Log(LOG_NONE, true) << "--- End log colors ---" << NEWLINE;
 	}
 	
-	Window* window;
+	glfwSetErrorCallback(GLFWError);
 	
-	if ((error = Initialize(&window)) != ERR_OK)
+	if ((error = Engine::Ref().Initialize()) != ERR_OK)
 	{
 		Log(LOG_FATAL) << GetErrorMessage(error) << NEWLINE;
-		Log(LOG_FATAL) << GetErrorMessage(ERR_INIT) << NEWLINE;
-		
-		delete window;
 		
 		Log(LOG_NONE) << "--- End log \'The Warctic\' ---" << NEWLINE;
 		
 		return ERR_INIT;
 	}
 	
-	while (glfwWindowShouldClose(*window->GetWindow()) == 0)
+	while (Engine::Ref().IsRunning())
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
-		
-		glfwSwapBuffers(*window->GetWindow());
-		
-		glfwPollEvents();
+		Engine::Ref().Loop();
 	}
-	
-	delete window;
 	
 	Log(LOG_NONE) << "--- End log \'The Warctic\' ---" << NEWLINE;
 	
