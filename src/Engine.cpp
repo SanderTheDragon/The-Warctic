@@ -7,8 +7,6 @@
 #include "Errors.hpp"
 #include "utils/Logger.hpp"
 
-#include "Event.hpp"
-
 uint Engine::Initialize()
 {
 	uint error;
@@ -46,11 +44,6 @@ uint Engine::Initialize()
 		return ERR_INIT_GLEW;
 	
 	Log(LOG_INFO) << "Initializing done" << NEWLINE;
-	
-	glfwSetKeyCallback(*window->GetWindow(), Event::HandleKeys);
-	glfwSetCursorPosCallback(*window->GetWindow(), Event::HandleMouseMove);
-	glfwSetScrollCallback(*window->GetWindow(), Event::HandleMouseWheel);
-	glfwSetMouseButtonCallback(*window->GetWindow(), Event::HandleMouseButton);
 	
 	running = true;
 	

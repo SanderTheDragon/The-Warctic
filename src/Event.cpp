@@ -4,6 +4,7 @@
 #include "Errors.hpp"
 #include "utils/Logger.hpp"
 
+#include "Engine.hpp"
 #include "utils/String.hpp"
 
 std::string Event::ButtonName(uint button)
@@ -199,7 +200,7 @@ void Event::HandleKeyDown(GLFWwindow* window, int key, int scancode, int mods)
 
 void Event::HandleMouseButton(GLFWwindow* window, int button, int action, int mods)
 {
-	Log(LOG_TRACE) << "\'" << ButtonName(button) << "\' was " << ((action == GLFW_RELEASE) ? "released" : "pressed") << NEWLINE;
+	Log(LOG_TRACE) << "\'" << ButtonName(button) << "\' was " << ((action == GLFW_RELEASE) ? "released" : "pressed") << " at (" << Engine::Ref().GetMousePos().x << "," << Engine::Ref().GetMousePos().y << ")" << NEWLINE;
 	
 	if (action == GLFW_RELEASE)
 	{
@@ -216,6 +217,8 @@ void Event::HandleMouseButton(GLFWwindow* window, int button, int action, int mo
 void Event::HandleMouseMove(GLFWwindow* window, double x, double y)
 {
 	//Log(LOG_TRACE) << "Mouse moved to (" << x << "," << y << ")" << NEWLINE;
+	
+	Engine::Ref().SetMousePos(x, y);
 }
 
 void Event::HandleMouseWheel(GLFWwindow* window, double xOff, double yOff)

@@ -23,6 +23,7 @@
 #include "utils/Logger.hpp"
 
 #include "Engine.hpp"
+#include "Event.hpp"
 
 void GLFWError(int c, const char* msg)
 {
@@ -167,6 +168,13 @@ int main(int argc, char* argv[])
 		
 		return ERR_INIT;
 	}
+	
+	Log(LOG_TRACE) << "Setting GLFW event callbacks" << NEWLINE;
+	
+	glfwSetKeyCallback(*(*Engine::Ref().GetWindow())->GetWindow(), Event::HandleKeys);
+	glfwSetCursorPosCallback(*(*Engine::Ref().GetWindow())->GetWindow(), Event::HandleMouseMove);
+	glfwSetScrollCallback(*(*Engine::Ref().GetWindow())->GetWindow(), Event::HandleMouseWheel);
+	glfwSetMouseButtonCallback(*(*Engine::Ref().GetWindow())->GetWindow(), Event::HandleMouseButton);
 	
 	while (Engine::Ref().IsRunning())
 	{
