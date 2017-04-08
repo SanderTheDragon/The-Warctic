@@ -24,6 +24,7 @@
 
 #include "Engine.hpp"
 #include "Event.hpp"
+#include "utils/String.hpp"
 
 void GLFWError(int c, const char* msg)
 {
@@ -56,6 +57,8 @@ uint ParseArguments(int argc, char* argv[])
 			Log(LOG_NONE, true) << "-llf    Set minimal log level required to print to log file, values: off/0, fatal/1, error/2, warning/3, info/4, debug/5, trace/6" << NEWLINE;
 			Log(LOG_NONE, true) << "-lnc    Disable colors in the terminal" << NEWLINE;
 			Log(LOG_NONE, true) << "-dar    Set display aspect ratio, values: 16:9, 16:10, 4:3" << NEWLINE;
+			Log(LOG_NONE, true) << "-dsr    Set start resolution height, like 1080=1920x1080, anything <" << MIN_WIN_HEIGHT << " will be set to " << MIN_WIN_HEIGHT << NEWLINE;
+			Log(LOG_NONE, true) << "-dfs    Use fullscreen instead of windowed mode" << NEWLINE;
 			
 			return ERR_EXIT; //Just to exit
 		}
@@ -124,11 +127,44 @@ uint ParseArguments(int argc, char* argv[])
 			Log(LOG_NONE) << "Changing aspect ratio to \'" << value << "\'" << NEWLINE;
 		}
 		
+		if (arg == "-dsr") //Set start resolution
+		{
+			if (i + 1 >= argc)
+			{
+				Log(LOG_ERROR) << "No value provided for " << arg << NEWLINE;
+				continue;
+			}
+			
+			std::string value = argv[i + 1];
+			uint res = 0;
+			
+			try
+			{
+				res = String::ToInt(value);
+			}
+			catch (std::exception)
+			{
+				Log(LOG_ERROR) << "Invalid value \'" << value << "\' for " << arg << NEWLINE;
+				continue;
+			}
+			
+			Config::Ref().SetStartResolution(res);
+			
+			Log(LOG_NONE) << "Changing starting resolution to \'" << ((res < 480) ? "480" : value) << "\'" << NEWLINE;
+		}
+		
 		if (arg == "-lnc") //Disable colors in terminal
 		{
 			Config::Ref().SetLogTermColor(false);
 			
 			Log(LOG_NONE) << "Disabled colors in terminal (-lnc)" << NEWLINE;
+		}
+		
+		if (arg == "-dfs") //Set fullscreen
+		{
+			Config::Ref().SetFullscreen(true);
+			
+			Log(LOG_NONE) << "Made window fullscreen (-dfs)" << NEWLINE;
 		}
 	}
 	

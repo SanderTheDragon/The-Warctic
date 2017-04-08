@@ -22,14 +22,7 @@ uint Engine::Initialize()
 	
 	window = new Window();
 	
-	uint winW = 852;
-	
-	if (Config::Ref().GetAspectRatio() == ASPECT_16_10)
-		winW = 768;
-	if (Config::Ref().GetAspectRatio() == ASPECT_4_3)
-		winW = 640;
-	
-	if ((error = window->Initialize(winW, 480)) != ERR_OK)
+	if ((error = window->Initialize()) != ERR_OK)
 	{
 		Log(LOG_ERROR) << GetErrorMessage(error) << NEWLINE;
 		

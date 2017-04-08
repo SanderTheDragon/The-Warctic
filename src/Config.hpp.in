@@ -58,7 +58,18 @@
 
 
 
+//Other constants
+#define MIN_WIN_HEIGHT 480
+
+#define ASPECT_16_9  0x0A1609
+#define ASPECT_16_10 0x0A1610
+#define ASPECT_4_3   0x0A0403
+//End other constants
+
+
+
 #include "utils/Singleton.hpp"
+#include "utils/Types.hpp"
 
 class Config : public Singleton<Config>
 {
@@ -68,6 +79,8 @@ private:
 	bool logTermColor = true;
 	
 	uint aspectRatio = 0x0A1609; //Default aspect ratio is 16:9
+	uint startResolution = 480;    //Default resolution as start: 480
+	bool fullscreen = false;     //Start windowed as default
 	
 public:
 	uint GetLogLevelTerm() { return logLevelTerm; }
@@ -81,6 +94,12 @@ public:
 	
 	uint GetAspectRatio() { return aspectRatio; }
 	void SetAspectRatio(uint ratio) { aspectRatio = ratio; }
+	
+	bool GetFullscreen() { return fullscreen; }
+	void SetFullscreen(bool fs) { fullscreen = fs; }
+	
+	uint GetStartResolution() { return startResolution; }
+	void SetStartResolution(uint resolution) { startResolution = resolution; }
 };
 
 #endif

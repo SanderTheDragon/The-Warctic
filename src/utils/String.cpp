@@ -32,3 +32,11 @@ std::string String::ToHexString(int number)
 	
 	return ss.str();
 }
+
+int String::ToInt(std::string number)
+{
+	if (number.empty())
+		return 0;
+	
+	return std::stoi(number);
+}

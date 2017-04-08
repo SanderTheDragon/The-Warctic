@@ -1,14 +1,17 @@
 #include "Window.hpp"
 
+#include "Config.hpp"
 #include "Errors.hpp"
 #include "utils/Logger.hpp"
+
+#include "utils/Math.hpp"
 
 Window::Window()
 {
 	
 }
 
-uint Window::Initialize(ushort width, ushort height)
+uint Window::Initialize()
 {
 	Log(LOG_TRACE) << "Adding window hints" << NEWLINE;
 	
@@ -24,7 +27,10 @@ uint Window::Initialize(ushort width, ushort height)
 	
 	Log(LOG_DEBUG) << "Creating window" << NEWLINE;
 	
-	window = glfwCreateWindow(width, height, "The Warctic", NULL, NULL);
+	if (Config::Ref().GetStartResolution() < MIN_WIN_HEIGHT)
+		window = glfwCreateWindow(Math::CalculateMinWinWidth(Config::Ref().GetAspectRatio()), MIN_WIN_HEIGHT, "The Warctic", (Config::Ref().GetFullscreen()) ? glfwGetPrimaryMonitor() : NULL, NULL);
+	else
+		window = glfwCreateWindow(Math::CalculateWinWidth(Config::Ref().GetAspectRatio(), Config::Ref().GetStartResolution()), Config::Ref().GetStartResolution(), "The Warctic", (Config::Ref().GetFullscreen()) ? glfwGetPrimaryMonitor() : NULL, NULL);
 	
 	if (window == NULL)
 		return ERR_INIT_WINDOW;
@@ -33,17 +39,17 @@ uint Window::Initialize(ushort width, ushort height)
 	
 	if (Config::Ref().GetAspectRatio() == ASPECT_16_9)
 	{
-		glfwSetWindowSizeLimits(window, 852, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
+		glfwSetWindowSizeLimits(window, Math::CalculateMinWinWidth(ASPECT_16_9), MIN_WIN_HEIGHT, GLFW_DONT_CARE, GLFW_DONT_CARE);
 		glfwSetWindowAspectRatio(window, 16, 9);
 	}
 	else if (Config::Ref().GetAspectRatio() == ASPECT_16_10)
 	{
-		glfwSetWindowSizeLimits(window, 768, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
+		glfwSetWindowSizeLimits(window, Math::CalculateMinWinWidth(ASPECT_16_10), MIN_WIN_HEIGHT, GLFW_DONT_CARE, GLFW_DONT_CARE);
 		glfwSetWindowAspectRatio(window, 16, 10);
 	}
 	else if (Config::Ref().GetAspectRatio() == ASPECT_4_3) //Almost everyone uses 16:9 or 16:10 but 4:3 users probably exist
 	{
-		glfwSetWindowSizeLimits(window, 640, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
+		glfwSetWindowSizeLimits(window, Math::CalculateMinWinWidth(ASPECT_4_3), MIN_WIN_HEIGHT, GLFW_DONT_CARE, GLFW_DONT_CARE);
 		glfwSetWindowAspectRatio(window, 4, 3);
 	}
 	
