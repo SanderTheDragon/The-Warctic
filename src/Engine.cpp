@@ -9,7 +9,7 @@
 
 uint Engine::Initialize()
 {
-	uint error;
+	uint error = ERR_OK;
 	
 	Log(LOG_INFO) << "Initializing" << NEWLINE;
 	
@@ -40,7 +40,7 @@ uint Engine::Initialize()
 	
 	running = true;
 	
-	return ERR_OK;
+	return error;
 }
 
 void Engine::Loop()

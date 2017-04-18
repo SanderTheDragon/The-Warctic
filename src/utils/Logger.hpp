@@ -46,12 +46,15 @@ private:
 public:
 	Logger(ushort level, bool noFileOut = false)
 	{
+		//Check if the message should be written to the terminal or log file or both (or neither)
 		canWriteTerm = (level <= Config::Ref().GetLogLevelTerm());
 		canWriteFile = (noFileOut) ? !noFileOut : (level <= Config::Ref().GetLogLevelFile());
 		
+		//No need to go on if it won't be written anyway
 		if (!canWriteTerm && !canWriteFile)
 			return;
 		
+		//Try to open the log file
 		if (canWriteFile)
 		{
 			if (!logFile.is_open())
@@ -59,16 +62,15 @@ public:
 			
 			if (!logFile.is_open()) //If logfile still not open
 			{
-				if (Config::Ref().GetLogTermColor())
-					std::cout << LOG_COLOR_RESET << LOG_COLOR_BRED << "[ERROR]" << LOG_COLOR_RESET << LOG_COLOR_RED << "Could not open `" << FILE_LOG << "`" << NEWLINE;
-				else
-					std::cout << "[ERROR]Could not open `" << FILE_LOG << "`" << NEWLINE;
-				
 				canWriteFile = false;
-				Config::Ref().SetLogLevelFile(LOG_OFF);
+				Config::Ref().SetLogLevelFile(LOG_OFF); //Don't try to log anything to the log file again
+				
+				Logger(LOG_ERROR) << "Could not open `" << FILE_LOG << "`" << NEWLINE;
+				Logger(LOG_INFO) << "Disabled log file writing" << NEWLINE;
 			}
 		}
 		
+		//Print prefix for message
 		switch (level)
 		{
 		case LOG_NONE:
@@ -76,10 +78,7 @@ public:
 			{
 				if (Config::Ref().GetLogTermColor())
 					std::cout << LOG_COLOR_RESET;
-				else
-					break;
 			}
-			
 			break;
 		case LOG_FATAL:
 			if (canWriteTerm)
@@ -165,6 +164,7 @@ public:
 	template<typename T>
 	Logger &operator<<(const T &in)
 	{
+		//Append message parts to the streams
 		if (canWriteTerm)
 		{
 			std::cout << in;

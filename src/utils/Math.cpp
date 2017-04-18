@@ -2,11 +2,6 @@
 
 #include "Config.hpp"
 
-uint Math::CalculateMinWinWidth(uint aspect)
-{
-	return CalculateWinWidth(aspect, MIN_WIN_HEIGHT);
-}
-
 uint Math::CalculateWinWidth(uint aspect, uint height)
 {
 	switch (aspect)

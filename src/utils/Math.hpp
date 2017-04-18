@@ -6,8 +6,8 @@
 class Math
 {
 public:
-	static uint CalculateMinWinWidth(uint aspect);
-	static uint CalculateWinWidth(uint aspect, uint height);
+	static uint CalculateWinWidth(uint aspect, uint height); //Calculate the width of the window with given aspect ratio and height
+	static uint CalculateMinWinWidth(uint aspect) { return CalculateWinWidth(aspect, 480); }
 };
 
 #endif

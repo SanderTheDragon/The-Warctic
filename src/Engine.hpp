@@ -8,10 +8,9 @@
 class Engine : public Singleton<Engine>
 {
 private:
-	Window* window;
-	
 	bool running = false;
 	
+	Window* window;
 	Point mouse;
 	
 public:

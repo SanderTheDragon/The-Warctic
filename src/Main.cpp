@@ -17,6 +17,7 @@
 \***************************************************************************/
 
 #include <string>
+#include <vector>
 
 #include "Config.hpp"
 #include "Errors.hpp"
@@ -31,13 +32,15 @@ void GLFWError(int c, const char* msg)
 	Log(LOG_ERROR) << "GLFW " << c << ": " << msg << NEWLINE;
 }
 
+std::vector<std::string> argumentStrs;
+
 uint ParseArguments(int argc, char* argv[])
 {
 	for (int i = 0; i < argc; i++)
 	{
 		std::string arg(argv[i]);
 		
-		if (arg[1] == '-')
+		if (arg[1] == '-') //Also allow -- instead of -
 		{
 			arg = arg.substr(1, arg.length());
 		}
@@ -47,9 +50,9 @@ uint ParseArguments(int argc, char* argv[])
 			Log(LOG_NONE, true) << "Help for \'The Warctic\' Version " << VERSION << NEWLINE;
 			Log(LOG_NONE, true) << NEWLINE;
 #if defined(WIN) //Windows needs to be special again
-			Log(LOG_NONE, true) << "Usage: warctic.exe [-h] [-lnc] [-llt LEVEL] [-llf LEVEL] [-dar ASPECT]" << NEWLINE;
+			Log(LOG_NONE, true) << "Usage: warctic.exe [-h] [-llt LEVEL] [-llf LEVEL] [-lnc] [-dar ASPECT] [-dsr RESOLUTION] [-dfs]" << NEWLINE;
 #else
-			Log(LOG_NONE, true) << "Usage: ./warctic [-h] [-lnc] [-llt LEVEL] [-llf LEVEL] [-dar ASPECT]" << NEWLINE;
+			Log(LOG_NONE, true) << "Usage: ./warctic [-h] [-llt LEVEL] [-llf LEVEL] [-lnc] [-dar ASPECT] [-dsr RESOLUTION] [-dfs]" << NEWLINE;
 #endif
 			Log(LOG_NONE, true) << NEWLINE;
 			Log(LOG_NONE, true) << "-h      Show this help" << NEWLINE;
@@ -67,12 +70,12 @@ uint ParseArguments(int argc, char* argv[])
 		{
 			if (i + 1 >= argc)
 			{
-				Log(LOG_ERROR) << "No value provided for " << ((arg == "-llt") ? "terminal" : "file") << NEWLINE;
+				argumentStrs.push_back(String::Combine(5, "!No value provided for ", ((arg == "-llt") ? "terminal" : "file"), " log level (", arg.c_str(), ")"));
 				continue;
 			}
 			
 			std::string value = argv[i + 1];
-			uint level = LOG_NONE;
+			uint level = LOG_INFO;
 			
 			if (value == "off" || value == "0" || value == "off/0")
 				level = LOG_OFF;
@@ -90,20 +93,20 @@ uint ParseArguments(int argc, char* argv[])
 				level = LOG_TRACE;
 			else
 			{
-				Log(LOG_ERROR) << "Invalid value \'" << value << "\' for " << ((arg == "-llt") ? "terminal" : "file") << NEWLINE;
+				argumentStrs.push_back(String::Combine(7, "!Invalid value \'", value.c_str(), "\' for ", ((arg == "-llt") ? "terminal" : "file"), " log level (", arg.c_str(), ")"));
 				continue;
 			}
 			
 			(arg == "-llt") ? Config::Ref().SetLogLevelTerm(level) : Config::Ref().SetLogLevelFile(level);
 			
-			Log(LOG_NONE) << "Changing log level to \'" << value << "\' for " << ((arg == "-llt") ? "terminal" : "file") << NEWLINE;
+			argumentStrs.push_back(String::Combine(7, "Changed ", ((arg == "-llt") ? "terminal" : "file"), " log level to \'", value.c_str(), "\' (", arg.c_str(), ")"));
 		}
 		
 		if (arg == "-dar") //Set aspect ratio
 		{
 			if (i + 1 >= argc)
 			{
-				Log(LOG_ERROR) << "No value provided for " << arg << NEWLINE;
+				argumentStrs.push_back("!No value provided for aspect ratio (-dar)");
 				continue;
 			}
 			
@@ -118,20 +121,20 @@ uint ParseArguments(int argc, char* argv[])
 				ar = ASPECT_4_3;
 			else
 			{
-				Log(LOG_ERROR) << "Invalid value \'" << value << "\' for " << arg << NEWLINE;
+				argumentStrs.push_back(String::Combine(3, "!Invalid value \'", value.c_str(), "\' for aspect ratio (-dar)"));
 				continue;
 			}
 			
 			Config::Ref().SetAspectRatio(ar);
 			
-			Log(LOG_NONE) << "Changing aspect ratio to \'" << value << "\'" << NEWLINE;
+			argumentStrs.push_back(String::Combine(3, "Changed aspect ratio to \'", value.c_str(), "\' (-dar)"));
 		}
 		
 		if (arg == "-dsr") //Set start resolution
 		{
 			if (i + 1 >= argc)
 			{
-				Log(LOG_ERROR) << "No value provided for " << arg << NEWLINE;
+				argumentStrs.push_back("!No value provided for starting resolution (-dsr)");
 				continue;
 			}
 			
@@ -144,31 +147,52 @@ uint ParseArguments(int argc, char* argv[])
 			}
 			catch (std::exception)
 			{
-				Log(LOG_ERROR) << "Invalid value \'" << value << "\' for " << arg << NEWLINE;
+				argumentStrs.push_back(String::Combine(3, "!Invalid value \'", value.c_str(), "\' for starting resolution (-dsr)"));
+				continue;
+			}
+			
+			if (res < 480)
+			{
+				argumentStrs.push_back(String::Combine(3, "~Value \'", String::ToString(res).c_str(), "\' was too low for starting resolution"));
 				continue;
 			}
 			
 			Config::Ref().SetStartResolution(res);
 			
-			Log(LOG_NONE) << "Changing starting resolution to \'" << ((res < 480) ? "480" : value) << "\'" << NEWLINE;
+			argumentStrs.push_back(String::Combine(3, "Changed starting resolution to \'", String::ToString(res).c_str(), "\' (-dsr)"));
 		}
 		
 		if (arg == "-lnc") //Disable colors in terminal
 		{
 			Config::Ref().SetLogTermColor(false);
 			
-			Log(LOG_NONE) << "Disabled colors in terminal (-lnc)" << NEWLINE;
+			argumentStrs.push_back("Disabled colors in terminal (-lnc)");
 		}
 		
 		if (arg == "-dfs") //Set fullscreen
 		{
 			Config::Ref().SetFullscreen(true);
 			
-			Log(LOG_NONE) << "Made window fullscreen (-dfs)" << NEWLINE;
+			argumentStrs.push_back("Made window fullscreen (-dfs)");
 		}
 	}
 	
 	return ERR_OK;
+}
+
+void DumpArguments()
+{
+	for (uint i = 0; i < argumentStrs.size(); i++)
+	{
+		if (argumentStrs[i][0] == '!')
+			Log(LOG_ERROR) << argumentStrs[i].substr(1, argumentStrs[i].length()) << NEWLINE;
+		else if (argumentStrs[i][0] == '~')
+			Log(LOG_WARNING) << argumentStrs[i].substr(1, argumentStrs[i].length()) << NEWLINE;
+		else
+			Log(LOG_INFO) << argumentStrs[i] << NEWLINE;
+	}
+	
+	std::vector<std::string>().swap(argumentStrs); //Free memory
 }
 
 int main(int argc, char* argv[])
@@ -179,6 +203,8 @@ int main(int argc, char* argv[])
 		return ERR_OK;
 	
 	Log(LOG_NONE) << "--- Start log \'The Warctic\' ---" << NEWLINE;
+	
+	DumpArguments(); //Print arguments after everything is done
 	
 	if (Config::Ref().GetLogTermColor())
 	{
@@ -207,6 +233,7 @@ int main(int argc, char* argv[])
 	
 	Log(LOG_TRACE) << "Setting GLFW event callbacks" << NEWLINE;
 	
+	//Set GLFW callbacks
 	glfwSetKeyCallback(*(*Engine::Ref().GetWindow())->GetWindow(), Event::HandleKeys);
 	glfwSetCursorPosCallback(*(*Engine::Ref().GetWindow())->GetWindow(), Event::HandleMouseMove);
 	glfwSetScrollCallback(*(*Engine::Ref().GetWindow())->GetWindow(), Event::HandleMouseWheel);

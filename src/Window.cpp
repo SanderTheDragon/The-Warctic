@@ -27,10 +27,7 @@ uint Window::Initialize()
 	
 	Log(LOG_DEBUG) << "Creating window" << NEWLINE;
 	
-	if (Config::Ref().GetStartResolution() < MIN_WIN_HEIGHT)
-		window = glfwCreateWindow(Math::CalculateMinWinWidth(Config::Ref().GetAspectRatio()), MIN_WIN_HEIGHT, "The Warctic", (Config::Ref().GetFullscreen()) ? glfwGetPrimaryMonitor() : NULL, NULL);
-	else
-		window = glfwCreateWindow(Math::CalculateWinWidth(Config::Ref().GetAspectRatio(), Config::Ref().GetStartResolution()), Config::Ref().GetStartResolution(), "The Warctic", (Config::Ref().GetFullscreen()) ? glfwGetPrimaryMonitor() : NULL, NULL);
+	window = glfwCreateWindow(Math::CalculateWinWidth(Config::Ref().GetAspectRatio(), Config::Ref().GetStartResolution()), Config::Ref().GetStartResolution(), "The Warctic", (Config::Ref().GetFullscreen()) ? glfwGetPrimaryMonitor() : NULL, NULL);
 	
 	if (window == NULL)
 		return ERR_INIT_WINDOW;
@@ -53,9 +50,11 @@ uint Window::Initialize()
 		glfwSetWindowAspectRatio(window, 4, 3);
 	}
 	
+	//Set GLFW stuff
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 	
+	//Set GL stuff
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
 	return ERR_OK;

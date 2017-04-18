@@ -169,8 +169,6 @@ std::string Event::KeyName(uint key)
 	}
 }
 
-
-
 void Event::HandleKeys(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (action == GLFW_RELEASE)
@@ -196,8 +194,6 @@ void Event::HandleKeyDown(GLFWwindow* window, int key, int scancode, int mods)
 	Log(LOG_TRACE) << "Key \'" << Event::KeyName(key) << "\' was pressed" << NEWLINE;
 }
 
-
-
 void Event::HandleMouseButton(GLFWwindow* window, int button, int action, int mods)
 {
 	Log(LOG_TRACE) << "\'" << ButtonName(button) << "\' was " << ((action == GLFW_RELEASE) ? "released" : "pressed") << " at (" << Engine::Ref().GetMousePos().x << "," << Engine::Ref().GetMousePos().y << ")" << NEWLINE;
@@ -212,16 +208,14 @@ void Event::HandleMouseButton(GLFWwindow* window, int button, int action, int mo
 	}
 }
 
-
-
 void Event::HandleMouseMove(GLFWwindow* window, double x, double y)
 {
-	//Log(LOG_TRACE) << "Mouse moved to (" << x << "," << y << ")" << NEWLINE;
+	//Log(LOG_TRACE) << "Mouse moved to (" << x << "," << y << ")" << NEWLINE; --- Way to much spam
 	
 	Engine::Ref().SetMousePos(x, y);
 }
 
 void Event::HandleMouseWheel(GLFWwindow* window, double xOff, double yOff)
 {
-	//Log(LOG_TRACE) << "Mouse wheel moved " << xOff << " left and " << yOff << " up" << NEWLINE;
+	//Log(LOG_TRACE) << "Mouse wheel moved " << xOff << " left and " << yOff << " up" << NEWLINE; --- Way to much spam
 }
