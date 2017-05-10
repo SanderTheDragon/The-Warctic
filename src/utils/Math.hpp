@@ -1,7 +1,7 @@
 #ifndef MATH_HPP_
 #define MATH_HPP_
 
-#include "utils/Types.hpp"
+#include "misc/Types.hpp"
 
 class Math
 {

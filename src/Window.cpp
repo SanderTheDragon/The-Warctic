@@ -27,10 +27,10 @@ uint Window::Initialize()
 	
 	Log(LOG_DEBUG) << "Creating window" << NEWLINE;
 	
-	window = glfwCreateWindow(Math::CalculateWinWidth(Config::Ref().GetAspectRatio(), Config::Ref().GetStartResolution()), Config::Ref().GetStartResolution(), "The Warctic", (Config::Ref().GetFullscreen()) ? glfwGetPrimaryMonitor() : NULL, NULL);
+	window = glfwCreateWindow(Math::CalculateWinWidth(Config::Ref().GetAspectRatio(), Config::Ref().GetResolution()), Config::Ref().GetResolution(), "The Warctic", (Config::Ref().GetFullscreen()) ? glfwGetPrimaryMonitor() : NULL, NULL);
 	
 	if (window == NULL)
-		return ERR_INIT_WINDOW;
+		return ERR_WINDOW_CREATE;
 	
 	Log(LOG_TRACE) << "Configuring GLFW/GL" << NEWLINE;
 	

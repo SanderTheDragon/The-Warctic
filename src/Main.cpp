@@ -23,6 +23,7 @@
 #include "Errors.hpp"
 #include "utils/Logger.hpp"
 
+#include "ConfigFile.hpp"
 #include "Engine.hpp"
 #include "Event.hpp"
 #include "utils/String.hpp"
@@ -32,7 +33,7 @@ void GLFWError(int c, const char* msg)
 	Log(LOG_ERROR) << "GLFW " << c << ": " << msg << NEWLINE;
 }
 
-std::vector<std::string> argumentStrs;
+std::vector<std::string> argumentStrs; //Because it's easier
 
 uint ParseArguments(int argc, char* argv[])
 {
@@ -153,11 +154,11 @@ uint ParseArguments(int argc, char* argv[])
 			
 			if (res < 480)
 			{
-				argumentStrs.push_back(String::Combine(3, "~Value \'", String::ToString(res).c_str(), "\' was too low for starting resolution"));
+				argumentStrs.push_back(String::Combine(3, "~Value \'", String::ToString(res).c_str(), "\' was too low for starting resolution (-dsr)"));
 				continue;
 			}
 			
-			Config::Ref().SetStartResolution(res);
+			Config::Ref().SetResolution(res);
 			
 			argumentStrs.push_back(String::Combine(3, "Changed starting resolution to \'", String::ToString(res).c_str(), "\' (-dsr)"));
 		}
@@ -202,7 +203,9 @@ int main(int argc, char* argv[])
 	if (ParseArguments(argc, argv) == ERR_EXIT)
 		return ERR_OK;
 	
-	Log(LOG_NONE) << "--- Start log \'The Warctic\' ---" << NEWLINE;
+	Log(LOG_NONE, false, true) << "--- Start log \'The Warctic\' ---" << NEWLINE;
+	
+	ConfigFile::Read();
 	
 	DumpArguments(); //Print arguments after everything is done
 	
@@ -244,7 +247,7 @@ int main(int argc, char* argv[])
 		Engine::Ref().Loop();
 	}
 	
-	Log(LOG_NONE) << "--- End log \'The Warctic\' ---" << NEWLINE;
+	Log(LOG_NONE, false, true) << "--- End log \'The Warctic\' ---" << NEWLINE;
 	
 	return error;
 }

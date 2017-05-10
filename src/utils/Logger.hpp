@@ -44,11 +44,20 @@ private:
 	std::ofstream logFile;
 	
 public:
-	Logger(ushort level, bool noFileOut = false)
+	Logger(ushort level, bool noFileOut = false, bool forceWrite = false) //forceWrite overwrites noFileOut, so ("", true, true) == ("", false, true)
 	{
 		//Check if the message should be written to the terminal or log file or both (or neither)
-		canWriteTerm = (level <= Config::Ref().GetLogLevelTerm());
-		canWriteFile = (noFileOut) ? !noFileOut : (level <= Config::Ref().GetLogLevelFile());
+		if (!forceWrite)
+		{
+			canWriteTerm = (level <= Config::Ref().GetLogLevelTerm());
+			canWriteFile = (noFileOut) ? !noFileOut : (level <= Config::Ref().GetLogLevelFile());
+		}
+		else
+		{
+			//forceWrite won't write with LOG_OFF
+			canWriteTerm = (Config::Ref().GetLogLevelTerm() != LOG_OFF);
+			canWriteFile = (Config::Ref().GetLogLevelFile() != LOG_OFF);
+		}
 		
 		//No need to go on if it won't be written anyway
 		if (!canWriteTerm && !canWriteFile)
@@ -65,7 +74,7 @@ public:
 				canWriteFile = false;
 				Config::Ref().SetLogLevelFile(LOG_OFF); //Don't try to log anything to the log file again
 				
-				Logger(LOG_ERROR) << "Could not open `" << FILE_LOG << "`" << NEWLINE;
+				Logger(LOG_ERROR) << "Could not open \'" << FILE_LOG << "\'" << NEWLINE;
 				Logger(LOG_INFO) << "Disabled log file writing" << NEWLINE;
 			}
 		}

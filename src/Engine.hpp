@@ -1,8 +1,8 @@
 #ifndef ENGINE_HPP_
 #define ENGINE_HPP_
 
-#include "utils/Singleton.hpp"
-#include "utils/Structs.hpp"
+#include "misc/Singleton.hpp"
+#include "misc/Structs.hpp"
 #include "Window.hpp"
 
 class Engine : public Singleton<Engine>

@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <iomanip>
 #include <sstream>
-#include <vector>
 
 std::string String::Combine(int count, ...)
 {
@@ -55,6 +54,23 @@ int String::ToInt(std::string number)
 	return std::stoi(number);
 }
 
+std::string String::ToString(bool value)
+{
+	std::stringstream ss;
+	
+	ss << value;
+	
+	return ss.str();
+}
+
+bool String::ToBool(std::string value)
+{
+	if (value.empty())
+		return false;
+	
+	return value == "1";
+}
+
 bool String::IsNumber(std::string number)
 {
 	for (uint i = 0; i < number.length(); i++)
@@ -64,4 +80,25 @@ bool String::IsNumber(std::string number)
 	}
 	
 	return true;
+}
+
+std::vector<std::string> String::Split(std::string string, char delim)
+{
+	std::vector<std::string> tokens;
+	
+	if (string.find(delim) == std::string::npos) //If delim not in string, return vector with only string
+	{
+		tokens.push_back(string);
+		return tokens;
+	}
+	
+	std::string item;
+	std::stringstream ss(string);
+	
+	while (std::getline(ss, item, delim))
+	{
+		tokens.push_back(item);
+	}
+	
+	return tokens;
 }

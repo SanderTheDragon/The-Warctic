@@ -9,9 +9,9 @@
 
 
 //Version info
-#define VER_MAJOR ${VERSION_MAJOR}
-#define VER_MINOR ${VERSION_MINOR}
-#define VER_BUILD ${VERSION_BUILD}
+#define VER_MAJOR 0
+#define VER_MINOR 1
+#define VER_BUILD 1
 
 #define VERSION STR(VER_MAJOR) "." STR(VER_MINOR) "." STR(VER_BUILD)
 
@@ -53,7 +53,8 @@
 //Directory and file definitions
 #define DIR_ROOT "." DIR_SEP
 
-#define FILE_LOG DIR_ROOT "warctic.log"
+#define FILE_LOG    DIR_ROOT "warctic.log"
+#define FILE_CONFIG DIR_ROOT "warctic.cfg"
 //End directory and file definitions
 
 
@@ -68,38 +69,79 @@
 
 
 
-#include "utils/Singleton.hpp"
-#include "utils/Types.hpp"
+#include <map>
+#include <string>
+
+#include "utils/String.hpp"
+#include "misc/Singleton.hpp"
+#include "misc/Types.hpp"
 
 class Config : public Singleton<Config>
 {
 private:
-	uint logLevelTerm = 0x0C05; //Minimal log level to print in the terminal, default LOG_INFO
-	uint logLevelFile = 0x0C06; //Minimal log level to print to the log file, default LOG_DEBUG
-	bool logTermColor = true;
+	std::map<std::string, std::string> configMap;
 	
-	uint aspectRatio = 0x0A1609; //Default aspect ratio is 16:9
-	uint startResolution = 480;    //Default resolution as start: 480
-	bool fullscreen = false;     //Start windowed as default
+	//Get and set config values
+	int GetValueInt(std::string key)
+	{
+		if (GetKeyExists(key) && key[0] == 'i')
+			return String::ToInt(configMap[key]);
+		
+		return 0;
+	}
+	
+	void SetValueInt(std::string key, int val)
+	{
+		if (key[0] == 'i')
+			configMap[key] = String::ToString(val);
+	}
+	
+	bool GetValueBool(std::string key)
+	{
+		if (GetKeyExists(key) && key[0] == 'b')
+			return String::ToBool(configMap[key]);
+		
+		return false;
+	}
+	
+	void SetValueBool(std::string key, bool val)
+	{
+		if (key[0] == 'b')
+			configMap[key] = String::ToString(val);
+	}
 	
 public:
-	uint GetLogLevelTerm() { return logLevelTerm; }
-	void SetLogLevelTerm(uint level) { logLevelTerm = level; }
+	std::map<std::string, std::string>* GetConfigMap() { return &configMap; }
 	
-	uint GetLogLevelFile() { return logLevelFile; }
-	void SetLogLevelFile(uint level) { logLevelFile = level; }
 	
-	bool GetLogTermColor() { return logTermColor; }
-	void SetLogTermColor(bool color) { logTermColor = color; }
+	bool GetKeyExists(std::string key)
+	{
+		for (std::map<std::string, std::string>::iterator it = configMap.begin(); it != configMap.end(); it++)
+		{
+			if (it->first == key)
+				return true;
+		}
+		
+		return false;
+	}
 	
-	uint GetAspectRatio() { return aspectRatio; }
-	void SetAspectRatio(uint ratio) { aspectRatio = ratio; }
+	uint GetLogLevelTerm() { return GetValueInt("iLogLevelTerm"); }
+	void SetLogLevelTerm(uint level) { SetValueInt("iLogLevelTerm", level); }
 	
-	bool GetFullscreen() { return fullscreen; }
-	void SetFullscreen(bool fs) { fullscreen = fs; }
+	uint GetLogLevelFile() { return GetValueInt("iLogLevelFile"); }
+	void SetLogLevelFile(uint level) { SetValueInt("iLogLevelFile", level); }
 	
-	uint GetStartResolution() { return startResolution; }
-	void SetStartResolution(uint resolution) { startResolution = resolution; }
+	bool GetLogTermColor() { return GetValueBool("bLogColor"); }
+	void SetLogTermColor(bool color) { SetValueBool("bLogColor", color); }
+	
+	uint GetAspectRatio() { return GetValueInt("iDisplayAspectRatio"); }
+	void SetAspectRatio(uint ratio) { SetValueInt("iDisplayAspectRatio", ratio); }
+	
+	bool GetFullscreen() { return GetValueBool("bDisplayFullscreen"); }
+	void SetFullscreen(bool fs) { SetValueBool("bDisplayFullscreen", fs); }
+	
+	uint GetResolution() { return GetValueInt("iDisplayResolution"); }
+	void SetResolution(uint resolution) { SetValueInt("iDisplayResolution", resolution); }
 };
 
 #endif
