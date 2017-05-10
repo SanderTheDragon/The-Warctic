@@ -9,9 +9,9 @@
 
 
 //Version info
-#define VER_MAJOR 0
-#define VER_MINOR 1
-#define VER_BUILD 1
+#define VER_MAJOR ${VERSION_MAJOR}
+#define VER_MINOR ${VERSION_MINOR}
+#define VER_BUILD ${VERSION_BUILD}
 
 #define VERSION STR(VER_MAJOR) "." STR(VER_MINOR) "." STR(VER_BUILD)
 
