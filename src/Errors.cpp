@@ -27,6 +27,20 @@ std::string GetErrorMessage(uint code)
 		return "Window could not be created";
 		break;
 		
+	case ERR_FILE_OPEN:
+		return "Could not open file";
+		break;
+	case ERR_FILE_READ:
+		return "Could not read from file";
+		break;
+	case ERR_FILE_WRITE:
+		return "Could not write to file";
+		break;
+		
+	case ERR_WINDOW_CREATE:
+		return "Failed to create window";
+		break;
+		
 	default:
 		return String::Combine(3, "Could not find message for error \'", String::ToHexString(code).c_str(), "\'");
 		break;
