@@ -5,7 +5,6 @@ find_package (OGRE 2.0)
 
 if (NOT OGRE_FOUND)
     message (STATUS "Building OGRE 2")
-    set (OGREDEPS_INSTALL_DEV 1)
     set (OGRE_BUILD_SAMPLES2 0)
     add_subdirectory ("${CMAKE_CURRENT_SOURCE_DIR}/external/OGRE")
 endif ()
@@ -22,10 +21,15 @@ set (HEADERS
 
 
 
-include_directories (${OGRE_INCLUDE_DIRECTORIES})
+if (NOT OGRE_FOUND)
+    include_directories ("${CMAKE_CURRENT_BINARY_DIR}/external/OGRE/include/")
+    include_directories ("${CMAKE_CURRENT_SOURCE_DIR}/external/OGRE/OgreMain/include/")
+    include_directories ("${CMAKE_CURRENT_SOURCE_DIR}/external/OGRE/RenderSystems/GL3Plus/include/")
+else ()
+    include_directories (${OGRE_INCLUDE_DIRECTORIES})
+endif ()
 
 add_executable (${PROJECT_NAME} ${SOURCES} ${HEADERS})
-
 if (NOT OGRE_FOUND)
     target_link_libraries (${PROJECT_NAME} OgreMain RenderSystem_GL3Plus)
 else ()
