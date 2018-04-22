@@ -2,3 +2,7 @@
 	path = external/OGRE
 	url = https://github.com/OGRECave/ogre.git
 	branch = v2-1
+[submodule "external/SDL2"]
+	path = external/SDL2
+	url = https://github.com/SDL-mirror/SDL
+	branch = master
