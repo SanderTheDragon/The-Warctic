@@ -10,7 +10,7 @@ Scene::Scene(Engine* engine) :
 
 bool Scene::init()
 {
-	engine->getRoot()->createSceneManager(Ogre::SCENE_DYNAMIC, 4, Ogre::INSTANCING_CULLING_THREADED);
+	engine->getRoot()->createSceneManager(Ogre::ST_GENERIC, 2, Ogre::INSTANCING_CULLING_THREADED);
 
 	return true;
 }

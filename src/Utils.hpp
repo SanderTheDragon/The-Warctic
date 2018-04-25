@@ -24,7 +24,7 @@ namespace Utils
 
 	inline bool toBool(std::string &value)
 	{
-		return value.compare("True") == 0 || value.compare("true") == 0 || value.compare("On") == 0 || value.compare("on") == 0 || value.compare("1") == 0;
+		return value.compare("1") == 0 || value.compare("True") == 0 || value.compare("true") == 0 || value.compare("On") == 0 || value.compare("on") == 0;
 	}
 
 	template<typename T>
