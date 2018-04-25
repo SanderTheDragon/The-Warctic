@@ -56,17 +56,23 @@ set (SRC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.hpp.in" "${SRC}/Config.hpp")
 
 set (SOURCES
+    "${SRC}/ConfigurationFile.cpp"
     "${SRC}/Engine.cpp"
     "${SRC}/GameWindow.cpp"
     "${SRC}/Input.cpp"
-    "${SRC}/Main.cpp")
+    "${SRC}/Main.cpp"
+    "${SRC}/Scene.cpp")
+
 set (HEADERS
     "${SRC}/Config.hpp"
+    "${SRC}/ConfigurationFile.hpp"
     "${SRC}/Engine.hpp"
     "${SRC}/GameWindow.hpp"
     "${SRC}/Input.hpp"
     "${SRC}/Log.hpp"
-    "${SRC}/Macro.hpp")
+    "${SRC}/Macro.hpp"
+    "${SRC}/Scene.hpp"
+    "${SRC}/Utils.hpp")
 
 
 

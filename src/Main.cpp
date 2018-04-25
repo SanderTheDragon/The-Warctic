@@ -6,6 +6,7 @@
 #include <SDL2/SDL_version.h>
 
 #include "Config.hpp"
+#include "ConfigurationFile.hpp"
 #include "Log.hpp"
 
 //Create a log file
@@ -36,6 +37,8 @@ int main(int argc, char* argv[])
 	{
 		engine->loop();
 	}
+
+	engine->getConfig()->write();
 
 	delete engine;
 }

@@ -67,7 +67,7 @@ public:
 	}
 
 	template<typename T>
-	Log& operator<<(T message)
+	Log& operator<<(T const message)
 	{
 		std::cout << message;
 		file << message;

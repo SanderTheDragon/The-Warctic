@@ -5,10 +5,12 @@
 #include <OgreRoot.h>
 #include <SDL2/SDL.h>
 
+class Engine;
+
 class GameWindow
 {
 public:
-	GameWindow();
+	GameWindow(Engine* engine);
 	~GameWindow();
 
 	bool init(Ogre::Root* root);
@@ -22,6 +24,8 @@ private:
 	SDL_GLContext context;
 
 	Ogre::String windowHandle;
+
+	Engine* engine;
 };
 
 #endif

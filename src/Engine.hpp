@@ -4,8 +4,10 @@
 #include <OgreLogManager.h>
 #include <OgreRoot.h>
 
+class ConfigurationFile;
 class GameWindow;
 class Input;
+class Scene;
 
 class Engine
 {
@@ -17,15 +19,21 @@ public:
 	void stop();
 	void loop();
 
-	bool isRunning() { return running; }
+	bool const isRunning() { return running; }
+
+	Ogre::Root* const getRoot() { return root; }
+
+	ConfigurationFile* const getConfig() { return config; }
 
 private:
 	Ogre::LogManager* logManager;
 	Ogre::RenderSystem* renderSystem;
 	Ogre::Root* root;
 
+	ConfigurationFile* config;
 	GameWindow* window;
 	Input* input;
+	Scene* scene;
 
 	bool running;
 };

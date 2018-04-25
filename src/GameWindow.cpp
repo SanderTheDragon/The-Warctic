@@ -5,9 +5,13 @@
 #include <SDL2/SDL_syswm.h>
 
 #include "Config.hpp"
+#include "ConfigurationFile.hpp"
+#include "Engine.hpp"
 #include "Log.hpp"
+#include "Utils.hpp"
 
-GameWindow::GameWindow() :
+GameWindow::GameWindow(Engine* engine) :
+	engine(engine),
 	renderWindow(nullptr),
 	window(nullptr)
 {
@@ -31,13 +35,26 @@ GameWindow::~GameWindow()
 
 bool GameWindow::init(Ogre::Root* root)
 {
+	int glMajor = engine->getConfig()->getValue<int>("iOpenGLMajor", 3);
+	int glMinor = engine->getConfig()->getValue<int>("iOpenGLMinor", 3);
+	if (glMajor > 4 || glMajor < 3 || (glMajor == 3 && glMinor > 3) || (glMajor == 4 && glMinor > 6))
+	{
+		Log(LOG_WARNING) << glMajor << "." << glMinor << " is not a valid OpenGL version, using 3.3";
+
+		glMajor = glMinor = 3;
+		engine->getConfig()->setValue<int>("iOpenGLMajor", glMajor);
+		engine->getConfig()->setValue<int>("iOpenGLMinor", glMinor);
+	}
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, glMajor);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, glMinor);
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	window = SDL_CreateWindow("The Warctic " VERSION_STRING, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_OPENGL);
+	int const windowWidth = engine->getConfig()->getValue<int>("iWindowWidth", 1024);
+	int const windowHeight = engine->getConfig()->getValue<int>("iWindowHeight", 768);
+	window = SDL_CreateWindow("The Warctic " VERSION_STRING, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL);
 	if (window == nullptr)
 	{
 		Log(LOG_ERROR) << "Failed to create SDL_Window: " << SDL_GetError();
@@ -72,7 +89,7 @@ bool GameWindow::init(Ogre::Root* root)
 	}
 	else
 	{
-		profile = Ogre::StringConverter::toString(gl_profile);
+		profile = Utils::toString(gl_profile);
 	}
 
 	Log(LOG_INFO) << "Using OpenGL " << profile << " " << gl_major << "." << gl_minor;
@@ -86,14 +103,14 @@ bool GameWindow::init(Ogre::Root* root)
 	}
 
 #ifdef LINUX
-	windowHandle = Ogre::StringConverter::toString((unsigned long)wmInfo.info.x11.window);
+	windowHandle = Utils::toString((unsigned long)wmInfo.info.x11.window);
 #elif MAC
 	options["macAPI"] = "cocoa";
 	options["macAPICocoaUseNSView"] = "true";
 
-	winHandle = Ogre::StringConverter::toString(WindowContentViewHandle(wmInfo));
+	winHandle = Utils::toString(WindowContentViewHandle(wmInfo));
 #elif WINDOWS
-	windowHandle = Ogre::StringConverter::toString((unsigned long)wmInfo.info.win.window);
+	windowHandle = Utils::toString((unsigned long)wmInfo.info.win.window);
 #endif
 
 	if (windowHandle.empty())
@@ -104,7 +121,7 @@ bool GameWindow::init(Ogre::Root* root)
 
 	Ogre::NameValuePairList options;
 	options["externalWindowHandle"] = windowHandle;
-	renderWindow = root->createRenderWindow("The Warctic " VERSION_STRING, 1024, 768, false, &options);
+	renderWindow = root->createRenderWindow("The Warctic " VERSION_STRING, windowWidth, windowHeight, false, &options);
 	if (renderWindow == nullptr)
 	{
 		Log(LOG_ERROR) << "Failed to create RenderWindow";
